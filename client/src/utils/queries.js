@@ -11,11 +11,12 @@ export const QUERY_USERS = gql`
 `;
 
 export const QUERY_ME = gql`
-	query Query {
-		me {
-			username
-			email
-			_id
-		}
-	}
+  query me {
+    me {
+      _id
+      username
+      email
+     
+    }
+  }
 `;

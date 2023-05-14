@@ -1,7 +1,5 @@
-// these queries are here for example ONLY
 import { QUERY_USERS } from '../../utils/queries';
 import { useQuery } from '@apollo/client';
-// END example
 
 function About() {
 	const { loading, data } = useQuery(QUERY_USERS);
@@ -17,7 +15,7 @@ function About() {
 			) : (
 					<div>
 						{users.map(user => {
-							return <p key={user._id}>{user.email}</p>
+							return <p key={user._id}>{user.username}: {user.email}</p>
 						})}
 					</div>
 			)}
