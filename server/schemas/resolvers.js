@@ -5,14 +5,16 @@ const { signToken } = require('../utils/auth');
 const resolvers = {
 	Query: {
 		users: async () => {
-			return await User.find({}).select('-password');
+			// return await User.find({}).select('-password');
+			return User.find().populate('');
 		},
 		user: async (parent, { username }) => {
-			return User.findOne({ username });
+			return User.findOne({ username }).populate('');
 		},
 		me: async (parent, args, context) => {
 			if (context.user) {
-				const userData = await User.findOne({ _id: context.user._id }).select('-__v -password');
+				const userData = await User.findOne({ _id: context.user._id }).populate('')
+				// .select('-__v -password');
 
 				return userData;
 			}

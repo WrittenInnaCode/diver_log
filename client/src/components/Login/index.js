@@ -5,7 +5,7 @@ import { LOGIN_USER } from '../../utils/mutations';
 
 import Auth from '../../utils/auth';
 
-import { Button, Modal, Form, Alert } from 'react-bootstrap';
+import { Button, Form, Alert } from 'react-bootstrap';
 
 
 const Login = () => {
@@ -110,7 +110,7 @@ const Login = () => {
                     variant="danger"
                     style={{ fontSize: '0.8rem', marginTop: '2rem' }}
                 >
-                    Oh snapping turtle! Something went wrong with your login credentials! Please try again.
+                    Oh snapping turtle! Something's wrong with your login credentials! Please try again.
                 </Alert>
 
             </Form>

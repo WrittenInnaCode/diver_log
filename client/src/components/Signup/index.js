@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Alert, Modal } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../../utils/mutations';
@@ -133,7 +133,7 @@ const Signup = () => {
                     variant="danger"
                     style={{ fontSize: '0.8rem', marginTop: '2rem' }}
                 >
-                    Something went wrong with your signup!
+                    Something went wrong with your signup! Please try again.
                 </Alert>
             </Form>
         </div>
