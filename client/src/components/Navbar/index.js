@@ -7,7 +7,7 @@ import Signup from '../../components/Signup';
 
 import Auth from '../../utils/auth';
 
-import { Navbar, Nav, Container, Button, Modal, Tab, Tabs } from 'react-bootstrap';
+import { Navbar, Nav, Container, Button, Modal, Tab, Tabs, NavDropdown, Figure } from 'react-bootstrap';
 
 
 function AppNavbar() {
@@ -26,7 +26,7 @@ function AppNavbar() {
 
 	return (
 		<div>
-			<Navbar>
+			<Navbar >
 				<Container>
 					{/* <a href="/">Home</a> */}
 					<Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
@@ -37,22 +37,48 @@ function AppNavbar() {
 					</Nav>
 
 
-					<div className="d-flex">
+					
 						{Auth.loggedIn() ? (
 							<>
-								<Link to="/me">
+								<Figure>
+									<Figure.Image
+										width={40}
+										height={40}
+										alt="user icon"
+										src={require(`../../assets/images/Mask.png`)} 
+									/>
+								</Figure>
+
+								<NavDropdown
+									title={Auth.getProfile().data.username}
+									id="basic-nav-dropdown">
+
+									<NavDropdown.Item href="/me">My Profile</NavDropdown.Item>
+									<NavDropdown.Item href="#action/3.2">
+										Another action
+									</NavDropdown.Item>
+									<NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+
+									<NavDropdown.Divider />
+
+									<NavDropdown.Item href="#action/3.4">
+										<Button variant="warning" onClick={logout} size="sm"> Ascend and Exit </Button>
+									</NavDropdown.Item>
+								</NavDropdown>
+
+								{/* <Link to="/me">
 									{Auth.getProfile().data.username}'s profile {' '}
-								</Link>
-								<Button onClick={logout} size="sm"> Logout </Button>
+								</Link> */}
+								{/* <Button variant="warning" onClick={logout} size="sm"> Ascend and Exit </Button> */}
 							</>
 						) : (
 							<>
-								<Button variant="success" size="sm" onClick={() => handleShow()}>
-									Login
+								<Button variant="info" size="sm" onClick={() => handleShow()}>
+									Dive In
 								</Button>
 							</>
 						)}
-					</div>
+					
 
 
 				</Container>

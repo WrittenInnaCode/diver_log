@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   useQuery,
   //  useMutation 
@@ -24,13 +24,16 @@ const Profile = () => {
 
   const user = data?.me || data?.user || {};
 
+  const navigate = useNavigate();
+  //is this working????????
+
 // Modal 
   const [show, setShow] = useState(true);
   const handleClose = () => setShow(false);
 
 
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-    return <Navigate to="/me" replace={true} />;
+    return  navigate("/me");
   }
 
   if (loading) {
