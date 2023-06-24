@@ -32,8 +32,8 @@ function AppNavbar() {
 					<Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
 
 					<Nav className="me-auto">
-						<Nav.Link as={Link} to="/about">About</Nav.Link>
-						<Nav.Link as={Link} to="/contact">Contact</Nav.Link>
+						<Nav.Link as={Link} to="/dives">Dives</Nav.Link>
+						<Nav.Link as={Link} to="/newdivelog">New Dive Log</Nav.Link>
 					</Nav>
 
 
@@ -51,17 +51,18 @@ function AppNavbar() {
 
 								<NavDropdown
 									title={Auth.getProfile().data.username}
-									id="basic-nav-dropdown">
+									id="basic-nav-dropdown"
+									className='username'>
 
-									<NavDropdown.Item href="/me">My Profile</NavDropdown.Item>
-									<NavDropdown.Item href="#action/3.2">
-										Another action
-									</NavDropdown.Item>
-									<NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+									<NavDropdown.Item href="/me">Profile</NavDropdown.Item>
+
+									<NavDropdown.Item href="/dives">View My Dives</NavDropdown.Item>
+
+									<NavDropdown.Item href="/newdivelog">Log New Dive</NavDropdown.Item>
 
 									<NavDropdown.Divider />
 
-									<NavDropdown.Item href="#action/3.4">
+									<NavDropdown.Item>
 										<Button variant="warning" onClick={logout} size="sm"> Ascend and Exit </Button>
 									</NavDropdown.Item>
 								</NavDropdown>

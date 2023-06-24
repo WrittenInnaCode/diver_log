@@ -12,8 +12,8 @@ import './App.css';
 
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
-import About from './pages/About';
-import Contact from './pages/Contact';
+import Dives from './pages/Dives';
+import NewDive from './pages/NewDive';
 import Profile from './pages/Profile';
 
 const httpLink = createHttpLink({
@@ -58,12 +58,12 @@ function App() {
               element={<Profile />}
             />
             <Route
-              path="/about"
-              element={<About />}
+              path="/dives"
+              element={<Dives />}
             />
             <Route
-              path="/contact"
-              element={<Contact />}
+              path="/newdivelog"
+              element={<NewDive />}
             />
             <Route
               path='*'

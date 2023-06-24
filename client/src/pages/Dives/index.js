@@ -1,14 +1,14 @@
 import { QUERY_USERS } from '../../utils/queries';
 import { useQuery } from '@apollo/client';
 
-function About() {
+function Dives() {
 	const { loading, data } = useQuery(QUERY_USERS);
 
 	const users = data?.users || [];
 
 	return (
 		<h1>
-			This is the about page.
+			This is the dives page.
 
 			{loading ? (
 				<div>Loading ...</div>
@@ -23,4 +23,4 @@ function About() {
 	);
 }
 
-export default About;
+export default Dives;
