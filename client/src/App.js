@@ -12,7 +12,7 @@ import './App.css';
 
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
-import Dives from './pages/Dives';
+import Dive from './pages/Dive';
 import NewDive from './pages/NewDive';
 import Profile from './pages/Profile';
 
@@ -59,7 +59,7 @@ function App() {
             />
             <Route
               path="/dives"
-              element={<Dives />}
+              element={<Dive />}
             />
             <Route
               path="/newdivelog"

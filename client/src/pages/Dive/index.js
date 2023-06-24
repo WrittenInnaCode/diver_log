@@ -1,7 +1,7 @@
 import { QUERY_USERS } from '../../utils/queries';
 import { useQuery } from '@apollo/client';
 
-function Dives() {
+function Dive() {
 	const { loading, data } = useQuery(QUERY_USERS);
 
 	const users = data?.users || [];
@@ -23,4 +23,4 @@ function Dives() {
 	);
 }
 
-export default Dives;
+export default Dive;

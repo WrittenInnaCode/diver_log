@@ -17,7 +17,13 @@ const userSchema = new Schema(
 		password: {
 			type: String,
 			required: true,
-		}
+		},
+		dives: [
+			{
+			  type: Schema.Types.ObjectId,
+			  ref: 'Dive',
+			},
+		  ],
 	},
 	// set this to use virtual below
 	{
