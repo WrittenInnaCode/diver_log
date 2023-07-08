@@ -16,7 +16,16 @@ export const QUERY_USER = gql`
       _id
       username
       email
-    
+      dives {
+        _id
+        diveSite
+        diveText
+        diveBuddy
+        diveLife
+        diveImage
+        diveAuthor
+        createdAt
+    }
     }
   }
 `;
@@ -28,7 +37,54 @@ export const QUERY_ME = gql`
       _id
       username
       email
-      
+      dives {
+        _id
+        diveSite
+        diveText
+        diveBuddy
+        diveLife
+        diveImage
+        diveAuthor
+        createdAt
+    }
+    }
+  }
+`;
+
+
+export const QUERY_DIVES = gql`
+  query getDives {
+    dives {
+      _id
+      diveSite
+      diveText
+      diveBuddy
+      diveLife
+      diveImage
+      diveAuthor
+      createdAt
+    }
+  }
+`;
+
+
+export const QUERY_SINGLE_DIVE = gql`
+  query getSingleDive($diveId: ID!) {
+    dive(diveId: $diveId) {
+      _id
+      diveSite
+      diveText
+      diveBuddy
+      diveLife
+      diveImage
+      diveAuthor
+      createdAt
+      comments {
+        _id
+        commentText
+        commentAuthor
+        createdAt
+      }
     }
   }
 `;
