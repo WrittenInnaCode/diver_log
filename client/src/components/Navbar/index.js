@@ -60,6 +60,8 @@ function AppNavbar() {
 
 									<NavDropdown.Item href="/newdivelog">Log New Dive</NavDropdown.Item>
 
+									<NavDropdown.Item href="/bucketlist">My Bucket List</NavDropdown.Item>
+
 									<NavDropdown.Divider />
 
 									<NavDropdown.Item>

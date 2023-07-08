@@ -2,12 +2,6 @@ const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
 const diveSchema = new Schema({
-    diveTitle: {
-        type: String,
-        required: 'You need a title!',
-        minlength: 1,
-        trim: true,
-    },
     diveSite: {
         type: String,
         required: 'You need a dive site!',
@@ -16,13 +10,24 @@ const diveSchema = new Schema({
     },
     diveText: {
         type: String,
-        // required: 'You need to leave a dive post!',
+        // required: 'You need to leave a dive description!',
         minlength: 1,
         trim: true,
-      },
+    },
     diveAuthor: {
         type: String,
         required: true,
+        trim: true,
+    },
+    diveBuddy: {
+        type: String,
+        // required: 'You need a Buddy!',
+        minlength: 1,
+        trim: true,
+    },
+    diveLife: {
+        type: String,
+        minlength: 1,
         trim: true,
     },
     diveImage: {

@@ -15,6 +15,7 @@ import Home from './pages/Home';
 import Dive from './pages/Dive';
 import NewDive from './pages/NewDive';
 import Profile from './pages/Profile';
+import BucketList from './pages/BucketList';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -64,6 +65,10 @@ function App() {
             <Route
               path="/newdivelog"
               element={<NewDive />}
+            />
+            <Route
+              path="/bucketlist"
+              element={<BucketList />}
             />
             <Route
               path='*'
