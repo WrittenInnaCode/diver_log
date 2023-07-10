@@ -12,7 +12,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 
-const NewDive = ({ edit, diveId }) => {
+const NewDive = () => {
 
 	const [diveSite, setDiveSite] = useState('');
 	const [diveText, setDiveText] = useState('');
@@ -47,20 +47,20 @@ const NewDive = ({ edit, diveId }) => {
 		event.preventDefault();
 
 		try {
-			if (edit) {
-				const { data } = await edit({
-					variables: {
-						diveId,
-						diveSite,
-						diveText,
-						diveBuddy,
-						diveLife
+			// if (edit) {
+			// 	const { data } = await edit({
+			// 		variables: {
+			// 			diveId,
+			// 			diveSite,
+			// 			diveText,
+			// 			diveBuddy,
+			// 			diveLife
 
-					},
-				});
-				window.location.assign('/me');
+			// 		},
+			// 	});
+			// 	window.location.assign('/me');
 
-			} else {
+			// } else {
 				const { data } = await addDive({
 					variables: {
 						diveSite,
@@ -76,7 +76,7 @@ const NewDive = ({ edit, diveId }) => {
 				setDiveText('');
 				setDiveBuddy('');
 				setDiveLife('');
-			}
+			// }
 
 		} catch (err) {
 			console.error(err);
@@ -118,6 +118,7 @@ const NewDive = ({ edit, diveId }) => {
 								type="text" 
 								placeholder="Enter the Dive Site name or location"
 								value={diveSite}
+								name="diveSite"
 								onChange={handleChange} />
 							</Form.Group>
 
@@ -127,6 +128,7 @@ const NewDive = ({ edit, diveId }) => {
 								type="text" 
 								placeholder="Add people you've dived with" 
 								value={diveBuddy}
+								name="diveBuddy"
 								onChange={handleChange} />
 							</Form.Group>
 
@@ -136,6 +138,7 @@ const NewDive = ({ edit, diveId }) => {
 								type="text" 
 								placeholder="Add marine life you encountered during this dive" 
 								value={diveLife}
+								name="diveLife"
 								onChange={handleChange} />
 							</Form.Group>
 
@@ -146,6 +149,7 @@ const NewDive = ({ edit, diveId }) => {
 								placeholder='Write about your experience while taking this dive' 
 								rows={3}
 								value={diveText}
+								name="diveText"
 								onChange={handleChange} />
 							</Form.Group>
 

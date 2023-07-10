@@ -14,6 +14,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Dive from './pages/Dive';
 import NewDive from './pages/NewDive';
+import SingleDive from './pages/SingleDive';
 import Profile from './pages/Profile';
 import BucketList from './pages/BucketList';
 
@@ -66,6 +67,10 @@ function App() {
               path="/newdivelog"
               element={<NewDive />}
             />
+            <Route 
+                path="/dives/:diveId"
+                element={<SingleDive />}
+              />
             <Route
               path="/bucketlist"
               element={<BucketList />}

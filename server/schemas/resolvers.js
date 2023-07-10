@@ -57,14 +57,16 @@ const resolvers = {
 			return { token, user };
 		},
 
-		addDive: async (parent, { diveSite, diveText, diveBuddy, diveLife, diveImage }, context) => {
+		addDive: async (parent, { diveSite, diveText, diveBuddy, diveLife 
+			// diveImage
+		 }, context) => {
 			if (context.user) {
 				const dive = await Dive.create({
 					diveSite,
 					diveText,
 					diveLife,
 					diveBuddy,
-					diveImage,
+					// diveImage,
 					diveAuthor: context.user.username,
 				});
 

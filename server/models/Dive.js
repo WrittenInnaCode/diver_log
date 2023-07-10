@@ -11,7 +11,7 @@ const diveSchema = new Schema({
     diveText: {
         type: String,
         // required: 'You need to leave a dive description!',
-        minlength: 1,
+        // minlength: 1,
         trim: true,
     },
     diveAuthor: {
@@ -22,17 +22,17 @@ const diveSchema = new Schema({
     diveBuddy: {
         type: String,
         // required: 'You need a Buddy!',
-        minlength: 1,
+        // minlength: 1,
         trim: true,
     },
     diveLife: {
         type: String,
-        minlength: 1,
+        // minlength: 1,
         trim: true,
     },
-    diveImage: {
-        type: String,
-    },
+    // diveImage: {
+    //     type: String,
+    // },
     createdAt: {
         type: Date,
         default: Date.now,

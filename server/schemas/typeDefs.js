@@ -17,7 +17,6 @@ const typeDefs = gql`
 		diveLife: String
     	diveAuthor: String
     	createdAt: String
-		diveImage: String
     	comments: [Comment]!
   	}
 
@@ -44,7 +43,7 @@ const typeDefs = gql`
 	type Mutation {
 		addUser(username: String!, email: String!, password: String!): Auth
 		login(email: String!, password: String!): Auth
-		addDive(diveSite: String!, diveText: String!, diveBuddy: String!, diveImage: String!): Dive
+		addDive(diveSite: String!, diveText: String!, diveBuddy: String!, diveLife: String!): Dive
     	addComment(diveId: ID!, commentText: String!): Dive
     	removeDive(diveId: ID!): Dive
 		editDive(diveId: ID!, diveSite: String!, diveText: String!, diveBuddy: String!, diveImage: String!): Dive

@@ -25,15 +25,33 @@ export const ADD_USER = gql`
 `;
 
 
+// export const ADD_DIVE = gql`
+//   mutation addDive($diveSite: String!, $diveText: String!, $diveBuddy: String!, $diveLife: String!, $diveImage: String!) {
+//     addDive(diveSite: $diveSite, diveText: $diveText, diveBuddy: $diveBuddy, diveLife: $diveLife, diveImage: $diveImage) {
+//       _id
+//       diveSite
+//       diveText
+//       diveBuddy
+//       diveLife
+//       diveImage
+//       diveAuthor
+//       createdAt
+//       comments {
+//         _id
+//         commentText
+//       }
+//     }
+//   }
+// `;
+
 export const ADD_DIVE = gql`
-  mutation addDive($diveSite: String!, $diveText: String!, $diveBuddy: String!, $diveLife: String!, $diveImage: String!) {
-    addDive(diveSite: $diveSite, diveText: $diveText, diveBuddy: $diveBuddy, diveLife: $diveLife, diveImage: $diveImage) {
+  mutation addDive($diveSite: String!, $diveText: String!, $diveBuddy: String!, $diveLife: String!) {
+    addDive(diveSite: $diveSite, diveText: $diveText, diveBuddy: $diveBuddy, diveLife: $diveLife) {
       _id
       diveSite
       diveText
       diveBuddy
       diveLife
-      diveImage
       diveAuthor
       createdAt
       comments {
@@ -43,7 +61,6 @@ export const ADD_DIVE = gql`
     }
   }
 `;
-
 
 export const REMOVE_DIVE = gql`
   mutation removeDive($diveId: ID!) {

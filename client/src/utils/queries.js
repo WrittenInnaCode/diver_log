@@ -22,7 +22,6 @@ export const QUERY_USER = gql`
         diveText
         diveBuddy
         diveLife
-        diveImage
         diveAuthor
         createdAt
     }
@@ -43,7 +42,6 @@ export const QUERY_ME = gql`
         diveText
         diveBuddy
         diveLife
-        diveImage
         diveAuthor
         createdAt
     }
@@ -60,7 +58,6 @@ export const QUERY_DIVES = gql`
       diveText
       diveBuddy
       diveLife
-      diveImage
       diveAuthor
       createdAt
     }
@@ -76,7 +73,6 @@ export const QUERY_SINGLE_DIVE = gql`
       diveText
       diveBuddy
       diveLife
-      diveImage
       diveAuthor
       createdAt
       comments {
