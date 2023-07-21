@@ -14,24 +14,28 @@ function Dive() {
 	const dives = data?.dives || [];
 
 	return (
-		<h1>
-			This is the dives page.
-
+		<div>
+			<h2>
+				This is the dives page.
+			</h2>
 			{loading ? (
 				<div>Loading ...</div>
 			) : (
-				// <div>
-				// 	{users.map(user => {
-				// 		return <p key={user._id}>{user.username}: {user.email}</p>
-				// 	})}
-				// </div>
+				<div>
+					{/* <div>
+				 	{users.map(user => {
+					return <p key={user._id}>{user.username}: {user.email}</p>
+					})}
+				</div> */}
 
-				<DiveList
-					dives={dives}
-					title="Dives"
-				/>
+					<DiveList
+						dives={dives}
+						title="All Dives"
+					/>
+				</div>
 			)}
-		</h1>
+
+		</div>
 	);
 }
 

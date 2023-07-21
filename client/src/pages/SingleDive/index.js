@@ -30,25 +30,25 @@ const SingleDive = () => {
 
 
             <p style={{
-                fontSize: '1.5rem',
-                border: '2px',
-                lineHeight: '1.5',
+                // fontSize: '1.5rem',
+                // border: '2px',
+                // lineHeight: '1.5',
             }} >
                 {dive.diveText}
             </p>
 
             <p style={{
-                fontSize: '1.5rem',
-                border: '2px',
-                lineHeight: '1.5',
+                // fontSize: '1.5rem',
+                // border: '2px',
+                // lineHeight: '1.5',
             }} >
                 {dive.diveBuddy}
             </p>
 
             <p style={{
-                fontSize: '1.5rem',
-                border: '2px',
-                lineHeight: '1.5',
+                // fontSize: '1.5rem',
+                // border: '2px',
+                // lineHeight: '1.5',
             }} >
                 {dive.diveLife}
             </p>

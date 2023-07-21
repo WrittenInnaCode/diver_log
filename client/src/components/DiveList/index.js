@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
 
 const DiveList = ({
   dives,
@@ -17,44 +18,41 @@ const DiveList = ({
 
       {dives && dives.map((dive) => (
 
-          <div key={dive._id} className="card mb-3">
-
-            <h4>
-              {showUsername ? (
-                <Link
-                 
-                  to={`/profiles/${dive.diveAuthor}`}
-                >
+        <Card key={dive._id}
+          className="m-3"
+        >
+          <Card.Body>
+            {showUsername ? (
+              <Card.Title>
+                <Link to={`/profiles/${dive.diveAuthor}`} >
                   {dive.diveAuthor} {''}
+
+                </Link>
+                <span>went diving in</span>
+                <Link to={`/dives/${dive._id}`}>
+                  <span> {dive.diveSite} {''} </span>
                   <span>
-                    went diving in {dive.diveSite} {''}
-                  </span>
-                  <span>
-                     on {dive.createdAt}
+                    on {dive.createdAt}
                   </span>
                 </Link>
+              </Card.Title>
 
-                
-                
-              ) : (
+
+            ) : (
                 <>
                   <span style={{ fontSize: '1rem' }}>
                     You had this dive on {dive.createdAt}
                   </span>
                 </>
               )}
-            </h4>
-            <div className="card-body bg-light p-2">
-              <p>{dive.diveText}</p>
-            </div>
-            <Link
-              className="btn btn-primary btn-block btn-squared"
-              to={`/dives/${dive._id}`}
-            >
-              Join the discussion on this dive.
-            </Link>
-          </div>
-        ))}
+
+             <Card.Text
+              //  className="card-body bg-light p-2"
+             >{dive.diveText}</Card.Text>
+          </Card.Body>
+
+        </Card>
+      ))}
     </div>
   );
 };
