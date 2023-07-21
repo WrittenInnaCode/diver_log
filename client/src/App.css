@@ -2,3 +2,12 @@
     font-size: large;
     font-weight: 500;
 }
+
+.diveText{
+    text-decoration: none; 
+    color:slategray;
+}
+
+.diveText:hover{
+    color:slategray;
+}

@@ -9,7 +9,7 @@ const DiveList = ({
   showUsername = true,
 }) => {
   if (!dives.length) {
-    return <p>No dives yet...</p>;
+    return <p>There are no dives logged yet... Be the first one to log a dive!</p>;
   }
 
   return (
@@ -22,33 +22,37 @@ const DiveList = ({
           className="m-3"
         >
           <Card.Body>
-            {showUsername ? (
-              <Card.Title>
-                <Link to={`/profiles/${dive.diveAuthor}`} >
-                  {dive.diveAuthor} {''}
-
-                </Link>
-                <span>went diving in</span>
-                <Link to={`/dives/${dive._id}`}>
-                  <span> {dive.diveSite} {''} </span>
-                  <span>
-                    on {dive.createdAt}
-                  </span>
-                </Link>
-              </Card.Title>
-
-
-            ) : (
+            <Card.Title>
+              {showUsername ? (
                 <>
-                  <span style={{ fontSize: '1rem' }}>
-                    You had this dive on {dive.createdAt}
-                  </span>
+                  <Link to={`/profiles/${dive.diveAuthor}`} >
+                    {dive.diveAuthor} {''}
+                  </Link>
+                  <span>went diving in</span>
+                  <Link to={`/dives/${dive._id}`}>
+                    <span> {dive.diveSite} {''} </span>
+                    <span>
+                      on {dive.createdAt}
+                    </span>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link to={`/dives/${dive._id}`}>
+                    {dive.diveSite}
+                  </Link>
+                  <p style={{ fontSize: '1rem', paddingTop: '0.5rem' }}>{dive.createdAt}</p>
                 </>
               )}
 
-             <Card.Text
-              //  className="card-body bg-light p-2"
-             >{dive.diveText}</Card.Text>
+            </Card.Title>
+
+            <Link className="diveText" to={`/dives/${dive._id}`}>
+              <Card.Text >
+                {dive.diveText}
+              </Card.Text>
+            </Link>
+
           </Card.Body>
 
         </Card>

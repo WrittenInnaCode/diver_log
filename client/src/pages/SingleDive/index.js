@@ -25,33 +25,31 @@ const SingleDive = () => {
         return <div>Loading...</div>;
     }
     return (
-        <div >
-            <h1 style={{ fontStyle: 'italic' }}>{dive.diveSite}</h1>
+        <div style={{ padding: '1rem' }}>
+            <h1 style={{ fontStyle: 'italic', paddingBottom: '1rem' }}>{dive.diveSite}</h1>
 
 
             <p style={{
                 // fontSize: '1.5rem',
                 // border: '2px',
                 // lineHeight: '1.5',
+                paddingBottom: '2rem'
             }} >
                 {dive.diveText}
             </p>
+            <div style={{ paddingBottom: '1rem' }}>
+                <h4>Who went diving with me:</h4>
+                <p>
+                    {dive.diveBuddy}
+                </p>
+            </div>
 
-            <p style={{
-                // fontSize: '1.5rem',
-                // border: '2px',
-                // lineHeight: '1.5',
-            }} >
-                {dive.diveBuddy}
-            </p>
+            <div style={{ paddingBottom: '1rem' }}>
+                <h4>The aquatic life I saw:</h4>
+                <p style={{ }} >
+                    {dive.diveLife}
+                </p></div>
 
-            <p style={{
-                // fontSize: '1.5rem',
-                // border: '2px',
-                // lineHeight: '1.5',
-            }} >
-                {dive.diveLife}
-            </p>
 
 
             <h3 style={{ fontSize: '1rem', paddingBottom: '2rem' }}>
