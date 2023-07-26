@@ -27,7 +27,7 @@ const SingleDive = () => {
     return (
         <div style={{ padding: '1rem' }}>
             <h1 style={{ fontStyle: 'italic', paddingBottom: '1rem' }}>{dive.diveSite}</h1>
-
+            <p> Went diving here on {dive.diveDate}.</p>
 
             <p style={{
                 // fontSize: '1.5rem',
@@ -37,6 +37,7 @@ const SingleDive = () => {
             }} >
                 {dive.diveText}
             </p>
+            
             <div style={{ paddingBottom: '1rem' }}>
                 <h4>Who went diving with me:</h4>
                 <p>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
 import { ADD_DIVE } from '../../utils/mutations';
@@ -49,6 +49,9 @@ const NewDive = () => {
 
 
 
+	const navigate = useNavigate();
+
+
 	// Fetch the user data from the cache
 	const { data: userData, loading: userLoading } = useQuery(QUERY_ME);
 
@@ -81,7 +84,7 @@ const NewDive = () => {
 
 			// } else {
 			const { diveSite, diveDate, diveText, diveBuddy, diveLife } = formData; // Destructure the variables from formData
-			const { name, value } = await addDive({
+			const { data } = await addDive({
 				variables: {
 					diveSite,
 					diveDate,
@@ -93,21 +96,29 @@ const NewDive = () => {
 				},
 			});
 
+			// console.log('Newly created dive:', data);
+
+			if (data && data.addDive && data.addDive._id) {
+
+			// After successful submission, navigate the user to the new dive post
+			navigate(`/dives/${data.addDive._id}`);
+
 			setFormData({
 				diveSite: '',
-				diveDate: '',
+				diveDate: null, // Use null to reset the date picker
 				diveText: '',
 				diveBuddy: '',
 				diveLife: '',
-			}); window.location.assign('/me');
+			});
 
 			// }
-
+ } else {
+        throw new Error('Failed to create dive post.');
+      }
 		} catch (err) {
 			console.error(err);
 		};
 	};
-
 
 
 
