@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 
 import { ADD_DIVE } from '../../utils/mutations';
+import { useQuery } from '@apollo/client';
 import { QUERY_DIVES, QUERY_ME } from '../../utils/queries';
 
 import Auth from '../../utils/auth';
@@ -15,14 +16,9 @@ import MyDatePicker from '../../components/DatePicker';
 
 const NewDive = () => {
 
-	// const [diveSite, setDiveSite] = useState('');
-	// const [diveText, setDiveText] = useState('');
-	// const [diveBuddy, setDiveBuddy] = useState('');
-	// const [diveLife, setDiveLife] = useState('');
-
 	const [formData, setFormData] = useState({
 		diveSite: '',
-		diveDate: '',
+		diveDate: null, // Initialize diveDate as null
 		diveText: '',
 		diveBuddy: '',
 		diveLife: '',
@@ -52,45 +48,19 @@ const NewDive = () => {
 	});
 
 
-	// const handleFormSubmit = async (event) => {
-	// 	event.preventDefault();
 
-	// 	try {
-	// 		// if (edit) {
-	// 		// 	const { data } = await edit({
-	// 		// 		variables: {
-	// 		// 			diveId,
-	// 		// 			diveSite,
-	// 		// 			diveText,
-	// 		// 			diveBuddy,
-	// 		// 			diveLife
+	// Fetch the user data from the cache
+	const { data: userData, loading: userLoading } = useQuery(QUERY_ME);
 
-	// 		// 		},
-	// 		// 	});
-	// 		// 	window.location.assign('/me');
+	if (userLoading) {
+		// Show a loading state while the data is being fetched
+		return <div>Loading...</div>;
+	}
 
-	// 		// } else {
-	// 			const { data } = await addDive({
-	// 				variables: {
-	// 					diveSite,
-	// 					diveText,
-	// 					diveBuddy,
-	// 					diveLife,
+	// Destructure the user data, providing a default value if it's null
+	const { me } = userData || { me: null };
 
-	// 					diveAuthor: Auth.getProfile().data.username,
-	// 				},
-	// 			});
 
-	// 			setDiveSite('');
-	// 			setDiveText('');
-	// 			setDiveBuddy('');
-	// 			setDiveLife('');
-	// 		// }
-
-	// 	} catch (err) {
-	// 		console.error(err);
-	// 	};
-	// };
 
 	const handleFormSubmit = async (event) => {
 		event.preventDefault();
@@ -129,7 +99,7 @@ const NewDive = () => {
 				diveText: '',
 				diveBuddy: '',
 				diveLife: '',
-			});
+			}); window.location.assign('/me');
 
 			// }
 
@@ -139,25 +109,23 @@ const NewDive = () => {
 	};
 
 
-	// const handleChange = (event) => {
-	// 	const { name, value } = event.target;
 
-	// 	if (name === 'diveSite') {
-	// 		setDiveSite(value);
-	// 	} else if (name === 'diveText') {
-	// 		setDiveText(value);
-	// 	} else if (name === 'diveBuddy') {
-	// 		setDiveBuddy(value);
-	// 	} else if (name === 'diveLife') {
-	// 		setDiveLife(value);
-	// 	};
-	// };
 
+	// Handle form field changes
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 		setFormData((prevData) => ({
 			...prevData,
 			[name]: value,
+		}));
+	};
+
+
+	// Callback function to handle date change
+	const handleDateChange = (date) => {
+		setFormData((prevData) => ({
+			...prevData,
+			diveDate: date,
 		}));
 	};
 
@@ -175,7 +143,10 @@ const NewDive = () => {
 					<Container>
 						<Form onSubmit={handleFormSubmit} className='diveForm'>
 
-							<MyDatePicker />
+							<MyDatePicker
+								diveDate={formData.diveDate}
+								handleDateChange={handleDateChange}
+							/>
 
 							<Form.Group className="mb-3" >
 								<Form.Label>Dive Site</Form.Label>

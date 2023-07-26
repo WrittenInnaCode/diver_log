@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
-function MyDatePicker() {
-    const [diveDate, handleDateChange] = useState(null);
+function MyDatePicker({ diveDate, handleDateChange }) {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -11,7 +10,7 @@ function MyDatePicker() {
         label="Select Dive Date"
         name="diveDate"
         value={diveDate}
-        onChange={(date) => handleDateChange(date)} // Update the selected date when a new date is picked
+        onChange={handleDateChange}
       />
     </LocalizationProvider>
   );

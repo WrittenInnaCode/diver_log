@@ -8,6 +8,10 @@ const diveSchema = new Schema({
         minlength: 1,
         trim: true,
     },
+    diveDate: {
+        type: String, 
+        required: true,
+    },
     diveText: {
         type: String,
         // required: 'You need to leave a dive description!',

@@ -19,6 +19,7 @@ export const QUERY_USER = gql`
       dives {
         _id
         diveSite
+        diveDate
         diveText
         diveBuddy
         diveLife
@@ -39,6 +40,7 @@ export const QUERY_ME = gql`
       dives {
         _id
         diveSite
+        diveDate
         diveText
         diveBuddy
         diveLife
@@ -55,6 +57,7 @@ export const QUERY_DIVES = gql`
     dives {
       _id
       diveSite
+      diveDate
       diveText
       diveBuddy
       diveLife
@@ -70,6 +73,7 @@ export const QUERY_SINGLE_DIVE = gql`
     dive(diveId: $diveId) {
       _id
       diveSite
+      diveDate
       diveText
       diveBuddy
       diveLife
