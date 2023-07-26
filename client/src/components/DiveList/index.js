@@ -31,7 +31,7 @@ const DiveList = ({
                   <span>went diving in</span>
                   <Link to={`/dives/${dive._id}`}>
                     <span> {dive.diveSite} {''} </span>
-                    <span>
+                    <span style={{ fontSize: '15px' }}>
                       on {dive.createdAt}
                     </span>
                   </Link>
@@ -41,7 +41,7 @@ const DiveList = ({
                   <Link to={`/dives/${dive._id}`}>
                     {dive.diveSite}
                   </Link>
-                  <p style={{ fontSize: '1rem', paddingTop: '0.5rem' }}>{dive.createdAt}</p>
+                  <p style={{ fontSize: '12px', paddingTop: '0.5rem' }}>{dive.createdAt}</p>
                 </>
               )}
 

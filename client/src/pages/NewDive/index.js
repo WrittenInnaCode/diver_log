@@ -11,13 +11,22 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
+import MyDatePicker from '../../components/DatePicker';
 
 const NewDive = () => {
 
-	const [diveSite, setDiveSite] = useState('');
-	const [diveText, setDiveText] = useState('');
-	const [diveBuddy, setDiveBuddy] = useState('');
-	const [diveLife, setDiveLife] = useState('');
+	// const [diveSite, setDiveSite] = useState('');
+	// const [diveText, setDiveText] = useState('');
+	// const [diveBuddy, setDiveBuddy] = useState('');
+	// const [diveLife, setDiveLife] = useState('');
+
+	const [formData, setFormData] = useState({
+		diveSite: '',
+		diveDate: '',
+		diveText: '',
+		diveBuddy: '',
+		diveLife: '',
+	});
 
 
 	const [addDive, { error }] = useMutation(ADD_DIVE, {
@@ -43,6 +52,46 @@ const NewDive = () => {
 	});
 
 
+	// const handleFormSubmit = async (event) => {
+	// 	event.preventDefault();
+
+	// 	try {
+	// 		// if (edit) {
+	// 		// 	const { data } = await edit({
+	// 		// 		variables: {
+	// 		// 			diveId,
+	// 		// 			diveSite,
+	// 		// 			diveText,
+	// 		// 			diveBuddy,
+	// 		// 			diveLife
+
+	// 		// 		},
+	// 		// 	});
+	// 		// 	window.location.assign('/me');
+
+	// 		// } else {
+	// 			const { data } = await addDive({
+	// 				variables: {
+	// 					diveSite,
+	// 					diveText,
+	// 					diveBuddy,
+	// 					diveLife,
+
+	// 					diveAuthor: Auth.getProfile().data.username,
+	// 				},
+	// 			});
+
+	// 			setDiveSite('');
+	// 			setDiveText('');
+	// 			setDiveBuddy('');
+	// 			setDiveLife('');
+	// 		// }
+
+	// 	} catch (err) {
+	// 		console.error(err);
+	// 	};
+	// };
+
 	const handleFormSubmit = async (event) => {
 		event.preventDefault();
 
@@ -61,21 +110,27 @@ const NewDive = () => {
 			// 	window.location.assign('/me');
 
 			// } else {
-				const { data } = await addDive({
-					variables: {
-						diveSite,
-						diveText,
-						diveBuddy,
-						diveLife,
+			const { diveSite, diveDate, diveText, diveBuddy, diveLife } = formData; // Destructure the variables from formData
+			const { name, value } = await addDive({
+				variables: {
+					diveSite,
+					diveDate,
+					diveText,
+					diveBuddy,
+					diveLife,
 
-						diveAuthor: Auth.getProfile().data.username,
-					},
-				});
+					diveAuthor: Auth.getProfile().data.username,
+				},
+			});
 
-				setDiveSite('');
-				setDiveText('');
-				setDiveBuddy('');
-				setDiveLife('');
+			setFormData({
+				diveSite: '',
+				diveDate: '',
+				diveText: '',
+				diveBuddy: '',
+				diveLife: '',
+			});
+
 			// }
 
 		} catch (err) {
@@ -84,18 +139,26 @@ const NewDive = () => {
 	};
 
 
+	// const handleChange = (event) => {
+	// 	const { name, value } = event.target;
+
+	// 	if (name === 'diveSite') {
+	// 		setDiveSite(value);
+	// 	} else if (name === 'diveText') {
+	// 		setDiveText(value);
+	// 	} else if (name === 'diveBuddy') {
+	// 		setDiveBuddy(value);
+	// 	} else if (name === 'diveLife') {
+	// 		setDiveLife(value);
+	// 	};
+	// };
+
 	const handleChange = (event) => {
 		const { name, value } = event.target;
-
-		if (name === 'diveSite') {
-			setDiveSite(value);
-		} else if (name === 'diveText') {
-			setDiveText(value);
-		} else if (name === 'diveBuddy') {
-			setDiveBuddy(value);
-		} else if (name === 'diveLife') {
-			setDiveLife(value);
-		};
+		setFormData((prevData) => ({
+			...prevData,
+			[name]: value,
+		}));
 	};
 
 
@@ -112,45 +175,47 @@ const NewDive = () => {
 					<Container>
 						<Form onSubmit={handleFormSubmit} className='diveForm'>
 
+							<MyDatePicker />
+
 							<Form.Group className="mb-3" >
 								<Form.Label>Dive Site</Form.Label>
-								<Form.Control 
-								type="text" 
-								placeholder="Enter the Dive Site name or location"
-								value={diveSite}
-								name="diveSite"
-								onChange={handleChange} />
+								<Form.Control
+									type="text"
+									placeholder="Enter the Dive Site name or location"
+									value={formData.diveSite}
+									name="diveSite"
+									onChange={handleChange} />
 							</Form.Group>
 
 							<Form.Group className="mb-3" >
 								<Form.Label>Dive Buddies</Form.Label>
-								<Form.Control 
-								type="text" 
-								placeholder="Add people you've dived with" 
-								value={diveBuddy}
-								name="diveBuddy"
-								onChange={handleChange} />
+								<Form.Control
+									type="text"
+									placeholder="Add people you've dived with"
+									value={formData.diveBuddy}
+									name="diveBuddy"
+									onChange={handleChange} />
 							</Form.Group>
 
 							<Form.Group className="mb-3" >
 								<Form.Label>Marine Life</Form.Label>
-								<Form.Control 
-								type="text" 
-								placeholder="Add marine life you encountered during this dive" 
-								value={diveLife}
-								name="diveLife"
-								onChange={handleChange} />
+								<Form.Control
+									type="text"
+									placeholder="Add marine life you encountered during this dive"
+									value={formData.diveLife}
+									name="diveLife"
+									onChange={handleChange} />
 							</Form.Group>
 
 							<Form.Group className="mb-3" >
 								<Form.Label>Dive description</Form.Label>
-								<Form.Control 
-								as="textarea" 
-								placeholder='Write about your experience while taking this dive' 
-								rows={3}
-								value={diveText}
-								name="diveText"
-								onChange={handleChange} />
+								<Form.Control
+									as="textarea"
+									placeholder='Write about your experience while taking this dive'
+									rows={3}
+									value={formData.diveText}
+									name="diveText"
+									onChange={handleChange} />
 							</Form.Group>
 
 							<Button variant="primary" type="submit">
