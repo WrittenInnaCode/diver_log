@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
@@ -8,6 +8,7 @@ function MyDatePicker({ diveDate, handleDateChange }) {
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePicker
         label="Select Dive Date"
+        disableFuture
         name="diveDate"
         value={diveDate}
         onChange={handleDateChange}

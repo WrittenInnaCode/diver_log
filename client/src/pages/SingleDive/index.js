@@ -1,4 +1,5 @@
 import React from 'react';
+import { format } from 'date-fns';
 
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
@@ -27,7 +28,7 @@ const SingleDive = () => {
     return (
         <div style={{ padding: '1rem' }}>
             <h1 style={{ fontStyle: 'italic', paddingBottom: '1rem' }}>{dive.diveSite}</h1>
-            <p> Went diving here on {dive.diveDate}.</p>
+            <p> Went diving here on {format(new Date(dive.diveDate), 'MMMM d, yyyy')}.</p>
 
             <p style={{
                 // fontSize: '1.5rem',

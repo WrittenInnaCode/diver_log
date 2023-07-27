@@ -30,17 +30,20 @@ const Profile = () => {
     return <div>Loading...</div>;
   }
 
+  // Create a new array by sorting the dives based on the dive date property
+  const sortedDives = user.dives.slice().sort((a, b) => new Date(b.diveDate) - new Date(a.diveDate));
+
   return (
     <div>
 
       <h2 className="mb-4">
         Viewing {userParam ? `${user.username}'s` : 'your'} profile.
       </h2>
-      
+
       <h4>{`${user.username}'s dives:`}</h4>
       <div className="col-12 col-md-10 mb-5">
         <DiveList
-          dives={user.dives}
+          dives={sortedDives}
           // title={`${user.username}'s dives:`}
           // showTitle={false}
           showUsername={false}

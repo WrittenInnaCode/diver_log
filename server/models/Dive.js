@@ -4,13 +4,13 @@ const dateFormat = require('../utils/dateFormat');
 const diveSchema = new Schema({
     diveSite: {
         type: String,
-        required: 'You need a dive site!',
+        required: 'You need to enter a dive site!',
         minlength: 1,
         trim: true,
     },
     diveDate: {
         type: String, 
-        required: true,
+        required: 'You need to enter the date of the dive!',
     },
     diveText: {
         type: String,

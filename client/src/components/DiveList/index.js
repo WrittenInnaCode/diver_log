@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
+import { format } from 'date-fns'
 
 const DiveList = ({
   dives,
@@ -31,18 +32,18 @@ const DiveList = ({
                   <span>went diving in</span>
                   <Link to={`/dives/${dive._id}`}>
                     <span> {dive.diveSite} {''} </span>
-                    <span> on {dive.diveDate}.</span>
-                    
+                    <span> on {format(new Date(dive.diveDate), 'MMMM d, yyyy')}.</span>
+
                   </Link>
                   <p style={{ fontSize: '15px' }}>
-                      Posted on {dive.createdAt}
-                    </p>
+                    Posted on {dive.createdAt}
+                  </p>
                 </>
               ) : (
                 <>
                   <Link to={`/dives/${dive._id}`}>
-                    {dive.diveSite}
-                   on {dive.diveDate}
+                    <span>{dive.diveSite}</span>
+                    <span> on {format(new Date(dive.diveDate), 'MMMM d, yyyy')}.</span>
                   </Link>
                   <p style={{ fontSize: '12px', paddingTop: '0.5rem' }}> Posted on {dive.createdAt}</p>
                 </>

@@ -24,6 +24,8 @@ const NewDive = () => {
 		diveLife: '',
 	});
 
+	const [errorMessage, setErrorMessage] = useState('');
+
 
 	const [addDive, { error }] = useMutation(ADD_DIVE, {
 		update(cache, { data: { addDive } }) {
@@ -68,6 +70,14 @@ const NewDive = () => {
 	const handleFormSubmit = async (event) => {
 		event.preventDefault();
 
+		
+		// Check if diveDate is null or empty
+		if (!formData.diveDate) {
+			setErrorMessage("Please select a date before submitting the form.");
+			return; // Exit the function to prevent form submission
+		}
+
+
 		try {
 			// if (edit) {
 			// 	const { data } = await edit({
@@ -100,21 +110,21 @@ const NewDive = () => {
 
 			if (data && data.addDive && data.addDive._id) {
 
-			// After successful submission, navigate the user to the new dive post
-			navigate(`/dives/${data.addDive._id}`);
+				// After successful submission, navigate the user to the new dive post
+				navigate(`/dives/${data.addDive._id}`);
 
-			setFormData({
-				diveSite: '',
-				diveDate: null, // Use null to reset the date picker
-				diveText: '',
-				diveBuddy: '',
-				diveLife: '',
-			});
+				setFormData({
+					diveSite: '',
+					diveDate: null, // Use null to reset the date picker
+					diveText: '',
+					diveBuddy: '',
+					diveLife: '',
+				});
 
-			// }
- } else {
-        throw new Error('Failed to create dive post.');
-      }
+				// }
+			} else {
+				throw new Error('Failed to create dive post.');
+			}
 		} catch (err) {
 			console.error(err);
 		};
@@ -158,10 +168,11 @@ const NewDive = () => {
 								diveDate={formData.diveDate}
 								handleDateChange={handleDateChange}
 							/>
-
+							{errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
 							<Form.Group className="mb-3" >
 								<Form.Label>Dive Site</Form.Label>
 								<Form.Control
+									// required
 									type="text"
 									placeholder="Enter the Dive Site name or location"
 									value={formData.diveSite}
