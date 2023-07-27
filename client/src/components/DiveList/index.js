@@ -33,11 +33,12 @@ const DiveList = ({
                   <Link to={`/dives/${dive._id}`}>
                     <span> {dive.diveSite} {''} </span>
                     <span> on {format(new Date(dive.diveDate), 'MMMM d, yyyy')}.</span>
-
                   </Link>
+
                   <p style={{ fontSize: '15px' }}>
                     Posted on {dive.createdAt}
                   </p>
+
                 </>
               ) : (
                 <>

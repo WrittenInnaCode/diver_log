@@ -1,5 +1,5 @@
 import React from 'react';
-import { format } from 'date-fns';
+import { format, differenceInMinutes  } from 'date-fns';
 
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
@@ -22,9 +22,22 @@ const SingleDive = () => {
 
     const dive = data?.dive || {};
 
+
+    const calculateTotalTime = (timeIn, timeOut) => {
+        if (!timeIn || !timeOut) {
+            return null;
+        }
+        
+        const totalTime = differenceInMinutes(new Date(timeOut), new Date(timeIn));
+        return totalTime;
+    };
+
+
     if (loading) {
         return <div>Loading...</div>;
     }
+
+
     return (
         <div style={{ padding: '1rem' }}>
             <h1 style={{ fontStyle: 'italic', paddingBottom: '1rem' }}>{dive.diveSite}</h1>
@@ -38,9 +51,20 @@ const SingleDive = () => {
             }} >
                 {dive.diveText}
             </p>
-            
+
             <div style={{ paddingBottom: '1rem' }}>
-                <h4>Who went diving with me:</h4>
+                <h4>Dive stats:</h4>
+                <p>
+                    Dive started at {format(new Date(dive.timeIn), 'hh:mm aa')}
+                </p>
+                <p>
+                    Dive ended at {format(new Date(dive.timeOut), 'hh:mm aa')}
+                </p>
+                <p>Total dive time: {calculateTotalTime(dive.timeIn, dive.timeOut)} minutes</p>
+            </div>
+
+            <div style={{ paddingBottom: '1rem' }}>
+                <h4>My dive buddy:</h4>
                 <p>
                     {dive.diveBuddy}
                 </p>
@@ -48,7 +72,7 @@ const SingleDive = () => {
 
             <div style={{ paddingBottom: '1rem' }}>
                 <h4>The aquatic life I saw:</h4>
-                <p style={{ }} >
+                <p style={{}} >
                     {dive.diveLife}
                 </p></div>
 

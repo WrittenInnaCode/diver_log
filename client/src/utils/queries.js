@@ -20,6 +20,8 @@ export const QUERY_USER = gql`
         _id
         diveSite
         diveDate
+        timeIn
+        timeOut
         diveText
         diveBuddy
         diveLife
@@ -41,6 +43,8 @@ export const QUERY_ME = gql`
         _id
         diveSite
         diveDate
+        timeIn
+        timeOut
         diveText
         diveBuddy
         diveLife
@@ -58,6 +62,8 @@ export const QUERY_DIVES = gql`
       _id
       diveSite
       diveDate
+      timeIn
+      timeOut
       diveText
       diveBuddy
       diveLife
@@ -74,6 +80,8 @@ export const QUERY_SINGLE_DIVE = gql`
       _id
       diveSite
       diveDate
+      timeIn
+      timeOut
       diveText
       diveBuddy
       diveLife

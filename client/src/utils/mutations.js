@@ -25,31 +25,15 @@ export const ADD_USER = gql`
 `;
 
 
-// export const ADD_DIVE = gql`
-//   mutation addDive($diveSite: String!, $diveText: String!, $diveBuddy: String!, $diveLife: String!, $diveImage: String!) {
-//     addDive(diveSite: $diveSite, diveText: $diveText, diveBuddy: $diveBuddy, diveLife: $diveLife, diveImage: $diveImage) {
-//       _id
-//       diveSite
-//       diveText
-//       diveBuddy
-//       diveLife
-//       diveImage
-//       diveAuthor
-//       createdAt
-//       comments {
-//         _id
-//         commentText
-//       }
-//     }
-//   }
-// `;
 
 export const ADD_DIVE = gql`
-  mutation addDive($diveSite: String!, $diveDate: String!, $diveText: String!, $diveBuddy: String!, $diveLife: String!) {
-    addDive(diveSite: $diveSite, diveDate: $diveDate, diveText: $diveText, diveBuddy: $diveBuddy, diveLife: $diveLife) {
+  mutation addDive($diveSite: String!, $diveDate: String!, $timeIn: String!, $timeOut: String!, $diveText: String!, $diveBuddy: String!, $diveLife: String!) {
+    addDive(diveSite: $diveSite, diveDate: $diveDate, timeIn: $timeIn, timeOut: $timeOut, diveText: $diveText, diveBuddy: $diveBuddy, diveLife: $diveLife) {
       _id
       diveSite
       diveDate
+      timeIn
+      timeOut
       diveText
       diveBuddy
       diveLife
@@ -69,6 +53,8 @@ export const REMOVE_DIVE = gql`
       _id
       diveSite
       diveDate
+      timeIn
+      timeOut
       diveText
       diveBuddy
       diveLife
@@ -85,11 +71,13 @@ export const REMOVE_DIVE = gql`
 
 
 export const EDIT_DIVE = gql`
-  mutation editDive($diveId: ID!, $diveSite: String!, $diveDate: String!, $diveText: String!, $diveBuddy: String!, $diveLife: String!, $diveImage: String!) {
-    editDive(diveId: $diveId, diveSite: $diveSite, diveDate: $diveDate, diveText: $diveText, diveBuddy: $diveBuddy, diveLife: $diveLife, diveImage: $diveImage) {
+  mutation editDive($diveId: ID!, $diveSite: String!, $diveDate: String!, $timeIn: String!, $timeOut: String!, $diveText: String!, $diveBuddy: String!, $diveLife: String!, $diveImage: String!) {
+    editDive(diveId: $diveId, diveSite: $diveSite, diveDate: $diveDate, timeIn: $timeIn, timeOut: $timeOut, diveText: $diveText, diveBuddy: $diveBuddy, diveLife: $diveLife, diveImage: $diveImage) {
       _id
       diveSite
       diveDate
+      timeIn
+      timeOut
       diveText
       diveBuddy
       diveLife
@@ -105,6 +93,8 @@ export const ADD_COMMENT = gql`
       _id
       diveSite
       diveDate
+      timeIn
+      timeOut
       diveText
       diveBuddy
       diveImage

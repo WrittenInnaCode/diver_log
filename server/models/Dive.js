@@ -12,6 +12,14 @@ const diveSchema = new Schema({
         type: String, 
         required: 'You need to enter the date of the dive!',
     },
+    timeIn: {
+        type: String, 
+        required: 'You need to enter the time when the dive started!',
+    },
+    timeOut: {
+        type: String, 
+        required: 'You need to enter the time when the dive ended!',
+    },
     diveText: {
         type: String,
         // required: 'You need to leave a dive description!',

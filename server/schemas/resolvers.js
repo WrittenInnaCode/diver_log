@@ -57,13 +57,15 @@ const resolvers = {
 			return { token, user };
 		},
 
-		addDive: async (parent, { diveSite, diveDate, diveText, diveBuddy, diveLife 
+		addDive: async (parent, { diveSite, diveDate, timeIn, timeOut, diveText, diveBuddy, diveLife 
 			// diveImage
 		 }, context) => {
 			if (context.user) {
 				const dive = await Dive.create({
 					diveSite,
 					diveDate,
+					timeIn,
+					timeOut,
 					diveText,
 					diveLife,
 					diveBuddy,
@@ -116,16 +118,18 @@ const resolvers = {
 			throw new AuthenticationError('You need to be logged in!');
 		},
 
-		editDive: async (parent, { diveId, diveSite, diveDate, diveText, diveBuddy, diveLife, diveImage }, context) => {
+		editDive: async (parent, { diveId, diveSite, diveDate, timeIn, timeOut, diveText, diveBuddy, diveLife, diveImage }, context) => {
 			if (context.user) {
 				const dive = await Dive.findByIdAndUpdate(diveId, {
 					$set: {
 					diveSite,
 					diveDate,
+					timeIn,
+					timeOut,
 					diveText,
 					diveBuddy,
 					diveLife,
-					diveImage,
+					// diveImage,
 					}
 				});
 				return dive;

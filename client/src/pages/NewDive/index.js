@@ -13,12 +13,17 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 import MyDatePicker from '../../components/DatePicker';
+import MyTimePicker from '../../components/TimePicker';
+import { differenceInMinutes } from 'date-fns';
+
 
 const NewDive = () => {
 
 	const [formData, setFormData] = useState({
 		diveSite: '',
 		diveDate: null, // Initialize diveDate as null
+		timeIn: null,
+		timeOut: null,
 		diveText: '',
 		diveBuddy: '',
 		diveLife: '',
@@ -70,10 +75,10 @@ const NewDive = () => {
 	const handleFormSubmit = async (event) => {
 		event.preventDefault();
 
-		
+
 		// Check if diveDate is null or empty
-		if (!formData.diveDate) {
-			setErrorMessage("Please select a date before submitting the form.");
+		if (!formData.diveDate || !formData.timeIn || !formData.timeOut) {
+			setErrorMessage("Please select the date and time before submitting the form.");
 			return; // Exit the function to prevent form submission
 		}
 
@@ -93,11 +98,13 @@ const NewDive = () => {
 			// 	window.location.assign('/me');
 
 			// } else {
-			const { diveSite, diveDate, diveText, diveBuddy, diveLife } = formData; // Destructure the variables from formData
+			const { diveSite, diveDate, timeIn, timeOut, diveText, diveBuddy, diveLife } = formData; // Destructure the variables from formData
 			const { data } = await addDive({
 				variables: {
 					diveSite,
 					diveDate,
+					timeIn,
+					timeOut,
 					diveText,
 					diveBuddy,
 					diveLife,
@@ -106,7 +113,7 @@ const NewDive = () => {
 				},
 			});
 
-			// console.log('Newly created dive:', data);
+			console.log('Newly created dive:', data);
 
 			if (data && data.addDive && data.addDive._id) {
 
@@ -116,6 +123,8 @@ const NewDive = () => {
 				setFormData({
 					diveSite: '',
 					diveDate: null, // Use null to reset the date picker
+					timeIn: null,
+					timeOut: null,
 					diveText: '',
 					diveBuddy: '',
 					diveLife: '',
@@ -151,6 +160,29 @@ const NewDive = () => {
 	};
 
 
+	const handleTimeInChange = (time) => {
+		setFormData((prevData) => ({
+			...prevData,
+			timeIn: time,
+		}));
+	};
+
+	const handleTimeOutChange = (time) => {
+		setFormData((prevData) => ({
+			...prevData,
+			timeOut: time,
+		}));
+	};
+
+	const calculateTotaDivelTime = (timeIn, timeOut) => {
+        if (!timeIn || !timeOut) {
+          return null; // If either timeIn or timeOut is not set, return null indicating invalid input
+        }
+    
+        const totalDiveTime = differenceInMinutes(timeOut, timeIn);
+        return totalDiveTime;
+      };
+	  
 
 	return (
 		<div>
@@ -164,11 +196,28 @@ const NewDive = () => {
 					<Container>
 						<Form onSubmit={handleFormSubmit} className='diveForm'>
 
-							<MyDatePicker
-								diveDate={formData.diveDate}
-								handleDateChange={handleDateChange}
-							/>
-							{errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+							<div>
+
+								<MyDatePicker
+									diveDate={formData.diveDate}
+									handleDateChange={handleDateChange}
+								/>
+								{/* {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} */}
+
+								<MyTimePicker
+									type="in"
+									selectedTime={formData.timeIn}
+									handleTimeChange={handleTimeInChange}
+								/>
+								<MyTimePicker
+									type="out"
+									selectedTime={formData.timeOut}
+									handleTimeChange={handleTimeOutChange}
+								/>
+
+								{errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+							</div>
+
 							<Form.Group className="mb-3" >
 								<Form.Label>Dive Site</Form.Label>
 								<Form.Control

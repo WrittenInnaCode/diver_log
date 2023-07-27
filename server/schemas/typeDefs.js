@@ -13,6 +13,8 @@ const typeDefs = gql`
     	_id: ID
 		diveSite: String
 		diveDate: String
+		timeIn: String
+		timeOut: String
 		diveText: String
 		diveBuddy: String
 		diveLife: String
@@ -41,13 +43,33 @@ const typeDefs = gql`
 		me: User
 	}
 
+
 	type Mutation {
 		addUser(username: String!, email: String!, password: String!): Auth
 		login(email: String!, password: String!): Auth
-		addDive(diveSite: String!, diveDate: String!, diveText: String!, diveBuddy: String!, diveLife: String!): Dive
+
+		addDive(
+			diveSite: String!, 
+			diveDate: String!, 
+			timeIn: String!, 
+			timeOut: String!, 
+			diveText: String!, 
+			diveBuddy: String!, 
+			diveLife: String!): Dive
+
     	addComment(diveId: ID!, commentText: String!): Dive
     	removeDive(diveId: ID!): Dive
-		editDive(diveId: ID!, diveSite: String!, diveDate: String!, diveText: String!, diveBuddy: String!, diveImage: String!): Dive
+
+		editDive(
+			diveId: ID!, 
+			diveSite: String!, 
+			diveDate: String!, 
+			timeIn: String!, 
+			timeOut: String!, 
+			diveText: String!, 
+			diveBuddy: String!, 
+			diveImage: String!): Dive
+
     	removeComment(diveId: ID!, commentId: ID!): Dive
 	}
 `;
