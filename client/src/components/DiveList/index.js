@@ -1,14 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import { format } from 'date-fns'
+import Pagination from 'react-bootstrap/Pagination';
 
 const DiveList = ({
   dives,
   title,
   showTitle = true,
   showUsername = true,
+  itemsPerPage = 10,
 }) => {
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+   // Calculate the index of the first and last dive to display on the current page
+   const indexOfLastDive = currentPage * itemsPerPage;
+   const indexOfFirstDive = indexOfLastDive - itemsPerPage;
+   const currentDives = dives.slice(indexOfFirstDive, indexOfLastDive);
+ 
+   const totalPages = Math.ceil(dives.length / itemsPerPage);
+ 
+   const handlePaginationClick = (pageNumber) => {
+     setCurrentPage(pageNumber);
+   };
+
+
   if (!dives.length) {
     return <p>There are no dives logged yet... Be the first one to log a dive!</p>;
   }
@@ -17,7 +34,8 @@ const DiveList = ({
     <div>
       {showTitle && <h3>{title}</h3>}
 
-      {dives && dives.map((dive) => (
+      {/* {dives && dives.map((dive) => ( */}
+      {currentDives.map((dive) => (
 
         <Card key={dive._id}
           className="m-3"
@@ -62,6 +80,21 @@ const DiveList = ({
 
         </Card>
       ))}
+
+{totalPages > 1 && (
+        <Pagination>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <Pagination.Item
+              key={index + 1}
+              active={index + 1 === currentPage}
+              onClick={() => handlePaginationClick(index + 1)}
+            >
+              {index + 1}
+            </Pagination.Item>
+          ))}
+        </Pagination>
+      )}
+      
     </div>
   );
 };
