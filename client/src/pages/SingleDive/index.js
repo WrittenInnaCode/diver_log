@@ -1,35 +1,67 @@
 import React from 'react';
-import { format, differenceInMinutes  } from 'date-fns';
+import { format, differenceInMinutes } from 'date-fns';
 
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useQuery, useMutation } from '@apollo/client';
 
 // import CommentList from '../../components/CommentList';
 // import CommentForm from '../../components/CommentForm';
 
 import { QUERY_SINGLE_DIVE } from '../../utils/queries';
+import { REMOVE_DIVE } from '../../utils/mutations';
+
+import Auth from '../../utils/auth';
+
+import Button from 'react-bootstrap/Button';
 
 
 const SingleDive = () => {
     // Use `useParams()` to retrieve value of the route parameter `:profileId`
     const { diveId } = useParams();
 
-    const { loading, data } = useQuery(QUERY_SINGLE_DIVE, {
+    const { loading, data, error } = useQuery(QUERY_SINGLE_DIVE, {
         // pass URL parameter
         variables: { diveId: diveId },
     });
 
+    const [removeDive] = useMutation(REMOVE_DIVE);
+    const navigate = useNavigate();
 
     const dive = data?.dive || {};
-
 
     const calculateTotalTime = (timeIn, timeOut) => {
         if (!timeIn || !timeOut) {
             return null;
         }
-        
         const totalTime = differenceInMinutes(new Date(timeOut), new Date(timeIn));
         return totalTime;
+    };
+
+
+    // Check if the currently logged-in user is the author of the dive
+    const isAuthor = Auth.loggedIn() && Auth.getProfile().data.username === dive.diveAuthor;
+
+
+    const handleDelete = async (diveId) => {
+        const confirmed = window.confirm('Are you sure you want to delete this dive?');
+        if (confirmed) {
+            try {
+                // console.log('Deleting dive with ID:', diveId);
+                const { data } = await removeDive({
+                    variables: { diveId },
+                });
+                // Check if the dive was successfully deleted
+                if (data && data.removeDive) {
+                    navigate('/me');
+                } else {
+                    console.error('Failed to delete dive');
+                }
+
+            } catch (error) {
+                // Handle any errors that occur during the deletion process
+                console.error('Error deleting dive:', error);
+            }
+        }
     };
 
 
@@ -37,10 +69,24 @@ const SingleDive = () => {
         return <div>Loading...</div>;
     }
 
+    if (error) {
+        // If an error occurred while fetching the dive data
+        console.error('Error fetching dive:', error);
+        return <div>Error loading dive data</div>;
+    }
 
     return (
-        <div style={{ padding: '1rem' }}>
-            <h1 style={{ fontStyle: 'italic', paddingBottom: '1rem' }}>{dive.diveSite}</h1>
+        <section className="dive-details" style={{ padding: '2rem' }} key={dive._id}>
+            <div class="d-flex justify-content-between">
+                <h1 style={{ fontStyle: 'italic', paddingBottom: '1rem' }}>{dive.diveSite}</h1>
+
+                {isAuthor && (
+                    <div>
+                        <Button variant="outline-warning" size="sm">EDIT</Button>
+                        <Button variant="outline-danger" size="sm" onClick={() => handleDelete(dive._id)}>DELETE</Button>
+                    </div>
+                )}
+            </div>
             <p> Went diving here on {format(new Date(dive.diveDate), 'MMMM d, yyyy')}.</p>
 
             <p style={{
@@ -99,7 +145,7 @@ const SingleDive = () => {
                 <CommentForm diveId={dive._id} />
             </div> */}
 
-        </div>
+        </section>
     );
 };
 

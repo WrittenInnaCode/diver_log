@@ -58,7 +58,6 @@ export const REMOVE_DIVE = gql`
       diveText
       diveBuddy
       diveLife
-      diveImage
       diveAuthor
       createdAt
       comments {

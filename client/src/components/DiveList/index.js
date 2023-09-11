@@ -14,7 +14,7 @@ const DiveList = ({
 
   const [currentPage, setCurrentPage] = useState(1);
 
-   // Calculate the index of the first and last dive to display on the current page
+   // Pagination. Calculate the index of the first and last dive to display on the current page
    const indexOfLastDive = currentPage * itemsPerPage;
    const indexOfFirstDive = indexOfLastDive - itemsPerPage;
    const currentDives = dives.slice(indexOfFirstDive, indexOfLastDive);
@@ -44,12 +44,13 @@ const DiveList = ({
             <Card.Title>
               {showUsername ? (
                 <>
+                {/* viewing ALL dives by all users */}
                   <Link to={`/profiles/${dive.diveAuthor}`} >
                     {dive.diveAuthor} {''}
                   </Link>
                   <span>went diving in</span>
                   <Link to={`/dives/${dive._id}`}>
-                    <span> {dive.diveSite} {''} </span>
+                    <span> {dive.diveSite} {''}</span>
                     <span> on {format(new Date(dive.diveDate), 'MMMM d, yyyy')}.</span>
                   </Link>
 
@@ -60,6 +61,7 @@ const DiveList = ({
                 </>
               ) : (
                 <>
+                {/* viewing all dives by a specific/single user */}
                   <Link to={`/dives/${dive._id}`}>
                     <span>{dive.diveSite}</span>
                     <span> on {format(new Date(dive.diveDate), 'MMMM d, yyyy')}.</span>

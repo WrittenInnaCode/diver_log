@@ -27,9 +27,8 @@ function AppNavbar() {
 	return (
 		<div>
 			<Navbar >
-				<Container>
 					{/* <a href="/">Home</a> */}
-					<Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
+					<Navbar.Brand as={Link} to="/">Dive_log</Navbar.Brand>
 
 					<Nav className="me-auto">
 						<Nav.Link as={Link} to="/dives">Dives</Nav.Link>
@@ -81,10 +80,6 @@ function AppNavbar() {
 								</Button>
 							</>
 						)}
-					
-
-
-				</Container>
 			</Navbar>
 
 			<div>
