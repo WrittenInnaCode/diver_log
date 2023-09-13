@@ -20,6 +20,14 @@ const diveSchema = new Schema({
         type: String, 
         required: 'You need to enter the time when the dive ended!',
     },
+    startPsi: {
+        type: String, 
+        required: 'You need to enter tank PSI at the beginning of the dive!',
+    },
+    endPsi: {
+        type: String, 
+        required: 'You need to enter tank PSI at the end of the dive!',
+    },
     diveText: {
         type: String,
         // required: 'You need to leave a dive description!',

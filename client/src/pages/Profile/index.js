@@ -18,6 +18,8 @@ const Profile = () => {
 
   const user = data?.me || data?.user || {};
 
+  const numDives = (user.dives ?? []).length;
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,12 +28,14 @@ const Profile = () => {
     }
   });
 
+  // Create a new array by sorting the dives based on the dive date property
+  const sortedDives = (user.dives || []).slice().sort((a, b) => new Date(b.diveDate) - new Date(a.diveDate));
+
+
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  // Create a new array by sorting the dives based on the dive date property
-  const sortedDives = user.dives.slice().sort((a, b) => new Date(b.diveDate) - new Date(a.diveDate));
 
   return (
     <div>
@@ -39,6 +43,8 @@ const Profile = () => {
       <h2 className="mb-4">
         Viewing {userParam ? `${user.username}'s` : 'your'} profile.
       </h2>
+
+      <p>{numDives} dives logged</p>
 
       <h4>{`${user.username}'s dives:`}</h4>
       <div className="col-12 col-md-10 mb-5">

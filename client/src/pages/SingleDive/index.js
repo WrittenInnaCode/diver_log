@@ -111,6 +111,16 @@ const SingleDive = () => {
             </div>
 
             <div style={{ paddingBottom: '1rem' }}>
+                <h4>Tank Pressure:</h4>
+                <p>
+                    Start:  {dive.startPsi} PSI
+                </p>
+                <p>
+                    End: {dive.endPsi} PSI
+                </p>
+            </div>
+
+            <div style={{ paddingBottom: '1rem' }}>
                 <h4>My dive buddy:</h4>
                 <p>
                     {dive.diveBuddy}

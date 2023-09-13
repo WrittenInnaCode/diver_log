@@ -57,15 +57,17 @@ const resolvers = {
 			return { token, user };
 		},
 
-		addDive: async (parent, { diveSite, diveDate, timeIn, timeOut, diveText, diveBuddy, diveLife 
+		addDive: async (parent, { diveSite, diveDate, timeIn, timeOut, startPsi, endPsi, diveText, diveBuddy, diveLife
 			// diveImage
-		 }, context) => {
+		}, context) => {
 			if (context.user) {
 				const dive = await Dive.create({
 					diveSite,
 					diveDate,
 					timeIn,
 					timeOut,
+					startPsi,
+					endPsi,
 					diveText,
 					diveLife,
 					diveBuddy,
@@ -103,33 +105,35 @@ const resolvers = {
 
 		removeDive: async (parent, { diveId }, context) => {
 			if (context.user) {
-			  const dive = await Dive.findOneAndDelete({
-				_id: diveId,
-				diveAuthor: context.user.username,
-			  });
-	  
-			  await User.findOneAndUpdate(
-				{ _id: context.user._id },
-				{ $pull: { dives: dive._id } }
-			  );
-	  
-			  return dive;
+				const dive = await Dive.findOneAndDelete({
+					_id: diveId,
+					diveAuthor: context.user.username,
+				});
+
+				await User.findOneAndUpdate(
+					{ _id: context.user._id },
+					{ $pull: { dives: dive._id } }
+				);
+
+				return dive;
 			}
 			throw new AuthenticationError('You need to be logged in!');
-		  },
+		},
 
-		editDive: async (parent, { diveId, diveSite, diveDate, timeIn, timeOut, diveText, diveBuddy, diveLife, diveImage }, context) => {
+		editDive: async (parent, { diveId, diveSite, diveDate, timeIn, timeOut, startPsi, endPsi, diveText, diveBuddy, diveLife, diveImage }, context) => {
 			if (context.user) {
 				const dive = await Dive.findByIdAndUpdate(diveId, {
 					$set: {
-					diveSite,
-					diveDate,
-					timeIn,
-					timeOut,
-					diveText,
-					diveBuddy,
-					diveLife,
-					// diveImage,
+						diveSite,
+						diveDate,
+						timeIn,
+						timeOut,
+						startPsi,
+						endPsi,
+						diveText,
+						diveBuddy,
+						diveLife,
+						// diveImage,
 					}
 				});
 				return dive;

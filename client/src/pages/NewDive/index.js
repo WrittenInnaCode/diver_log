@@ -24,6 +24,8 @@ const NewDive = () => {
 		diveDate: null, // Initialize diveDate as null
 		timeIn: null,
 		timeOut: null,
+		startPsi: '',
+		endPsi: '',
 		diveText: '',
 		diveBuddy: '',
 		diveLife: '',
@@ -98,13 +100,15 @@ const NewDive = () => {
 			// 	window.location.assign('/me');
 
 			// } else {
-			const { diveSite, diveDate, timeIn, timeOut, diveText, diveBuddy, diveLife } = formData; // Destructure the variables from formData
+			const { diveSite, diveDate, timeIn, timeOut, startPsi, endPsi, diveText, diveBuddy, diveLife } = formData; // Destructure the variables from formData
 			const { data } = await addDive({
 				variables: {
 					diveSite,
 					diveDate,
 					timeIn,
 					timeOut,
+					startPsi,
+					endPsi,
 					diveText,
 					diveBuddy,
 					diveLife,
@@ -125,6 +129,8 @@ const NewDive = () => {
 					diveDate: null, // Use null to reset the date picker
 					timeIn: null,
 					timeOut: null,
+					startPsi: '',
+					endPsi: '',
 					diveText: '',
 					diveBuddy: '',
 					diveLife: '',
@@ -236,6 +242,26 @@ const NewDive = () => {
 									placeholder="Add people you've dived with"
 									value={formData.diveBuddy}
 									name="diveBuddy"
+									onChange={handleChange} />
+							</Form.Group>
+
+							<Form.Group className="mb-3" >
+								<Form.Label>Start Pressure</Form.Label>
+								<Form.Control
+									type="text"
+									placeholder="PSI"
+									value={formData.startPsi}
+									name="startPsi"
+									onChange={handleChange} />
+							</Form.Group>
+
+							<Form.Group className="mb-3" >
+								<Form.Label>End Pressure</Form.Label>
+								<Form.Control
+									type="text"
+									placeholder="PSI"
+									value={formData.endPsi}
+									name="endPsi"
 									onChange={handleChange} />
 							</Form.Group>
 

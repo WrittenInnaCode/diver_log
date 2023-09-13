@@ -15,6 +15,8 @@ const typeDefs = gql`
 		diveDate: String
 		timeIn: String
 		timeOut: String
+		startPsi: String
+		endPsi: String
 		diveText: String
 		diveBuddy: String
 		diveLife: String
@@ -53,6 +55,8 @@ const typeDefs = gql`
 			diveDate: String!, 
 			timeIn: String!, 
 			timeOut: String!, 
+			startPsi: String!,
+		    endPsi: String!,
 			diveText: String!, 
 			diveBuddy: String!, 
 			diveLife: String!): Dive
@@ -66,6 +70,8 @@ const typeDefs = gql`
 			diveDate: String!, 
 			timeIn: String!, 
 			timeOut: String!, 
+			startPsi: String!,
+		    endPsi: String!,
 			diveText: String!, 
 			diveBuddy: String!, 
 			diveImage: String!): Dive
