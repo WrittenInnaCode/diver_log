@@ -18,6 +18,11 @@ import SingleDive from './pages/SingleDive';
 import Profile from './pages/Profile';
 import BucketList from './pages/BucketList';
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
@@ -45,41 +50,50 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <>
-          <Navbar />
-          <Routes>
-            <Route
-              path="/"
-              element={<Home />}
-            />
-            <Route
-              path="/me"
-              element={<Profile />}
-            />
-            <Route
-              path="/profiles/:username"
-              element={<Profile />}
-            />
-            <Route
-              path="/dives"
-              element={<Dive />}
-            />
-            <Route
-              path="/newdivelog"
-              element={<NewDive />}
-            />
-            <Route 
-                path="/dives/:diveId"
-                element={<SingleDive />}
-              />
-            <Route
-              path="/bucketlist"
-              element={<BucketList />}
-            />
-            <Route
-              path='*'
-              element={<h1>Wrong page!</h1>}
-            />
-          </Routes>
+        <Container fluid>
+          <Row>
+            <Col sm={4}>
+              <Navbar />
+            </Col>
+            
+            <Col sm={8}>
+              <Routes>
+                <Route
+                  path="/"
+                  element={<Home />}
+                />
+                <Route
+                  path="/me"
+                  element={<Profile />}
+                />
+                <Route
+                  path="/profiles/:username"
+                  element={<Profile />}
+                />
+                <Route
+                  path="/dives"
+                  element={<Dive />}
+                />
+                <Route
+                  path="/newdivelog"
+                  element={<NewDive />}
+                />
+                <Route
+                  path="/dives/:diveId"
+                  element={<SingleDive />}
+                />
+                <Route
+                  path="/bucketlist"
+                  element={<BucketList />}
+                />
+                <Route
+                  path='*'
+                  element={<h1>Wrong page!</h1>}
+                />
+              </Routes>
+            </Col>
+          </Row>
+          </Container>
         </>
       </Router>
     </ApolloProvider>

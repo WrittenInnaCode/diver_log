@@ -1,6 +1,11 @@
+.logo{
+    /* font-family:Brush Script MT, Brush Script Std, cursive; */
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size: 30px !important;
+}
+
 .username{
-    font-size: large;
-    font-weight: 500;
+padding-top: 1rem !important;;
 }
 
 .diveText{
@@ -10,4 +15,8 @@
 
 .diveText:hover{
     color:slategray;
+}
+
+.logOutBttn{
+    margin-top: 2rem;
 }

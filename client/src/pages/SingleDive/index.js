@@ -25,7 +25,7 @@ const SingleDive = () => {
     });
 
     const [removeDive] = useMutation(REMOVE_DIVE);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const dive = data?.dive || {};
 
@@ -52,7 +52,8 @@ const SingleDive = () => {
                 });
                 // Check if the dive was successfully deleted
                 if (data && data.removeDive) {
-                    navigate('/me');
+                    // navigate('/me');
+                    window.location.assign('/me'); // to refresh the page and fetch the updated data from the server (so that deleted dive does not appear in the list after its deletion)
                 } else {
                     console.error('Failed to delete dive');
                 }

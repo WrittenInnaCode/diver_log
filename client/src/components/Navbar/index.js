@@ -25,37 +25,39 @@ function AppNavbar() {
 
 
 	return (
-		<div>
-			<Navbar >
-					{/* <a href="/">Home</a> */}
-					<Navbar.Brand as={Link} to="/">Dive_log</Navbar.Brand>
-
-					<Nav className="me-auto">
-						<Nav.Link as={Link} to="/dives">Dives</Nav.Link>
-						<Nav.Link as={Link} to="/newdivelog">New Dive Log</Nav.Link>
-					</Nav>
-
-
+		<Container>
+			<Navbar>
+				<Nav className="flex-column ">
+					<Container className='p-2'><Navbar.Brand as={Link} to="/" className='logo '>Dive_log</Navbar.Brand></Container>
 					
-						{Auth.loggedIn() ? (
-							<>
-								<Figure>
+					{Auth.loggedIn() ? (
+						<>
+							<div className="justify-content-md-center">
+								{/* <Figure>
 									<Figure.Image
 										width={40}
 										height={40}
 										alt="user icon"
-										src={require(`../../assets/images/Mask.png`)} 
+										src={require(`../../assets/images/Mask.png`)}
 									/>
-								</Figure>
+								</Figure> */}
 
-								<NavDropdown
+								<Nav.Link as={Link} to="/me" className='username fw-semibold '>
+									{Auth.getProfile().data.username} {' '}
+								</Nav.Link>
+								<Nav.Link as={Link} to="/newdivelog">Log New Dive</Nav.Link>
+
+								<Nav.Link as={Link} to="/dives">Explore Dives</Nav.Link>
+
+
+								<Button variant="warning" onClick={logout} size="sm" className='logOutBttn'> Ascend and Exit </Button>
+
+								{/* <NavDropdown
 									title={Auth.getProfile().data.username}
 									id="basic-nav-dropdown"
 									className='username'>
 
 									<NavDropdown.Item href="/me">Profile</NavDropdown.Item>
-
-									<NavDropdown.Item href="/dives">View My Dives</NavDropdown.Item>
 
 									<NavDropdown.Item href="/newdivelog">Log New Dive</NavDropdown.Item>
 
@@ -66,20 +68,19 @@ function AppNavbar() {
 									<NavDropdown.Item>
 										<Button variant="warning" onClick={logout} size="sm"> Ascend and Exit </Button>
 									</NavDropdown.Item>
-								</NavDropdown>
+								</NavDropdown> */}
+							</div>
+						</>
+					) : (
+						<>
+							<Button variant="info" size="sm" onClick={() => handleShow()}>
+								Dive In
+							</Button>
+						</>
+					)}
 
-								{/* <Link to="/me">
-									{Auth.getProfile().data.username}'s profile {' '}
-								</Link> */}
-								{/* <Button variant="warning" onClick={logout} size="sm"> Ascend and Exit </Button> */}
-							</>
-						) : (
-							<>
-								<Button variant="info" size="sm" onClick={() => handleShow()}>
-									Dive In
-								</Button>
-							</>
-						)}
+				</Nav>
+
 			</Navbar>
 
 			<div>
@@ -112,7 +113,7 @@ function AppNavbar() {
 					</Modal.Footer>
 				</Modal>
 			</div>
-		</div>
+		</Container>
 	);
 }
 
