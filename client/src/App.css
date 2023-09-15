@@ -1,22 +1,56 @@
-.logo{
+html {
+    background-color: rgb(1, 46, 119);
+}
+
+.logo {
     /* font-family:Brush Script MT, Brush Script Std, cursive; */
-    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 30px !important;
 }
 
-.username{
-padding-top: 1rem !important;;
+.navbarBg {
+    background-color: rgba(244, 214, 66, 0.556);
+    min-height: 100vh;
 }
 
-.diveText{
-    text-decoration: none; 
-    color:slategray;
+.bodyBg{
+    background-color: rgba(3, 105, 183, 0.844);
+    /* min-height: 100vh; */
 }
 
-.diveText:hover{
-    color:slategray;
+@media screen and (max-width: 800px) {
+    .navbarBg {
+        /* min-height:auto; */
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .navbarBg {
+        min-height:auto;
+    }
+    .bodyBg {
+        /* min-height:100vh; */
+    }
+  }
+
+.diveCard{
+    /* background-color: rgba(237, 249, 255, 0.661); */
 }
 
-.logOutBttn{
+.username {
+    padding-top: 1rem !important;
+    ;
+}
+
+.diveText {
+    text-decoration: none;
+    color: slategray;
+}
+
+.diveText:hover {
+    color: slategray;
+}
+
+.logOutBttn {
     margin-top: 2rem;
 }

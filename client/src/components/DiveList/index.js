@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import { format } from 'date-fns'
 import Pagination from 'react-bootstrap/Pagination';
+import Container from 'react-bootstrap/Container';
 
 const DiveList = ({
   dives,
@@ -31,7 +32,7 @@ const DiveList = ({
   }
 
   return (
-    <div>
+    <Container>
       {showTitle && <h3>{title}</h3>}
 
       {/* {dives && dives.map((dive) => ( */}
@@ -40,7 +41,7 @@ const DiveList = ({
         <Card key={dive._id}
           className="m-3"
         >
-          <Card.Body>
+          <Card.Body className='diveCard'>
             <Card.Title>
               {showUsername ? (
                 <>
@@ -97,7 +98,7 @@ const DiveList = ({
         </Pagination>
       )}
       
-    </div>
+    </Container>
   );
 };
 

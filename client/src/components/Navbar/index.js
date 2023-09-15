@@ -27,11 +27,12 @@ function AppNavbar() {
 	return (
 		<Container>
 			<Navbar>
-				<Nav className="flex-column ">
+				<Nav className="flex-column">
 					<Container className='p-2'><Navbar.Brand as={Link} to="/" className='logo '>Dive_log</Navbar.Brand></Container>
 					
 					{Auth.loggedIn() ? (
 						<>
+						<Container>
 							<div className="justify-content-md-center">
 								{/* <Figure>
 									<Figure.Image
@@ -72,6 +73,7 @@ function AppNavbar() {
 									</NavDropdown.Item>
 								</NavDropdown> */}
 							</div>
+							</Container>
 						</>
 					) : (
 						<>

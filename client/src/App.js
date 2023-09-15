@@ -49,52 +49,66 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <>
-        <Container fluid>
-          <Row>
-            <Col sm={4}>
-              <Navbar />
-            </Col>
-            
-            <Col sm={8}>
-              <Routes>
-                <Route
-                  path="/"
-                  element={<Home />}
-                />
-                <Route
-                  path="/me"
-                  element={<Profile />}
-                />
-                <Route
-                  path="/profiles/:username"
-                  element={<Profile />}
-                />
-                <Route
-                  path="/dives"
-                  element={<Dive />}
-                />
-                <Route
-                  path="/newdivelog"
-                  element={<NewDive />}
-                />
-                <Route
-                  path="/dives/:diveId"
-                  element={<SingleDive />}
-                />
-                <Route
-                  path="/bucketlist"
-                  element={<BucketList />}
-                />
-                <Route
-                  path='*'
-                  element={<h1>Wrong page!</h1>}
-                />
-              </Routes>
-            </Col>
-          </Row>
+        <div className="wrapper">
+          <Container fluid>
+            <Row>
+
+              <Col
+                xs="12"
+                lg="2"
+                sm="4"
+                md="3"
+                className='navbarBg'>
+                <Navbar />
+              </Col>
+
+              <Col
+                xs='auto'
+                lg="10"
+                sm="8"
+                md="9"
+                className='bodyBg'>
+
+                <Routes>
+                  <Route
+                    path="/"
+                    element={<Home />}
+                  />
+                  <Route
+                    path="/me"
+                    element={<Profile />}
+                  />
+                  <Route
+                    path="/profiles/:username"
+                    element={<Profile />}
+                  />
+                  <Route
+                    path="/dives"
+                    element={<Dive />}
+                  />
+                  <Route
+                    path="/newdivelog"
+                    element={<NewDive />}
+                  />
+                  <Route
+                    path="/dives/:diveId"
+                    element={<SingleDive />}
+                  />
+                  <Route
+                    path="/bucketlist"
+                    element={<BucketList />}
+                  />
+                  <Route
+                    path='*'
+                    element={<h1>Wrong page!</h1>}
+                  />
+                </Routes>
+
+              </Col>
+            </Row>
+
           </Container>
-        </>
+        </div>
       </Router>
     </ApolloProvider>
   );
