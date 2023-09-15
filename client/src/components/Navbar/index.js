@@ -49,6 +49,8 @@ function AppNavbar() {
 
 								<Nav.Link as={Link} to="/dives">Explore Dives</Nav.Link>
 
+								<Nav.Link as={Link} to="/bucketlist">Bucket List</Nav.Link>
+
 
 								<Button variant="warning" onClick={logout} size="sm" className='logOutBttn'> Ascend and Exit </Button>
 

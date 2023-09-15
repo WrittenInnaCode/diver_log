@@ -23,10 +23,12 @@ const diveSchema = new Schema({
     startPsi: {
         type: String, 
         required: 'You need to enter tank PSI at the beginning of the dive!',
+        minlength: 1,
     },
     endPsi: {
         type: String, 
         required: 'You need to enter tank PSI at the end of the dive!',
+        minlength: 1,
     },
     diveText: {
         type: String,
@@ -48,6 +50,26 @@ const diveSchema = new Schema({
     diveLife: {
         type: String,
         // minlength: 1,
+        trim: true,
+    },
+    temperature: {
+        type: String,
+        trim: true,
+    },
+    visibility: {
+        type: String,
+        trim: true,
+    },
+    current: {
+        type: String,
+        trim: true,
+    },
+    maxDepth: {
+        type: String,
+        trim: true,
+    },
+    weights: {
+        type: String,
         trim: true,
     },
     // diveImage: {

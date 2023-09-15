@@ -20,6 +20,11 @@ const typeDefs = gql`
 		diveText: String
 		diveBuddy: String
 		diveLife: String
+		temperature: String
+        visibility: String
+        current: String
+        maxDepth: String
+        weights: String
     	diveAuthor: String
     	createdAt: String
     	comments: [Comment]!
@@ -59,7 +64,12 @@ const typeDefs = gql`
 		    endPsi: String!,
 			diveText: String!, 
 			diveBuddy: String!, 
-			diveLife: String!): Dive
+			diveLife: String!,
+	    	temperature: String!, 
+            visibility: String!, 
+            current: String!, 
+            maxDepth: String!, 
+            weights: String!): Dive
 
     	addComment(diveId: ID!, commentText: String!): Dive
     	removeDive(diveId: ID!): Dive
@@ -74,6 +84,12 @@ const typeDefs = gql`
 		    endPsi: String!,
 			diveText: String!, 
 			diveBuddy: String!, 
+			diveLife: String!,
+	    	temperature: String!, 
+            visibility: String!, 
+            current: String!, 
+            maxDepth: String!, 
+            weights: String!
 			diveImage: String!): Dive
 
     	removeComment(diveId: ID!, commentId: ID!): Dive

@@ -128,6 +128,41 @@ const SingleDive = () => {
             </div>
 
             <div style={{ paddingBottom: '1rem' }}>
+                <h4>Temperature:</h4>
+                <p>
+                    {dive.temperature} °F
+                </p>
+            </div>
+
+            <div style={{ paddingBottom: '1rem' }}>
+                <h4>Visibility:</h4>
+                <p>
+                    {dive.visibility} FT
+                </p>
+            </div>
+
+            <div style={{ paddingBottom: '1rem' }}>
+                <h4>Current:</h4>
+                <p>
+                    {dive.current}
+                </p>
+            </div>
+
+            <div style={{ paddingBottom: '1rem' }}>
+                <h4>Max Depth:</h4>
+                <p>
+                    {dive.maxDepth} FT
+                </p>
+            </div>
+
+            <div style={{ paddingBottom: '1rem' }}>
+                <h4>Weights:</h4>
+                <p>
+                    {dive.weights} LB
+                </p>
+            </div>
+
+            <div style={{ paddingBottom: '1rem' }}>
                 <h4>The aquatic life I saw:</h4>
                 <p style={{}} >
                     {dive.diveLife}

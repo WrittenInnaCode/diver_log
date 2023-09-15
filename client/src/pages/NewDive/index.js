@@ -29,6 +29,11 @@ const NewDive = () => {
 		diveText: '',
 		diveBuddy: '',
 		diveLife: '',
+		temperature: '',
+		visibility: '',
+		current: '',
+		maxDepth: '',
+		weights: '',
 	});
 
 	const [errorMessage, setErrorMessage] = useState('');
@@ -100,7 +105,7 @@ const NewDive = () => {
 			// 	window.location.assign('/me');
 
 			// } else {
-			const { diveSite, diveDate, timeIn, timeOut, startPsi, endPsi, diveText, diveBuddy, diveLife } = formData; // Destructure the variables from formData
+			const { diveSite, diveDate, timeIn, timeOut, startPsi, endPsi, diveText, diveBuddy, diveLife, temperature, visibility, current, maxDepth, weights, } = formData; // Destructure the variables from formData
 			const { data } = await addDive({
 				variables: {
 					diveSite,
@@ -112,6 +117,11 @@ const NewDive = () => {
 					diveText,
 					diveBuddy,
 					diveLife,
+					temperature,
+					visibility,
+					current,
+					maxDepth,
+					weights,
 
 					diveAuthor: Auth.getProfile().data.username,
 				},
@@ -134,6 +144,11 @@ const NewDive = () => {
 					diveText: '',
 					diveBuddy: '',
 					diveLife: '',
+					temperature: '',
+					visibility: '',
+					current: '',
+					maxDepth: '',
+					weights: '',
 				});
 
 				// }
@@ -181,21 +196,21 @@ const NewDive = () => {
 	};
 
 	const calculateTotaDivelTime = (timeIn, timeOut) => {
-        if (!timeIn || !timeOut) {
-          return null; // If either timeIn or timeOut is not set, return null indicating invalid input
-        }
-    
-        const totalDiveTime = differenceInMinutes(timeOut, timeIn);
-        return totalDiveTime;
-      };
-	  
+		if (!timeIn || !timeOut) {
+			return null; // If either timeIn or timeOut is not set, return null indicating invalid input
+		}
+
+		const totalDiveTime = differenceInMinutes(timeOut, timeIn);
+		return totalDiveTime;
+	};
+
 
 	return (
 		<div>
 			<h2>
 				Log your new dive
 			</h2>
-
+			<p>Note that the system of measurement is Imperial.</p>
 
 			{Auth.loggedIn() ? (
 				<>
@@ -262,6 +277,56 @@ const NewDive = () => {
 									placeholder="PSI"
 									value={formData.endPsi}
 									name="endPsi"
+									onChange={handleChange} />
+							</Form.Group>
+
+							<Form.Group className="mb-3" >
+								<Form.Label>Temperature</Form.Label>
+								<Form.Control
+									type="text"
+									placeholder="°F"
+									value={formData.temperature}
+									name="temperature"
+									onChange={handleChange} />
+							</Form.Group>
+
+							<Form.Group className="mb-3" >
+								<Form.Label>Visibility</Form.Label>
+								<Form.Control
+									type="text"
+									placeholder="FT"
+									value={formData.visibility}
+									name="visibility"
+									onChange={handleChange} />
+							</Form.Group>
+
+							<Form.Group className="mb-3" >
+								<Form.Label>Current</Form.Label>
+								<Form.Control
+									type="text"
+									// placeholder=" "
+									value={formData.current}
+									name="current"
+									onChange={handleChange} />
+							</Form.Group>
+
+							<Form.Group className="mb-3" >
+								<Form.Label>Max Depth</Form.Label>
+								<Form.Control
+									type="text"
+									placeholder="FT"
+									value={formData.maxDepth}
+									name="maxDepth"
+									onChange={handleChange} />
+							</Form.Group>
+
+							<Form.Group className="mb-3" >
+								<Form.Label>Weights</Form.Label>
+								<Form.Control
+									type="text"
+									placeholder="LB"
+									value={formData.weights}
+									name="weights"
 									onChange={handleChange} />
 							</Form.Group>
 
