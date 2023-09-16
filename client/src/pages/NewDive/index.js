@@ -11,6 +11,7 @@ import Auth from '../../utils/auth';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 
 import MyDatePicker from '../../components/DatePicker';
 import MyTimePicker from '../../components/TimePicker';
@@ -206,150 +207,185 @@ const NewDive = () => {
 
 
 	return (
-		<div>
-			<h2>
-				Log your new dive
+		<Container>
+			<h2 className='p-2 mt-2 text-light text-opacity-75'>
+				Add dive log
 			</h2>
-			<p>Note that the system of measurement is Imperial.</p>
+
+			<Alert variant="primary" className='my-4 m-4 text-center'>Note that the system of measurement is Imperial.</Alert>
 
 			{Auth.loggedIn() ? (
 				<>
-					<Container>
+					<Container className='pb-4'>
 						<Form onSubmit={handleFormSubmit} className='diveForm'>
+							<div className="formBorders my-4">
+								<h5 className='text-primary text-opacity-50'>DATE & TIME</h5>
+								<div className="d-flex justify-content-evenly mb-3">
+									<MyDatePicker
+										diveDate={formData.diveDate}
+										handleDateChange={handleDateChange}
+									/>
+									{/* {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} */}
 
-							<div>
+									<MyTimePicker
+										type="in"
+										selectedTime={formData.timeIn}
+										handleTimeChange={handleTimeInChange}
+									/>
+									<MyTimePicker
+										type="out"
+										selectedTime={formData.timeOut}
+										handleTimeChange={handleTimeOutChange}
+									/>
 
-								<MyDatePicker
-									diveDate={formData.diveDate}
-									handleDateChange={handleDateChange}
-								/>
-								{/* {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} */}
-
-								<MyTimePicker
-									type="in"
-									selectedTime={formData.timeIn}
-									handleTimeChange={handleTimeInChange}
-								/>
-								<MyTimePicker
-									type="out"
-									selectedTime={formData.timeOut}
-									handleTimeChange={handleTimeOutChange}
-								/>
-
-								{errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+									{errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+								</div>
 							</div>
 
-							<Form.Group className="mb-3" >
-								<Form.Label>Dive Site</Form.Label>
-								<Form.Control
-									// required
-									type="text"
-									placeholder="Enter the Dive Site name or location"
-									value={formData.diveSite}
-									name="diveSite"
-									onChange={handleChange} />
-							</Form.Group>
+							<div className="formBorders my-4">
+								<h5 className='text-primary text-opacity-50'>DIVE SITE</h5>
+								<Form.Group className="mb-3" >
+									{/* <Form.Label>Dive Site</Form.Label> */}
+									<Form.Control
+										// required
+										type="text"
+										placeholder="Enter the Dive Site name or location"
+										value={formData.diveSite}
+										name="diveSite"
+										onChange={handleChange} />
+								</Form.Group>
+							</div>
 
-							<Form.Group className="mb-3" >
-								<Form.Label>Dive Buddies</Form.Label>
-								<Form.Control
-									type="text"
-									placeholder="Add people you've dived with"
-									value={formData.diveBuddy}
-									name="diveBuddy"
-									onChange={handleChange} />
-							</Form.Group>
+							<div className="formBorders my-4">
+								<h5 className='text-primary text-opacity-50'>DIVE BUDDIES</h5>
+								<Form.Group className="mb-3" >
+									{/* <Form.Label>Dive Buddies</Form.Label> */}
+									<Form.Control
+										type="text"
+										placeholder="Add people you've dived with"
+										value={formData.diveBuddy}
+										name="diveBuddy"
+										onChange={handleChange} />
+								</Form.Group>
+							</div>
 
-							<Form.Group className="mb-3" >
-								<Form.Label>Start Pressure</Form.Label>
-								<Form.Control
-									type="text"
-									placeholder="PSI"
-									value={formData.startPsi}
-									name="startPsi"
-									onChange={handleChange} />
-							</Form.Group>
 
-							<Form.Group className="mb-3" >
-								<Form.Label>End Pressure</Form.Label>
-								<Form.Control
-									type="text"
-									placeholder="PSI"
-									value={formData.endPsi}
-									name="endPsi"
-									onChange={handleChange} />
-							</Form.Group>
+							<div className="formBorders ">
+								<h5 className='text-primary text-opacity-50'>TANK PRESSURE</h5>
+								<div className="d-flex justify-content-evenly">
+									<Form.Group className="mb-3" >
+										<Form.Label>Start Pressure</Form.Label>
+										<Form.Control
+											type="text"
+											placeholder="PSI"
+											value={formData.startPsi}
+											name="startPsi"
+											onChange={handleChange} />
+									</Form.Group>
 
-							<Form.Group className="mb-3" >
-								<Form.Label>Temperature</Form.Label>
-								<Form.Control
-									type="text"
-									placeholder="°F"
-									value={formData.temperature}
-									name="temperature"
-									onChange={handleChange} />
-							</Form.Group>
+									<Form.Group className="mb-3" >
+										<Form.Label>End Pressure</Form.Label>
+										<Form.Control
+											type="text"
+											placeholder="PSI"
+											value={formData.endPsi}
+											name="endPsi"
+											onChange={handleChange} />
+									</Form.Group>
+								</div>
+							</div>
 
-							<Form.Group className="mb-3" >
-								<Form.Label>Visibility</Form.Label>
-								<Form.Control
-									type="text"
-									placeholder="FT"
-									value={formData.visibility}
-									name="visibility"
-									onChange={handleChange} />
-							</Form.Group>
 
-							<Form.Group className="mb-3" >
-								<Form.Label>Current</Form.Label>
-								<Form.Control
-									type="text"
-									// placeholder=" "
-									value={formData.current}
-									name="current"
-									onChange={handleChange} />
-							</Form.Group>
+							<div className='formBorders my-4'>
+								<h5 className='text-primary text-opacity-50'>WATER CONDITIONS</h5>
+								<div className="d-flex justify-content-evenly">
+									<div>
+										<Form.Group className="mb-3" >
+											<Form.Label>Temperature</Form.Label>
+											<Form.Control
+												type="text"
+												placeholder="°F"
+												value={formData.temperature}
+												name="temperature"
+												onChange={handleChange} />
+										</Form.Group>
 
-							<Form.Group className="mb-3" >
-								<Form.Label>Max Depth</Form.Label>
-								<Form.Control
-									type="text"
-									placeholder="FT"
-									value={formData.maxDepth}
-									name="maxDepth"
-									onChange={handleChange} />
-							</Form.Group>
+										<Form.Group className="mb-3" >
+											<Form.Label>Visibility</Form.Label>
+											<Form.Control
+												type="text"
+												placeholder="FT"
+												value={formData.visibility}
+												name="visibility"
+												onChange={handleChange} />
+										</Form.Group>
 
-							<Form.Group className="mb-3" >
-								<Form.Label>Weights</Form.Label>
-								<Form.Control
-									type="text"
-									placeholder="LB"
-									value={formData.weights}
-									name="weights"
-									onChange={handleChange} />
-							</Form.Group>
 
-							<Form.Group className="mb-3" >
-								<Form.Label>Marine Life</Form.Label>
-								<Form.Control
-									type="text"
-									placeholder="Add marine life you encountered during this dive"
-									value={formData.diveLife}
-									name="diveLife"
-									onChange={handleChange} />
-							</Form.Group>
+										<Form.Group className="mb-3" >
+											<Form.Label>Weights</Form.Label>
+											<Form.Control
+												type="text"
+												placeholder="LB"
+												value={formData.weights}
+												name="weights"
+												onChange={handleChange} />
+										</Form.Group>
 
-							<Form.Group className="mb-3" >
-								<Form.Label>Dive description</Form.Label>
-								<Form.Control
-									as="textarea"
-									placeholder='Write about your experience while taking this dive'
-									rows={3}
-									value={formData.diveText}
-									name="diveText"
-									onChange={handleChange} />
-							</Form.Group>
+									</div>
+
+									<div>
+										<Form.Group className="mb-3" >
+											<Form.Label>Max Depth</Form.Label>
+											<Form.Control
+												type="text"
+												placeholder="FT"
+												value={formData.maxDepth}
+												name="maxDepth"
+												onChange={handleChange} />
+										</Form.Group>
+
+										<Form.Group className="mb-3" >
+											<Form.Label>Current</Form.Label>
+											<Form.Control
+												type="text"
+												// placeholder=" "
+												value={formData.current}
+												name="current"
+												onChange={handleChange} />
+										</Form.Group>
+									</div>
+								</div>
+							</div>
+
+
+							<div className='formBorders my-4'>
+								<h5 className='text-primary text-opacity-50'>MARINE LIFE</h5>
+								<Form.Group className="mb-3" >
+									{/* <Form.Label>Marine Life</Form.Label> */}
+									<Form.Control
+										type="text"
+										placeholder="Add marine life you encountered during this dive"
+										value={formData.diveLife}
+										name="diveLife"
+										onChange={handleChange} />
+								</Form.Group>
+							</div>
+
+
+							<div className='formBorders my-4'>
+								<h5 className='text-primary text-opacity-50'>DIVE DESCRIPTION</h5>
+								<Form.Group className="mb-3" >
+									{/* <Form.Label>Dive description</Form.Label> */}
+									<Form.Control
+										as="textarea"
+										placeholder='Write about your experience while taking this dive'
+										rows={3}
+										value={formData.diveText}
+										name="diveText"
+										onChange={handleChange} />
+								</Form.Group>
+							</div>
+
 
 							<Button variant="primary" type="submit">
 								Submit
@@ -373,7 +409,7 @@ const NewDive = () => {
 				</p>
 			)}
 
-		</div>
+		</Container>
 
 	);
 };

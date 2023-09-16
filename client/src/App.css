@@ -54,3 +54,28 @@ html {
 .logOutBttn {
     margin-top: 2rem;
 }
+
+.customDatePicker {
+    background-color: rgb(255, 255, 255);
+    border-radius: 4px;
+  }
+
+  .customTimePicker{
+    background-color: rgb(255, 255, 255);
+    border-radius: 4px;
+  }
+
+  .diveForm{
+    background-color: rgba(208, 226, 255);
+    padding:1.5rem;
+    border-radius: 6px;
+    color:  rgba(0, 60, 157);
+  }
+
+  .formBorders{
+    border-style: dashed;
+    border-color: rgb(255, 255, 255);
+    border-radius: 4px;
+    padding: 1rem;
+    background-color: rgba(240, 248, 255, 0.555);
+  }

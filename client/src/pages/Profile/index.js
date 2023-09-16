@@ -8,6 +8,8 @@ import { QUERY_USER, QUERY_ME } from '../../utils/queries';
 
 import Auth from '../../utils/auth';
 
+import Container from 'react-bootstrap/Container';
+
 const Profile = () => {
 
   const { username: userParam } = useParams();
@@ -38,7 +40,7 @@ const Profile = () => {
 
 
   return (
-    <div>
+    <Container>
 
       <h2 className="mb-4">
         Viewing {userParam ? `${user.username}'s` : 'your'} profile.
@@ -47,16 +49,16 @@ const Profile = () => {
       <p>{numDives} dives logged</p>
 
       <h4>{`${user.username}'s dives:`}</h4>
-      <div className="col-12 col-md-10 mb-5">
+      <Container>
         <DiveList
           dives={sortedDives}
           // title={`${user.username}'s dives:`}
           // showTitle={false}
           showUsername={false}
         />
-      </div>
+      </Container>
 
-    </div>
+    </Container>
   )
 
 };

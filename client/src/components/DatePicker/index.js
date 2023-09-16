@@ -12,6 +12,7 @@ function MyDatePicker({ diveDate, handleDateChange }) {
         name="diveDate"
         value={diveDate}
         onChange={handleDateChange}
+        className="customDatePicker"
       />
     </LocalizationProvider>
   );

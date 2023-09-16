@@ -11,6 +11,7 @@ export default function MyTimePicker({ type, selectedTime, handleTimeChange }) {
                 label={`Time ${type === 'in' ? 'In' : 'Out'}`}
                 value={selectedTime}
                 onChange={handleTimeChange}
+                className='customTimePicker'
             />
         </LocalizationProvider>
 
