@@ -53,21 +53,11 @@ function App() {
           <Container fluid>
             <Row>
 
-              <Col
-                xs="12"
-                lg="2"
-                sm="4"
-                md="3"
-                className='navbarBg'>
+              <Col  xs={12} sm={4} md={4} lg={3}  className='navbarBg'>
                 <Navbar />
               </Col>
 
-              <Col
-                xs='auto'
-                lg="10"
-                sm="8"
-                md="9"
-                className='bodyBg'>
+              <Col  xs={12} sm={8} md={8} lg={9} className='bodyBg'>
 
                 <Routes>
                   <Route

@@ -13,33 +13,33 @@ html {
     min-height: 100vh;
 }
 
-.bodyBg{
+.bodyBg {
     background-color: rgba(3, 105, 183, 0.844);
-    /* min-height: 100vh; */
+    min-height: 100vh;
 }
 
-@media screen and (max-width: 800px) {
-    .navbarBg {
-        /* min-height:auto; */
-    }
-  }
 
-  @media screen and (max-width: 600px) {
+@media screen and (max-width: 600px) {
     .navbarBg {
-        min-height:auto;
+        min-height: auto;
     }
+
     .bodyBg {
         /* min-height:100vh; */
     }
-  }
 
-.diveCard{
+    .toggleBttn {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.diveCard {
     /* background-color: rgba(237, 249, 255, 0.661); */
 }
 
 .username {
     padding-top: 1rem !important;
-    ;
 }
 
 .diveText {

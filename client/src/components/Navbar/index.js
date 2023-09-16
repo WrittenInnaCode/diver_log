@@ -26,54 +26,37 @@ function AppNavbar() {
 
 	return (
 		<Container>
-			<Navbar>
-				<Nav className="flex-column">
+			<Navbar expand="sm">
+				<Nav className="d-flex flex-row flex-sm-column justify-content-center w-100">
 					<Container className='p-2'><Navbar.Brand as={Link} to="/" className='logo '>Dive_log</Navbar.Brand></Container>
-					
+
 					{Auth.loggedIn() ? (
 						<>
-						<Container>
-							<div className="justify-content-md-center">
-								{/* <Figure>
-									<Figure.Image
-										width={40}
-										height={40}
-										alt="user icon"
-										src={require(`../../assets/images/Mask.png`)}
-									/>
-								</Figure> */}
+							<div className='toggleBttn'>
+								<Container className='d-flex flex-column' >
+									<Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-								<Nav.Link as={Link} to="/me" className='username fw-semibold '>
-									{Auth.getProfile().data.username} {' '}
-								</Nav.Link>
-								<Nav.Link as={Link} to="/newdivelog">Log New Dive</Nav.Link>
+									<Navbar.Collapse id="basic-navbar-nav" >
+										<Nav className="me-auto">
+											<div className="navLinks">
 
-								<Nav.Link as={Link} to="/dives">Explore Dives</Nav.Link>
+												<Nav.Link as={Link} to="/me" className='username fw-semibold '>
+													{Auth.getProfile().data.username} {' '}
+												</Nav.Link>
+												<Nav.Link as={Link} to="/newdivelog">Log New Dive</Nav.Link>
 
-								<Nav.Link as={Link} to="/bucketlist">Bucket List</Nav.Link>
+												<Nav.Link as={Link} to="/dives">Explore Dives</Nav.Link>
+
+												<Nav.Link as={Link} to="/bucketlist">Bucket List</Nav.Link>
 
 
-								<Button variant="warning" onClick={logout} size="sm" className='logOutBttn'> Ascend and Exit </Button>
+												<Button variant="warning" onClick={logout} size="sm" className='logOutBttn'> Ascend and Exit </Button>
 
-								{/* <NavDropdown
-									title={Auth.getProfile().data.username}
-									id="basic-nav-dropdown"
-									className='username'>
-
-									<NavDropdown.Item href="/me">Profile</NavDropdown.Item>
-
-									<NavDropdown.Item href="/newdivelog">Log New Dive</NavDropdown.Item>
-
-									<NavDropdown.Item href="/bucketlist">My Bucket List</NavDropdown.Item>
-
-									<NavDropdown.Divider />
-
-									<NavDropdown.Item>
-										<Button variant="warning" onClick={logout} size="sm"> Ascend and Exit </Button>
-									</NavDropdown.Item>
-								</NavDropdown> */}
+											</div>
+										</Nav>
+									</Navbar.Collapse>
+								</Container>
 							</div>
-							</Container>
 						</>
 					) : (
 						<>
