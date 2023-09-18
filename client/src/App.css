@@ -15,23 +15,13 @@ html {
 
 .bodyBg {
     background-color: rgba(3, 105, 183, 0.844);
+    /* background-color: black; */
+    background: linear-gradient(rgba(22, 137, 226, 0.844), rgba(2, 28, 79, 0.844));
     min-height: 100vh;
 }
 
-
-@media screen and (max-width: 600px) {
-    .navbarBg {
-        min-height: auto;
-    }
-
-    .bodyBg {
-        /* min-height:100vh; */
-    }
-
-    .toggleBttn {
-        display: flex;
-        flex-direction: column;
-    }
+.loginBttn {
+    white-space: nowrap;
 }
 
 .diveCard {
@@ -58,24 +48,100 @@ html {
 .customDatePicker {
     background-color: rgb(255, 255, 255);
     border-radius: 4px;
-  }
+}
 
-  .customTimePicker{
+.customTimePicker {
     background-color: rgb(255, 255, 255);
     border-radius: 4px;
-  }
+}
 
-  .diveForm{
+.diveForm {
     background-color: rgba(208, 226, 255);
-    padding:1.5rem;
+    padding: 1.5rem;
     border-radius: 6px;
-    color:  rgba(0, 60, 157);
-  }
+    color: rgba(0, 60, 157);
+}
 
-  .formBorders{
-    border-style: dashed;
+.formBorders {
+    /* border-style: dashed; */
     border-color: rgb(255, 255, 255);
     border-radius: 4px;
     padding: 1rem;
     background-color: rgba(240, 248, 255, 0.555);
-  }
+}
+
+.diveDetails {
+    background-color: rgba(208, 226, 255);
+    margin: 1rem;
+    border-radius: 6px;
+    color: rgba(0, 60, 157);
+}
+
+.diveStats {
+    display: flex;
+    align-items: baseline;
+}
+
+.diveStatsAquatic{
+    display: flex;
+    align-items: baseline;
+}
+
+.aquaticLife {
+    white-space: nowrap;
+}
+
+.diveStats h6 {
+    padding-right: 0.5rem;
+    font-weight:bolder;
+    font-size: smaller;
+}
+
+.diveStatsAquatic h6 {
+    padding-right: 0.5rem;
+    font-weight:bolder;
+    font-size: smaller;
+}
+.diveStatsFlex {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.diveDescription{
+    white-space: pre-line;
+}
+
+@media screen and (max-width: 950px) {
+    .diveStatsFlex {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .navbarBg {
+        min-height: auto;
+    }
+
+    .bodyBg {
+        /* min-height:100vh; */
+    }
+
+    .toggleBttn {
+        display: flex;
+        flex-direction: column;
+        white-space: nowrap;
+    }
+
+    /* .diveStatsAquatic{
+        display: flex;
+        flex-direction: column;
+    } */
+}
+
+@media screen and (max-width: 850px) {
+    .diveStatsAquatic{
+        display: flex;
+        flex-direction: column;
+    }
+}

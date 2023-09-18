@@ -212,40 +212,14 @@ const NewDive = () => {
 				Add dive log
 			</h2>
 
-			<Alert variant="primary" className='my-4 m-4 text-center'>Note that the system of measurement is Imperial.</Alert>
-
 			{Auth.loggedIn() ? (
 				<>
+					<Alert variant="primary" className='my-4 m-4 text-center'>Note that the system of measurement is Imperial.</Alert>
 					<Container className='pb-4'>
 						<Form onSubmit={handleFormSubmit} className='diveForm'>
 							<div className="formBorders my-4">
-								<h5 className='text-primary text-opacity-50'>DATE & TIME</h5>
-								<div className="d-flex justify-content-evenly mb-3">
-									<MyDatePicker
-										diveDate={formData.diveDate}
-										handleDateChange={handleDateChange}
-									/>
-									{/* {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} */}
-
-									<MyTimePicker
-										type="in"
-										selectedTime={formData.timeIn}
-										handleTimeChange={handleTimeInChange}
-									/>
-									<MyTimePicker
-										type="out"
-										selectedTime={formData.timeOut}
-										handleTimeChange={handleTimeOutChange}
-									/>
-
-									{errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-								</div>
-							</div>
-
-							<div className="formBorders my-4">
-								<h5 className='text-primary text-opacity-50'>DIVE SITE</h5>
-								<Form.Group className="mb-3" >
-									{/* <Form.Label>Dive Site</Form.Label> */}
+								<h6 className='text-primary text-opacity-50'>DIVE SITE</h6>
+								<Form.Group className="mb-3">
 									<Form.Control
 										// required
 										type="text"
@@ -257,9 +231,32 @@ const NewDive = () => {
 							</div>
 
 							<div className="formBorders my-4">
-								<h5 className='text-primary text-opacity-50'>DIVE BUDDIES</h5>
-								<Form.Group className="mb-3" >
-									{/* <Form.Label>Dive Buddies</Form.Label> */}
+								<h6 className='text-primary text-opacity-50'>DATE & TIME</h6>
+								<div className="d-flex justify-content-evenly mb-3">
+									<MyDatePicker
+										diveDate={formData.diveDate}
+										handleDateChange={handleDateChange}
+									/>
+
+									<MyTimePicker
+										type="in"
+										selectedTime={formData.timeIn}
+										handleTimeChange={handleTimeInChange}
+									/>
+									<MyTimePicker
+										type="out"
+										selectedTime={formData.timeOut}
+										handleTimeChange={handleTimeOutChange}
+									/>
+								</div>
+								{errorMessage && <p style={{ color: 'red' }} className='text-center'>{errorMessage}</p>}
+							</div>
+
+
+
+							<div className="formBorders my-4">
+								<h6 className='text-primary text-opacity-50'>DIVE BUDDIES</h6>
+								<Form.Group className="mb-3">
 									<Form.Control
 										type="text"
 										placeholder="Add people you've dived with"
@@ -271,7 +268,7 @@ const NewDive = () => {
 
 
 							<div className="formBorders ">
-								<h5 className='text-primary text-opacity-50'>TANK PRESSURE</h5>
+								<h6 className='text-primary text-opacity-50'>TANK PRESSURE</h6>
 								<div className="d-flex justify-content-evenly">
 									<Form.Group className="mb-3" >
 										<Form.Label>Start Pressure</Form.Label>
@@ -297,7 +294,7 @@ const NewDive = () => {
 
 
 							<div className='formBorders my-4'>
-								<h5 className='text-primary text-opacity-50'>WATER CONDITIONS</h5>
+								<h6 className='text-primary text-opacity-50'>WATER CONDITIONS</h6>
 								<div className="d-flex justify-content-evenly">
 									<div>
 										<Form.Group className="mb-3" >
@@ -359,9 +356,8 @@ const NewDive = () => {
 
 
 							<div className='formBorders my-4'>
-								<h5 className='text-primary text-opacity-50'>MARINE LIFE</h5>
-								<Form.Group className="mb-3" >
-									{/* <Form.Label>Marine Life</Form.Label> */}
+								<h6 className='text-primary text-opacity-50'>MARINE LIFE</h6>
+								<Form.Group className="mb-3">
 									<Form.Control
 										type="text"
 										placeholder="Add marine life you encountered during this dive"
@@ -373,9 +369,8 @@ const NewDive = () => {
 
 
 							<div className='formBorders my-4'>
-								<h5 className='text-primary text-opacity-50'>DIVE DESCRIPTION</h5>
-								<Form.Group className="mb-3" >
-									{/* <Form.Label>Dive description</Form.Label> */}
+								<h6 className='text-primary text-opacity-50'>DIVE DESCRIPTION</h6>
+								<Form.Group className="mb-3">
 									<Form.Control
 										as="textarea"
 										placeholder='Write about your experience while taking this dive'
@@ -396,17 +391,17 @@ const NewDive = () => {
 
 
 					{error && (
-						<p>
+						<Alert variant="danger">
 							{error.message}
-						</p>
+						</Alert>
 					)}
 
 				</>
 
 			) : (
-				<p>
+				<Alert variant="danger">
 					You need to be logged in to log a new dive.
-				</p>
+				</Alert>
 			)}
 
 		</Container>

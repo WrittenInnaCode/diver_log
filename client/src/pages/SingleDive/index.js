@@ -13,6 +13,9 @@ import { REMOVE_DIVE } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 
 const SingleDive = () => {
@@ -77,107 +80,113 @@ const SingleDive = () => {
     }
 
     return (
-        <section className="dive-details" style={{ padding: '2rem' }} key={dive._id}>
-            <div class="d-flex justify-content-between">
-                <h1 style={{ fontStyle: 'italic', paddingBottom: '1rem' }}>{dive.diveSite}</h1>
+        <Container className="p-4" key={dive._id}>
+
+            <Container className='diveDetails pt-3'>
 
                 {isAuthor && (
-                    <div>
-                        <Button variant="outline-warning" size="sm">EDIT</Button>
-                        <Button variant="outline-danger" size="sm" onClick={() => handleDelete(dive._id)}>DELETE</Button>
+                    <div className='d-flex justify-content-end pb-2'>
+                        <Button variant="warning" size="sm">EDIT</Button>
+                        <Button variant="danger" size="sm" onClick={() => handleDelete(dive._id)}>DELETE</Button>
                     </div>
                 )}
-            </div>
-            <p> Went diving here on {format(new Date(dive.diveDate), 'MMMM d, yyyy')}.</p>
 
-            <p style={{
-                // fontSize: '1.5rem',
-                // border: '2px',
-                // lineHeight: '1.5',
-                paddingBottom: '2rem'
-            }} >
-                {dive.diveText}
-            </p>
+                <div className="formBorders m-1 pb-1">
+                    <h1 className='text-primary text-opacity-50'>{dive.diveSite}</h1>
+                    <div className='diveStats'>
+                        <h6 className='text-primary text-opacity-50'>DIVE DATE:</h6>
+                        <p>{format(new Date(dive.diveDate), 'MMMM d, yyyy')}</p>
+                    </div>
+                </div>
 
-            <div style={{ paddingBottom: '1rem' }}>
-                <h4>Dive stats:</h4>
-                <p>
-                    Dive started at {format(new Date(dive.timeIn), 'hh:mm aa')}
-                </p>
-                <p>
-                    Dive ended at {format(new Date(dive.timeOut), 'hh:mm aa')}
-                </p>
-                <p>Total dive time: {calculateTotalTime(dive.timeIn, dive.timeOut)} minutes</p>
-            </div>
+                <div className="formBorders m-1 my-4 pb-1">
+                    {/* <h6 className='text-primary text-opacity-50'>DIVE STATS</h6> */}
 
-            <div style={{ paddingBottom: '1rem' }}>
-                <h4>Tank Pressure:</h4>
-                <p>
-                    Start:  {dive.startPsi} PSI
-                </p>
-                <p>
-                    End: {dive.endPsi} PSI
-                </p>
-            </div>
+                    <Row className='diveStatsFlex pb-1'>
+                        <Col className='diveStats pe-2'>
+                            <h6 className='text-primary text-opacity-50'>TIME:</h6>
+                            <div>
+                                <span>
+                                    Dive started at {format(new Date(dive.timeIn), 'h:mm aa')}
+                                    <br />
+                                    Dive ended at {format(new Date(dive.timeOut), 'h:mm aa')}
+                                </span>
+                                <p className='border-top border-primary border-opacity-50'>Total dive time: {calculateTotalTime(dive.timeIn, dive.timeOut)} min</p>
+                            </div>
+                        </Col>
 
-            <div style={{ paddingBottom: '1rem' }}>
-                <h4>My dive buddy:</h4>
-                <p>
-                    {dive.diveBuddy}
-                </p>
-            </div>
+                        <Col className='diveStats ps-2'>
+                            <h6 className='text-primary text-opacity-50'>TANK PRESSURE:</h6>
+                            <p>
+                                Start:  {dive.startPsi} PSI
+                                {/* </p>
+                            <p> */}
+                                <br />
+                                End: {dive.endPsi} PSI
+                            </p>
+                        </Col>
+                    </Row>
 
-            <div style={{ paddingBottom: '1rem' }}>
-                <h4>Temperature:</h4>
-                <p>
-                    {dive.temperature} °F
-                </p>
-            </div>
 
-            <div style={{ paddingBottom: '1rem' }}>
-                <h4>Visibility:</h4>
-                <p>
-                    {dive.visibility} FT
-                </p>
-            </div>
+                    <Row className='diveStatsFlex pb-1'>
+                        <Col>
+                            <div className='diveStats'>
+                                <h6 className='text-primary text-opacity-50'>WATER TEMPERATURE:</h6>
+                                <p>{dive.temperature} °F </p>
+                            </div>
 
-            <div style={{ paddingBottom: '1rem' }}>
-                <h4>Current:</h4>
-                <p>
-                    {dive.current}
-                </p>
-            </div>
+                            <div className='diveStats'>
+                                <h6 className='text-primary text-opacity-50'>VISIBILITY:</h6>
+                                <p>{dive.visibility} FT </p>
+                            </div>
 
-            <div style={{ paddingBottom: '1rem' }}>
-                <h4>Max Depth:</h4>
-                <p>
-                    {dive.maxDepth} FT
-                </p>
-            </div>
+                            <div className='diveStats'>
+                                <h6 className='text-primary text-opacity-50'>CURRENT:</h6>
+                                <p>{dive.current} </p>
+                            </div>
+                        </Col>
 
-            <div style={{ paddingBottom: '1rem' }}>
-                <h4>Weights:</h4>
-                <p>
-                    {dive.weights} LB
-                </p>
-            </div>
 
-            <div style={{ paddingBottom: '1rem' }}>
-                <h4>The aquatic life I saw:</h4>
-                <p style={{}} >
-                    {dive.diveLife}
-                </p></div>
+                        <Col>
+                            <div className='diveStats'>
+                                <h6 className='text-primary text-opacity-50'>MAX DEPTH:</h6>
+                                <p>{dive.maxDepth} FT </p>
+                            </div>
+
+                            <div className='diveStats'>
+                                <h6 className='text-primary text-opacity-50'>WEIGHTS:</h6>
+                                <p>{dive.weights} LB </p>
+                            </div>
+                        </Col>
+
+                    </Row>
 
 
 
-            <h3 style={{ fontSize: '1rem', paddingBottom: '2rem' }}>
-                {dive.diveAuthor} {''}
-                <span> posted on {dive.createdAt} </span>
-            </h3>
 
-            <br />
+                    <div className='diveStats'>
+                        <h6 className='text-primary text-opacity-50'>MY DIVE BUDDY:</h6>
+                        <p>{dive.diveBuddy} </p>
+                    </div>
 
-            {/* <Divider horizontal style={{ marginTop: '3rem', marginBottom: '3rem' }}>
+                    <div className='diveStatsAquatic'>
+                        <h6 className='aquaticLife text-primary text-opacity-50'>AQUATIC LIFE ENCOUNTERED:</h6>
+                        <p>{dive.diveLife}</p>
+                    </div>
+                </div>
+
+                <p className="formBorders diveDescription my-4"> {dive.diveText}</p>
+
+                <div className='d-flex justify-content-end'>
+                    <p className="text-primary text-opacity-50">
+                        {dive.diveAuthor} {''}
+                        <span> posted on {dive.createdAt} </span>
+                    </p>
+                </div>
+
+
+
+                {/* <Divider horizontal style={{ marginTop: '3rem', marginBottom: '3rem' }}>
                 <Header as='h3'> Comments </Header>
             </Divider>
 
@@ -190,8 +199,8 @@ const SingleDive = () => {
             <div style={{ border: '' }}>
                 <CommentForm diveId={dive._id} />
             </div> */}
-
-        </section>
+            </Container>
+        </Container>
     );
 };
 

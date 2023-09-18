@@ -60,7 +60,7 @@ function AppNavbar() {
 						</>
 					) : (
 						<>
-							<Button variant="info" size="sm" onClick={() => handleShow()}>
+							<Button className="loginBttn" variant="info" size="sm" onClick={() => handleShow()}>
 								Dive In
 							</Button>
 						</>
