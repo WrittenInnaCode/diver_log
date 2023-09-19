@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card';
 import { format } from 'date-fns'
 import Pagination from 'react-bootstrap/Pagination';
 import Container from 'react-bootstrap/Container';
+import Alert from 'react-bootstrap/Alert';
 
 const DiveList = ({
   dives,
@@ -28,7 +29,7 @@ const DiveList = ({
 
 
   if (!dives.length) {
-    return <p>There are no dives logged yet... Be the first one to log a dive!</p>;
+    return <Alert variant="warning">There are no dives logged yet!</Alert>;
   }
 
   return (

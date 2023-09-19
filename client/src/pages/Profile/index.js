@@ -14,7 +14,7 @@ const Profile = () => {
 
   const { username: userParam } = useParams();
 
-  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+  const { loading, error, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
 
@@ -33,22 +33,38 @@ const Profile = () => {
   // Create a new array by sorting the dives based on the dive date property
   const sortedDives = (user.dives || []).slice().sort((a, b) => new Date(b.diveDate) - new Date(a.diveDate));
 
+  
+ // Calculate the maximum depth
+  let maxDepth = 0; // Initialize maxDepth to 0
+
+  sortedDives.forEach((dive) => {
+    if (dive.maxDepth > maxDepth) {
+      maxDepth = dive.maxDepth; // Update maxDepth if a deeper dive is found
+    }
+  });
+
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <Container>
 
-      <h2 className="mb-4">
+      {/* <h2 className="mb-4">
         Viewing {userParam ? `${user.username}'s` : 'your'} profile.
-      </h2>
+      </h2> */}
 
-      <p>{numDives} dives logged</p>
+      <Container className="userDetails p-4">
+        <h3 className='text-primary text-opacity-50 pb-3'>{`${user.username}`}</h3>
+        <p>{numDives} dives logged</p>
+        <p>Max depth: {maxDepth} FT</p>
+      </Container>
 
-      <h4>{`${user.username}'s dives:`}</h4>
+
+
       <Container>
         <DiveList
           dives={sortedDives}
