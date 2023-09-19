@@ -12,7 +12,10 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
+import StarRating from '../../components/StarRating';
 import MyDatePicker from '../../components/DatePicker';
 import MyTimePicker from '../../components/TimePicker';
 import { differenceInMinutes } from 'date-fns';
@@ -35,6 +38,7 @@ const NewDive = () => {
 		current: '',
 		maxDepth: '',
 		weights: '',
+		rating: null,
 	});
 
 	const [errorMessage, setErrorMessage] = useState('');
@@ -43,7 +47,7 @@ const NewDive = () => {
 	const [addDive, { error }] = useMutation(ADD_DIVE, {
 		update(cache, { data: { addDive } }) {
 			try {
-				const { dives } = cache.readQuery({ query: QUERY_DIVES });
+				const { dives } = cache.readQuery({ query: QUERY_DIVES }) || { dives: [] };
 
 				cache.writeQuery({
 					query: QUERY_DIVES,
@@ -54,11 +58,13 @@ const NewDive = () => {
 			}
 
 			// update me object's cache
-			const { me } = cache.readQuery({ query: QUERY_ME });
-			cache.writeQuery({
-				query: QUERY_ME,
-				data: { me: { ...me, dives: [...me.dives, addDive] } },
-			});
+			const { me } = cache.readQuery({ query: QUERY_ME }) || { me: null };
+			if (me) {
+				cache.writeQuery({
+					query: QUERY_ME,
+					data: { me: { ...me, dives: [...me.dives, addDive] } },
+				});
+			}
 		},
 	});
 
@@ -106,7 +112,7 @@ const NewDive = () => {
 			// 	window.location.assign('/me');
 
 			// } else {
-			const { diveSite, diveDate, timeIn, timeOut, startPsi, endPsi, diveText, diveBuddy, diveLife, temperature, visibility, current, maxDepth, weights, } = formData; // Destructure the variables from formData
+			const { diveSite, diveDate, timeIn, timeOut, startPsi, endPsi, diveText, diveBuddy, diveLife, temperature, visibility, current, maxDepth, weights, rating } = formData; // Destructure the variables from formData
 			const { data } = await addDive({
 				variables: {
 					diveSite,
@@ -123,6 +129,7 @@ const NewDive = () => {
 					current,
 					maxDepth,
 					weights,
+					rating,
 
 					diveAuthor: Auth.getProfile().data.username,
 				},
@@ -150,6 +157,7 @@ const NewDive = () => {
 					current: '',
 					maxDepth: '',
 					weights: '',
+					rating: null,
 				});
 
 				// }
@@ -216,18 +224,34 @@ const NewDive = () => {
 				<>
 					<Alert variant="primary" className='my-4 m-4 text-center'>Note that the system of measurement is Imperial.</Alert>
 					<Container className='pb-4'>
+
 						<Form onSubmit={handleFormSubmit} className='diveForm'>
+
 							<div className="formBorders my-4">
-								<h6 className='text-primary text-opacity-50'>DIVE SITE</h6>
-								<Form.Group className="mb-3">
-									<Form.Control
-										// required
-										type="text"
-										placeholder="Enter the Dive Site name or location"
-										value={formData.diveSite}
-										name="diveSite"
-										onChange={handleChange} />
-								</Form.Group>
+								<Row>
+									<Col>
+										<h6 className='text-primary text-opacity-50'>DIVE SITE</h6>
+										<Form.Group className="mb-3">
+											<Form.Control
+												// required
+												type="text"
+												placeholder="Enter the Dive Site name or location"
+												value={formData.diveSite}
+												name="diveSite"
+												onChange={handleChange} />
+										</Form.Group>
+									</Col>
+
+									<Col className='starRating text-center'>
+										<h6 className='text-primary text-opacity-50'>DIVE RATING</h6>
+										<StarRating
+											value={formData.rating}
+											// onChange={handleChange}
+											onChange={(newRating) => setFormData({ ...formData, rating: newRating })} // Update the rating in the form data
+										/>
+									</Col>
+								</Row>
+
 							</div>
 
 							<div className="formBorders my-4">

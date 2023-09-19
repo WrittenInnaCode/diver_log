@@ -25,6 +25,7 @@ const typeDefs = gql`
         current: String
         maxDepth: String
         weights: String
+		rating: Int
     	diveAuthor: String
     	createdAt: String
     	comments: [Comment]!
@@ -69,7 +70,8 @@ const typeDefs = gql`
             visibility: String!, 
             current: String!, 
             maxDepth: String!, 
-            weights: String!): Dive
+            weights: String!,
+			rating: Int!): Dive
 
     	addComment(diveId: ID!, commentText: String!): Dive
     	removeDive(diveId: ID!): Dive
@@ -89,7 +91,8 @@ const typeDefs = gql`
             visibility: String!, 
             current: String!, 
             maxDepth: String!, 
-            weights: String!
+            weights: String!,
+			rating: Int!,
 			diveImage: String!): Dive
 
     	removeComment(diveId: ID!, commentId: ID!): Dive

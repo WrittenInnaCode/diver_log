@@ -32,6 +32,7 @@ export const QUERY_USER = gql`
         current
         maxDepth
         weights
+        rating
         diveAuthor
         createdAt
     }
@@ -62,6 +63,7 @@ export const QUERY_ME = gql`
         current
         maxDepth
         weights
+        rating
         diveAuthor
         createdAt
     }
@@ -88,6 +90,7 @@ export const QUERY_DIVES = gql`
       current
       maxDepth
       weights
+      rating
       diveAuthor
       createdAt
     }
@@ -113,6 +116,7 @@ export const QUERY_SINGLE_DIVE = gql`
       current
       maxDepth
       weights
+      rating
       diveAuthor
       createdAt
       comments {

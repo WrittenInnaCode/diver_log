@@ -25,11 +25,14 @@ html {
  
 .bodyBg {
     background-color: rgba(3, 105, 183, 0.844);
-    background: linear-gradient(rgba(22, 137, 226, 0.844), rgba(2, 28, 79, 0.844));
+    background: linear-gradient(#1689e2d7, rgba(2, 28, 79, 0.844));
     min-height: 100vh;
 }
 
 .loginBttn {
+    white-space: nowrap;
+}
+.logOutBttn{
     white-space: nowrap;
 }
 
@@ -128,6 +131,21 @@ html {
     white-space: pre-line;
 }
 
+
+.star{
+    cursor: pointer;
+    transition: color 150ms;
+}
+
+.starRating {
+    text-align: center;
+    /* background-color: #97cdf6c0; */
+}
+
+input[type="radio"]{
+    display: none;
+}
+
 @media screen and (max-width: 950px) {
     .diveStatsFlex {
         display: flex;
@@ -135,7 +153,7 @@ html {
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 575px) {
     .navbarBg {
         min-height: auto;
         border-right: none;

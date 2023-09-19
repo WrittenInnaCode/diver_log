@@ -72,6 +72,12 @@ const diveSchema = new Schema({
         type: String,
         trim: true,
     },
+    rating: {
+        type: Number, // Use Number type to store the rating as an integer
+        required: 'Give this dive a star rating!',
+        min: 1, 
+        max: 5, 
+    },
     // diveImage: {
     //     type: String,
     // },

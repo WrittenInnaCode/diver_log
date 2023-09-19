@@ -91,13 +91,23 @@ const SingleDive = () => {
                     </div>
                 )}
 
-                <div className="formBorders m-1 pb-1">
-                    <h1 className='text-primary text-opacity-50'>{dive.diveSite}</h1>
-                    <div className='diveStats'>
-                        <h6 className='text-primary text-opacity-50'>DIVE DATE:</h6>
-                        <p>{format(new Date(dive.diveDate), 'MMMM d, yyyy')}</p>
-                    </div>
-                </div>
+                <Row className="formBorders m-1 pb-1">
+                    <Col>
+                        <div 
+                        // className="formBorders m-1 pb-1"
+                        >
+                            <h1 className='text-primary text-opacity-50'>{dive.diveSite}</h1>
+                            <div className='diveStats'>
+                                <h6 className='text-primary text-opacity-50'>DIVE DATE:</h6>
+                                <p>{format(new Date(dive.diveDate), 'MMMM d, yyyy')}</p>
+                            </div>
+                        </div>
+                    </Col>
+
+                    <Col className='star-rating'>
+                    </Col>
+                </Row>
+
 
                 <div className="formBorders m-1 my-4 pb-1">
                     {/* <h6 className='text-primary text-opacity-50'>DIVE STATS</h6> */}
