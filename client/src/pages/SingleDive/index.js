@@ -4,6 +4,10 @@ import { format, differenceInMinutes } from 'date-fns';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 
+import { Link } from 'react-router-dom';
+
+import DiveRating from '../../components/DiveRating';
+
 // import CommentList from '../../components/CommentList';
 // import CommentForm from '../../components/CommentForm';
 
@@ -82,6 +86,8 @@ const SingleDive = () => {
     return (
         <Container className="p-4" key={dive._id}>
 
+            <Link className='postAuthor px-4' to={`/profiles/${dive.diveAuthor}`}>{dive.diveAuthor}</Link>
+
             <Container className='diveDetails pt-3'>
 
                 {isAuthor && (
@@ -91,23 +97,22 @@ const SingleDive = () => {
                     </div>
                 )}
 
-                <Row className="formBorders m-1 pb-1">
-                    <Col>
-                        <div 
-                        // className="formBorders m-1 pb-1"
-                        >
+                <div className='formBorders m-1 pb-1'>
+                    <Row className="diveDetailsLocation ">
+                        <Col>
                             <h1 className='text-primary text-opacity-50'>{dive.diveSite}</h1>
-                            <div className='diveStats'>
-                                <h6 className='text-primary text-opacity-50'>DIVE DATE:</h6>
-                                <p>{format(new Date(dive.diveDate), 'MMMM d, yyyy')}</p>
-                            </div>
-                        </div>
-                    </Col>
+                        </Col>
 
-                    <Col className='star-rating'>
-                    </Col>
-                </Row>
+                        <Col className='star-rating pb-2'>
+                            <DiveRating rating={dive.rating} />
+                        </Col>
+                    </Row>
 
+                    <div className='diveStats'>
+                        <h6 className='text-primary text-opacity-50'>DIVE DATE:</h6>
+                        <p>{format(new Date(dive.diveDate), 'MMMM d, yyyy')}</p>
+                    </div>
+                </div>
 
                 <div className="formBorders m-1 my-4 pb-1">
                     {/* <h6 className='text-primary text-opacity-50'>DIVE STATS</h6> */}
@@ -187,10 +192,10 @@ const SingleDive = () => {
 
                 <p className="formBorders diveDescription my-4"> {dive.diveText}</p>
 
-                <div className='d-flex justify-content-end'>
+                <div className='d-flex justify-content-end fw-light'>
+                    {/* <Link className='px-1 text-decoration-none' to={`/profiles/${dive.diveAuthor}`}>{dive.diveAuthor}</Link> */}
                     <p className="text-primary text-opacity-50">
-                        {dive.diveAuthor} {''}
-                        <span> posted on {dive.createdAt} </span>
+                        Posted on {dive.createdAt}
                     </p>
                 </div>
 

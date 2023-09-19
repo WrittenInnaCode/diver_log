@@ -146,6 +146,41 @@ input[type="radio"]{
     display: none;
 }
 
+/* these stars are the ones from the DiveRating */
+.star-rating {
+    font-size: 24px;
+  }
+  
+  .star-filled {
+    color: #ffc107;
+  }
+  
+  .star-empty {
+    color: #97cdf6c0;
+  }
+/*  */
+
+
+.postAuthor{
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.postAuthor:hover{
+    color: white;
+    text-decoration: underline;
+}
+
+
+@media screen and (max-width: 950px) {
+    .diveDetailsLocation {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+}
+
 @media screen and (max-width: 950px) {
     .diveStatsFlex {
         display: flex;
