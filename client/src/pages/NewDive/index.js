@@ -42,6 +42,7 @@ const NewDive = () => {
 	});
 
 	const [errorMessage, setErrorMessage] = useState('');
+	const [ratingError, setRatingError] = useState('');
 
 
 	const [addDive, { error }] = useMutation(ADD_DIVE, {
@@ -89,13 +90,16 @@ const NewDive = () => {
 	const handleFormSubmit = async (event) => {
 		event.preventDefault();
 
-
-		// Check if diveDate is null or empty
+		// Check if these fields are null or empty
 		if (!formData.diveDate || !formData.timeIn || !formData.timeOut) {
 			setErrorMessage("Please select the date and time before submitting the form.");
 			return; // Exit the function to prevent form submission
 		}
 
+		if (formData.rating === null) {
+			setRatingError('Please provide a rating for the dive.');
+			return;
+		}
 
 		try {
 			// if (edit) {
@@ -187,6 +191,7 @@ const NewDive = () => {
 			...prevData,
 			diveDate: date,
 		}));
+		setErrorMessage('');
 	};
 
 
@@ -195,6 +200,7 @@ const NewDive = () => {
 			...prevData,
 			timeIn: time,
 		}));
+		setErrorMessage('');
 	};
 
 	const handleTimeOutChange = (time) => {
@@ -202,6 +208,7 @@ const NewDive = () => {
 			...prevData,
 			timeOut: time,
 		}));
+		setErrorMessage('');
 	};
 
 	const calculateTotaDivelTime = (timeIn, timeOut) => {
@@ -233,7 +240,7 @@ const NewDive = () => {
 										<h6 className='text-primary text-opacity-50'>DIVE SITE</h6>
 										<Form.Group className="mb-3">
 											<Form.Control
-												// required
+												required
 												type="text"
 												placeholder="Enter the Dive Site name or location"
 												value={formData.diveSite}
@@ -246,9 +253,12 @@ const NewDive = () => {
 										<h6 className='text-primary text-opacity-50'>DIVE RATING</h6>
 										<StarRating
 											value={formData.rating}
-											// onChange={handleChange}
-											onChange={(newRating) => setFormData({ ...formData, rating: newRating })} // Update the rating in the form data
-										/>
+											onChange={(newRating) => {
+												setFormData({ ...formData, rating: newRating });
+												setRatingError(''); // Clear the rating error when the user selects a rating
+											}} />
+										{ratingError && <p style={{ color: 'red' }}>{ratingError}</p>}
+
 									</Col>
 								</Row>
 
@@ -297,6 +307,7 @@ const NewDive = () => {
 									<Form.Group className="mb-3" >
 										<Form.Label>Start Pressure</Form.Label>
 										<Form.Control
+											required
 											type="text"
 											placeholder="PSI"
 											value={formData.startPsi}
@@ -307,6 +318,7 @@ const NewDive = () => {
 									<Form.Group className="mb-3" >
 										<Form.Label>End Pressure</Form.Label>
 										<Form.Control
+											required
 											type="text"
 											placeholder="PSI"
 											value={formData.endPsi}

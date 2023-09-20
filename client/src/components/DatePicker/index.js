@@ -7,6 +7,7 @@ function MyDatePicker({ diveDate, handleDateChange }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePicker
+      required
         label="Select Dive Date"
         disableFuture
         name="diveDate"
