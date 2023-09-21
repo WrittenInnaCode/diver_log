@@ -5,6 +5,8 @@ export const QUERY_USERS = gql`
 		users {
 			username
 			email
+      avatar
+      userBio
 			_id
 		}
 	}
@@ -16,6 +18,8 @@ export const QUERY_USER = gql`
       _id
       username
       email
+      avatar
+      userBio
       dives {
         _id
         diveSite
@@ -33,6 +37,7 @@ export const QUERY_USER = gql`
         maxDepth
         weights
         rating
+        divePhoto
         diveAuthor
         createdAt
     }
@@ -47,6 +52,8 @@ export const QUERY_ME = gql`
       _id
       username
       email
+      avatar
+      userBio
       dives {
         _id
         diveSite
@@ -64,6 +71,7 @@ export const QUERY_ME = gql`
         maxDepth
         weights
         rating
+        divePhoto
         diveAuthor
         createdAt
     }
@@ -91,6 +99,7 @@ export const QUERY_DIVES = gql`
       maxDepth
       weights
       rating
+      divePhoto
       diveAuthor
       createdAt
     }
@@ -117,6 +126,7 @@ export const QUERY_SINGLE_DIVE = gql`
       maxDepth
       weights
       rating
+      divePhoto
       diveAuthor
       createdAt
       comments {

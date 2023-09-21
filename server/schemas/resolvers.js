@@ -33,8 +33,8 @@ const resolvers = {
 	},
 
 	Mutation: {
-		addUser: async (parent, { username, email, password }) => {
-			const user = await User.create({ username, email, password });
+		addUser: async (parent, { username, email, password, avatar, userBio }) => {
+			const user = await User.create({ username, email, password, avatar, userBio });
 			const token = signToken(user);
 			return { token, user };
 		},
@@ -57,7 +57,23 @@ const resolvers = {
 			return { token, user };
 		},
 
-		addDive: async (parent, { diveSite, diveDate, timeIn, timeOut, startPsi, endPsi, diveText, diveBuddy, diveLife, temperature, visibility, current, maxDepth, weights, rating, // diveImage
+		addDive: async (parent, {
+			diveSite,
+			diveDate,
+			timeIn,
+			timeOut,
+			startPsi,
+			endPsi,
+			diveText,
+			diveBuddy,
+			diveLife,
+			temperature,
+			visibility,
+			current,
+			maxDepth,
+			weights,
+			rating,
+			divePhoto
 		}, context) => {
 			if (context.user) {
 				const dive = await Dive.create({
@@ -76,7 +92,7 @@ const resolvers = {
 					weights,
 					rating,
 					diveBuddy,
-					// diveImage,
+					divePhoto,
 					diveAuthor: context.user.username,
 				});
 
@@ -125,7 +141,25 @@ const resolvers = {
 			throw new AuthenticationError('You need to be logged in!');
 		},
 
-		editDive: async (parent, { diveId, diveSite, diveDate, timeIn, timeOut, startPsi, endPsi, diveText, diveBuddy, diveLife, temperature, visibility, current, maxDepth, weights, rating, diveImage }, context) => {
+		editDive: async (parent, { 
+			diveId, 
+			diveSite, 
+			diveDate, 
+			timeIn, 
+			timeOut, 
+			startPsi, 
+			endPsi, 
+			diveText, 
+			diveBuddy, 
+			diveLife, 
+			temperature, 
+			visibility, 
+			current, 
+			maxDepth, 
+			weights, 
+			rating, 
+			divePhoto 
+		}, context) => {
 			if (context.user) {
 				const dive = await Dive.findByIdAndUpdate(diveId, {
 					$set: {
@@ -145,7 +179,7 @@ const resolvers = {
 						maxDepth,
 						weights,
 						rating,
-						// diveImage,
+						divePhoto
 					}
 				});
 				return dive;

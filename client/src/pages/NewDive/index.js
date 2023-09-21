@@ -87,6 +87,7 @@ const NewDive = () => {
 
 
 
+// ---------------------------------form submit--------------------------------- //
 	const handleFormSubmit = async (event) => {
 		event.preventDefault();
 
@@ -100,6 +101,13 @@ const NewDive = () => {
 			setRatingError('Please provide a rating for the dive.');
 			return;
 		}
+
+		if (formData.timeOut < formData.timeIn) {
+			setErrorMessage("Are you sure you ended the dive before it started?");
+			return;
+		  }
+
+
 
 		try {
 			// if (edit) {
@@ -211,7 +219,8 @@ const NewDive = () => {
 		setErrorMessage('');
 	};
 
-	const calculateTotaDivelTime = (timeIn, timeOut) => {
+
+	const calculateTotalDiveTime = (timeIn, timeOut) => {
 		if (!timeIn || !timeOut) {
 			return null; // If either timeIn or timeOut is not set, return null indicating invalid input
 		}

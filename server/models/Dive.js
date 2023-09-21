@@ -78,9 +78,9 @@ const diveSchema = new Schema({
         // min: 1, 
         // max: 5, 
     },
-    // diveImage: {
-    //     type: String,
-    // },
+    divePhoto: {
+        type: String,
+    },
     createdAt: {
         type: Date,
         default: Date.now,

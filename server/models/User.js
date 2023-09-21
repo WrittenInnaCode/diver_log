@@ -18,6 +18,14 @@ const userSchema = new Schema(
 			type: String,
 			required: true,
 		},
+		avatar:{
+			type: String,
+			default: 'https://res.cloudinary.com/dbudwdvhb/image/upload/v1676680902/hux6zkykufuxkgsy6xha.png',
+		},
+		userBio:{
+			type: String,
+			default: '',
+		},
 		dives: [
 			{
 			  type: Schema.Types.ObjectId,
