@@ -18,20 +18,20 @@ const userSchema = new Schema(
 			type: String,
 			required: true,
 		},
-		avatar:{
+		avatar: {
 			type: String,
 			default: 'https://res.cloudinary.com/dbudwdvhb/image/upload/v1676680902/hux6zkykufuxkgsy6xha.png',
 		},
-		userBio:{
+		userBio: {
 			type: String,
 			default: '',
 		},
 		dives: [
 			{
-			  type: Schema.Types.ObjectId,
-			  ref: 'Dive',
+				type: Schema.Types.ObjectId,
+				ref: 'Dive',
 			},
-		  ],
+		],
 	},
 	// set this to use virtual below
 	{

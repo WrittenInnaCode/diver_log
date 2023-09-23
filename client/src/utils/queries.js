@@ -40,7 +40,7 @@ export const QUERY_USER = gql`
         divePhoto
         diveAuthor
         createdAt
-    }
+       }
     }
   }
 `;
@@ -74,7 +74,7 @@ export const QUERY_ME = gql`
         divePhoto
         diveAuthor
         createdAt
-    }
+      }
     }
   }
 `;
@@ -137,4 +137,4 @@ export const QUERY_SINGLE_DIVE = gql`
       }
     }
   }
-`;
+  `;

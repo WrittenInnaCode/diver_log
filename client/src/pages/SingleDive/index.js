@@ -1,7 +1,7 @@
 import React from 'react';
 import { format, differenceInMinutes } from 'date-fns';
 
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 
 import { Link } from 'react-router-dom';
@@ -11,7 +11,7 @@ import DiveRating from '../../components/DiveRating';
 // import CommentList from '../../components/CommentList';
 // import CommentForm from '../../components/CommentForm';
 
-import { QUERY_SINGLE_DIVE } from '../../utils/queries';
+import { QUERY_SINGLE_DIVE, QUERY_USER } from '../../utils/queries';
 import { REMOVE_DIVE } from '../../utils/mutations';
 
 import Auth from '../../utils/auth';
@@ -20,6 +20,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Image from 'react-bootstrap/Image';
 
 
 const SingleDive = () => {
@@ -32,7 +33,6 @@ const SingleDive = () => {
     });
 
     const [removeDive] = useMutation(REMOVE_DIVE);
-    // const navigate = useNavigate();
 
     const dive = data?.dive || {};
 
@@ -73,20 +73,35 @@ const SingleDive = () => {
     };
 
 
-    if (loading) {
+    // Fetch the user data to get the user's avatar
+    const { loading: userLoading, data: userData, error: userError } = useQuery(QUERY_USER, {
+        variables: { username: dive.diveAuthor },
+    });
+
+    if (loading || userLoading) {
         return <div>Loading...</div>;
     }
 
-    if (error) {
-        // If an error occurred while fetching the dive data
-        console.error('Error fetching dive:', error);
-        return <div>Error loading dive data</div>;
+    if (error || userError) {
+        console.error('Error fetching data:', error || userError);
+        return <div>Error loading data</div>;
     }
+    // Access the user data and avatar here
+    const user = userData.user;
+
+
 
     return (
         <Container className="p-4" key={dive._id}>
 
-            <Link className='postAuthor px-4' to={`/profiles/${dive.diveAuthor}`}>{dive.diveAuthor}</Link>
+            <Link className='postAuthor px-2' to={`/profiles/${dive.diveAuthor}`}>
+                <Image rounded
+                    src={user.avatar}
+                    alt={`${user.username}'s Avatar`}
+                    style={{ width: '35px', height: '35px' }} />
+
+                {dive.diveAuthor}
+            </Link>
 
             <Container className='diveDetails pt-3'>
 

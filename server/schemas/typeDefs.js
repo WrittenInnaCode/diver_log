@@ -6,9 +6,9 @@ const typeDefs = gql`
 		username: String
 		email: String
 		password: String
-		avatar: String
-		userBio: String
 		dives: [Dive]!
+		avatar: String
+  		userBio: String
 	}
 
 	type Dive {
@@ -50,7 +50,7 @@ const typeDefs = gql`
 		users: [User]
 		user(username: String!): User
 		dives(username: String): [Dive]
-    	dive(diveId: ID!): Dive
+		dive(diveId: ID!): Dive
 		me: User
 	}
 
@@ -60,9 +60,9 @@ const typeDefs = gql`
 		username: String!, 
 		email: String!, 
 		password: String!, 
-		avatar: String, 
-		userBio: String
-		): Auth
+		avatar: String!
+  		userBio: String!): Auth
+
 		login(email: String!, password: String!): Auth
 
 		addDive(
@@ -84,9 +84,6 @@ const typeDefs = gql`
 			divePhoto: String!
 			): Dive
 
-    	addComment(diveId: ID!, commentText: String!): Dive
-    	removeDive(diveId: ID!): Dive
-
 		editDive(
 			diveId: ID!, 
 			diveSite: String!, 
@@ -107,6 +104,10 @@ const typeDefs = gql`
 			divePhoto: String!
 			): Dive
 
+		removeDive(diveId: ID!): Dive
+
+    	addComment(diveId: ID!, commentText: String!): Dive
+    
     	removeComment(diveId: ID!, commentId: ID!): Dive
 	}
 `;

@@ -1,16 +1,14 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Dive } = require('../models');
+const { User, Dive, About } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
 	Query: {
 		users: async () => {
-			// return await User.find({}).select('-password');
-			// return User.find().populate('dives');
 			return await User.find({}).select('-password').populate('dives');
 		},
 		user: async (parent, { username }) => {
-			return User.findOne({ username }).populate('dives');
+			return User.findOne({ username }).select('-password').populate('dives');
 		},
 		dives: async (parent, { username }) => {
 			const params = username ? { username } : {};
@@ -22,12 +20,8 @@ const resolvers = {
 		me: async (parent, args, context) => {
 			if (context.user) {
 				const userData = await User.findOne({ _id: context.user._id }).select('-__v -password').populate('dives');
-				// const userData = await User.findOne({ _id: context.user._id }).populate('dives')
-				// .select('-__v -password');
-
 				return userData;
 			}
-
 			throw new AuthenticationError('Not logged in');
 		}
 	},
@@ -141,24 +135,24 @@ const resolvers = {
 			throw new AuthenticationError('You need to be logged in!');
 		},
 
-		editDive: async (parent, { 
-			diveId, 
-			diveSite, 
-			diveDate, 
-			timeIn, 
-			timeOut, 
-			startPsi, 
-			endPsi, 
-			diveText, 
-			diveBuddy, 
-			diveLife, 
-			temperature, 
-			visibility, 
-			current, 
-			maxDepth, 
-			weights, 
-			rating, 
-			divePhoto 
+		editDive: async (parent, {
+			diveId,
+			diveSite,
+			diveDate,
+			timeIn,
+			timeOut,
+			startPsi,
+			endPsi,
+			diveText,
+			diveBuddy,
+			diveLife,
+			temperature,
+			visibility,
+			current,
+			maxDepth,
+			weights,
+			rating,
+			divePhoto
 		}, context) => {
 			if (context.user) {
 				const dive = await Dive.findByIdAndUpdate(diveId, {
