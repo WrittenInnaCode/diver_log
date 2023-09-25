@@ -15,33 +15,37 @@ export const QUERY_USERS = gql`
 export const QUERY_USER = gql`
   query user($username: String!) {
     user(username: $username) {
+    _id
+    username
+    avatar
+    userBio
+    email
+    dives {
       _id
-      username
-      email
-      avatar
-      userBio
-      dives {
+      createdAt
+      current
+      diveBuddy
+      diveDate
+      diveLife
+     # divePhoto
+      diveSite
+      diveText
+      endPsi
+      maxDepth
+      rating
+      startPsi
+      temperature
+      timeIn
+      timeOut
+      visibility
+      weights
+     # diveAuthor
+      author {
+        username
         _id
-        diveSite
-        diveDate
-        timeIn
-        timeOut
-        startPsi
-        endPsi
-        diveText
-        diveBuddy
-        diveLife
-        temperature
-        visibility
-        current
-        maxDepth
-        weights
-        rating
-        divePhoto
-        diveAuthor
-        createdAt
-       }
+      }
     }
+  }
   }
 `;
 
@@ -49,33 +53,37 @@ export const QUERY_USER = gql`
 export const QUERY_ME = gql`
   query me {
     me {
+    _id
+    avatar
+    email
+    userBio
+    username
+    dives {
       _id
-      username
-      email
-      avatar
-      userBio
-      dives {
-        _id
-        diveSite
-        diveDate
-        timeIn
-        timeOut
-        startPsi
-        endPsi
-        diveText
-        diveBuddy
-        diveLife
-        temperature
-        visibility
-        current
-        maxDepth
-        weights
-        rating
-        divePhoto
-        diveAuthor
-        createdAt
+      createdAt
+      current
+      diveBuddy
+      diveDate
+      diveLife
+     # divePhoto
+      diveSite
+      diveText
+      endPsi
+      maxDepth
+      rating
+      startPsi
+      temperature
+      timeIn
+      timeOut
+      visibility
+      weights
+     # diveAuthor
+      author {
+       _id
+       username
       }
     }
+  }
   }
 `;
 
@@ -83,26 +91,35 @@ export const QUERY_ME = gql`
 export const QUERY_DIVES = gql`
   query getDives {
     dives {
+    _id
+    author {
       _id
-      diveSite
-      diveDate
-      timeIn
-      timeOut
-      startPsi
-      endPsi
-      diveText
-      diveBuddy
-      diveLife
-      temperature
-      visibility
-      current
-      maxDepth
-      weights
-      rating
-      divePhoto
-      diveAuthor
-      createdAt
+      username
+      avatar
     }
+    comments {
+      commentAuthor {
+        username
+      }
+      commentText
+    }
+    createdAt
+    current
+    diveBuddy
+    diveDate
+    diveLife
+    diveSite
+    diveText
+    endPsi
+    maxDepth
+    rating
+    startPsi
+    temperature
+    timeIn
+    timeOut
+    visibility
+    weights
+  }
   }
 `;
 
@@ -111,30 +128,34 @@ export const QUERY_SINGLE_DIVE = gql`
   query getSingleDive($diveId: ID!) {
     dive(diveId: $diveId) {
       _id
-      diveSite
+      createdAt
+      current
+      diveBuddy
       diveDate
+      diveLife
+      diveSite
+      diveText
+      endPsi
+      maxDepth
+      rating
+      startPsi
+      temperature
       timeIn
       timeOut
-      startPsi
-      endPsi
-      diveText
-      diveBuddy
-      diveLife
-      temperature
       visibility
-      current
-      maxDepth
       weights
-      rating
-      divePhoto
-      diveAuthor
-      createdAt
+      author {
+        _id
+        username
+        avatar
+      }
       comments {
         _id
         commentText
-        commentAuthor
-        createdAt
+        commentAuthor {
+          username
+        }
       }
     }
   }
-  `;
+`;

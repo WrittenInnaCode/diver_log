@@ -36,20 +36,17 @@ const diveSchema = new Schema({
         // minlength: 1,
         trim: true,
     },
-    diveAuthor: {
-        type: String,
+    author: {
+        type: Schema.Types.ObjectId, 
+        ref: 'User',
         required: true,
-        trim: true,
     },
     diveBuddy: {
         type: String,
-        // required: 'You need a Buddy!',
-        // minlength: 1,
         trim: true,
     },
     diveLife: {
         type: String,
-        // minlength: 1,
         trim: true,
     },
     temperature: {
@@ -78,9 +75,9 @@ const diveSchema = new Schema({
         // min: 1, 
         // max: 5, 
     },
-    divePhoto: {
-        type: String,
-    },
+    // divePhoto: {
+    //     type: String,
+    // },
     createdAt: {
         type: Date,
         default: Date.now,
@@ -94,7 +91,8 @@ const diveSchema = new Schema({
                 minlength: 1,
             },
             commentAuthor: {
-                type: String,
+                type: Schema.Types.ObjectId,
+                ref: 'User',
                 required: true,
             },
             createdAt: {

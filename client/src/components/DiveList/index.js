@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import { format } from 'date-fns'
 import Pagination from 'react-bootstrap/Pagination';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
+
+import Image from 'react-bootstrap/Image';
 
 const DiveList = ({
   dives,
@@ -36,19 +38,17 @@ const DiveList = ({
     <Container>
       {showTitle && <h3>{title}</h3>}
 
-      {/* {dives && dives.map((dive) => ( */}
       {currentDives.map((dive) => (
 
-        <Card key={dive._id}
-          className="m-3"
-        >
+        <Card key={dive._id} className="m-3">
           <Card.Body className='diveCard'>
             <Card.Title>
               {showUsername ? (
                 <>
                 {/* viewing ALL dives by all users */}
-                  <Link to={`/profiles/${dive.diveAuthor}`} >
-                    {dive.diveAuthor} {''}
+                  <Link to={`/profiles/${dive.author?.username}`} >
+                  <Image src={dive.author?.avatar} alt={`${dive.author?.username}'s Avatar`} style={{ width: '35px', height: '35px' }} />
+                    {dive.author.username} {''}
                   </Link>
                   <span>went diving in</span>
                   <Link to={`/dives/${dive._id}`}>

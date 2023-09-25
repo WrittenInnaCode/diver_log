@@ -28,8 +28,8 @@ const typeDefs = gql`
         maxDepth: String
         weights: String
 		rating: Int
-		divePhoto: String
-    	diveAuthor: String
+		#divePhoto: String
+		author: User
     	createdAt: String
     	comments: [Comment]!
   	}
@@ -37,7 +37,7 @@ const typeDefs = gql`
   	type Comment {
     	_id: ID
     	commentText: String
-    	commentAuthor: String
+    	commentAuthor: User
     	createdAt: String
   	}
 
@@ -59,12 +59,14 @@ const typeDefs = gql`
 		addUser(
 		username: String!, 
 		email: String!, 
-		password: String!, 
-		avatar: String!
-  		userBio: String!): Auth
+		password: String!): Auth
 
 		login(email: String!, password: String!): Auth
 
+		updateUserAvatar(avatar: String!): User
+		
+		updateUserBio(userBio: String!): User
+		
 		addDive(
 			diveSite: String!, 
 			diveDate: String!, 
@@ -81,7 +83,7 @@ const typeDefs = gql`
             maxDepth: String!, 
             weights: String!,
 			rating: Int!,
-			divePhoto: String!
+			#divePhoto: String!
 			): Dive
 
 		editDive(
@@ -101,7 +103,7 @@ const typeDefs = gql`
             maxDepth: String!, 
             weights: String!,
 			rating: Int!,
-			divePhoto: String!
+			#divePhoto: String!
 			): Dive
 
 		removeDive(diveId: ID!): Dive

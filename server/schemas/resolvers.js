@@ -27,8 +27,8 @@ const resolvers = {
 	},
 
 	Mutation: {
-		addUser: async (parent, { username, email, password, avatar, userBio }) => {
-			const user = await User.create({ username, email, password, avatar, userBio });
+		addUser: async (parent, { username, email, password}) => {
+			const user = await User.create({ username, email, password });
 			const token = signToken(user);
 			return { token, user };
 		},
@@ -51,6 +51,32 @@ const resolvers = {
 			return { token, user };
 		},
 
+
+		updateUserAvatar: async (_, { avatar }, { user }) => {
+			if (!user) {
+				throw new Error("You must be authenticated to update your avatar.");
+			}
+			// Update the user's avatar in the database
+			user.avatar = avatar;
+
+			// Save the updated user in the database
+			await user.save();
+
+			return user;
+		},
+
+		updateUserBio: async (_, { userBio }, { user }) => {
+			if (!user) {
+				throw new Error("You must be authenticated to update your userBio.");
+			}
+
+			user.userBio = userBio;
+
+			await user.save();
+
+			return user;
+		},
+
 		addDive: async (parent, {
 			diveSite,
 			diveDate,
@@ -67,7 +93,7 @@ const resolvers = {
 			maxDepth,
 			weights,
 			rating,
-			divePhoto
+			// divePhoto
 		}, context) => {
 			if (context.user) {
 				const dive = await Dive.create({
@@ -86,8 +112,8 @@ const resolvers = {
 					weights,
 					rating,
 					diveBuddy,
-					divePhoto,
-					diveAuthor: context.user.username,
+					// divePhoto,
+					author: context.user._id,
 				});
 
 				await User.findOneAndUpdate(
@@ -122,7 +148,7 @@ const resolvers = {
 			if (context.user) {
 				const dive = await Dive.findOneAndDelete({
 					_id: diveId,
-					diveAuthor: context.user.username,
+					author: context.user._id,
 				});
 
 				await User.findOneAndUpdate(
@@ -152,7 +178,7 @@ const resolvers = {
 			maxDepth,
 			weights,
 			rating,
-			divePhoto
+			// divePhoto
 		}, context) => {
 			if (context.user) {
 				const dive = await Dive.findByIdAndUpdate(diveId, {
@@ -173,7 +199,7 @@ const resolvers = {
 						maxDepth,
 						weights,
 						rating,
-						divePhoto
+						// divePhoto
 					}
 				});
 				return dive;
@@ -200,6 +226,18 @@ const resolvers = {
 		},
 
 	},
+
+	Dive: {
+		author: async (dive, args, context) => {
+		  try {
+			const user = await User.findById(dive.author);
+			return user;
+		  } catch (error) {
+			throw new Error('Error fetching dive author: ' + error.message);
+		  }
+		},
+	  },
+
 };
 
 module.exports = resolvers;

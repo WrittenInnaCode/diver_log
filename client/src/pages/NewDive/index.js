@@ -142,12 +142,12 @@ const NewDive = () => {
 					maxDepth,
 					weights,
 					rating,
-
+					// author: Auth.getProfile().data.username,
 					diveAuthor: Auth.getProfile().data.username,
 				},
 			});
 
-			// console.log('Newly created dive:', data);
+			console.log('Newly created dive:', data);
 
 			if (data && data.addDive && data.addDive._id) {
 

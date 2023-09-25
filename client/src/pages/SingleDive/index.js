@@ -11,7 +11,7 @@ import DiveRating from '../../components/DiveRating';
 // import CommentList from '../../components/CommentList';
 // import CommentForm from '../../components/CommentForm';
 
-import { QUERY_SINGLE_DIVE, QUERY_USER } from '../../utils/queries';
+import { QUERY_SINGLE_DIVE } from '../../utils/queries';
 import { REMOVE_DIVE } from '../../utils/mutations';
 
 import Auth from '../../utils/auth';
@@ -46,7 +46,11 @@ const SingleDive = () => {
 
 
     // Check if the currently logged-in user is the author of the dive
-    const isAuthor = Auth.loggedIn() && Auth.getProfile().data.username === dive.diveAuthor;
+    const userLoggedIn = Auth.loggedIn();
+    const userProfile = Auth.getProfile().data;
+
+    const isAuthor = userLoggedIn && userProfile && userProfile.username === (dive.author?.username);
+    // const isAuthor = Auth.loggedIn() && Auth.getProfile().data.username === dive.author.username;
 
 
     const handleDelete = async (diveId) => {
@@ -73,34 +77,26 @@ const SingleDive = () => {
     };
 
 
-    // Fetch the user data to get the user's avatar
-    const { loading: userLoading, data: userData, error: userError } = useQuery(QUERY_USER, {
-        variables: { username: dive.diveAuthor },
-    });
-
-    if (loading || userLoading) {
+    if (loading) {
         return <div>Loading...</div>;
     }
 
-    if (error || userError) {
-        console.error('Error fetching data:', error || userError);
+    if (error) {
+        console.error('Error fetching data:', error);
         return <div>Error loading data</div>;
     }
-    // Access the user data and avatar here
-    const user = userData.user;
-
 
 
     return (
         <Container className="p-4" key={dive._id}>
 
-            <Link className='postAuthor px-2' to={`/profiles/${dive.diveAuthor}`}>
+            <Link className='postAuthor px-2' to={`/profiles/${dive.author.username}`}>
                 <Image rounded
-                    src={user.avatar}
-                    alt={`${user.username}'s Avatar`}
+                    src={dive.author.avatar}
+                    alt={`${dive.author.username}'s Avatar`}
                     style={{ width: '35px', height: '35px' }} />
 
-                {dive.diveAuthor}
+                {dive.author.username}
             </Link>
 
             <Container className='diveDetails pt-3'>
@@ -157,7 +153,6 @@ const SingleDive = () => {
                         </Col>
                     </Row>
 
-
                     <Row className='diveStatsFlex pb-1'>
                         <Col>
                             <div className='diveStats'>
@@ -191,9 +186,6 @@ const SingleDive = () => {
 
                     </Row>
 
-
-
-
                     <div className='diveStats'>
                         <h6 className='text-primary text-opacity-50'>MY DIVE BUDDY:</h6>
                         <p>{dive.diveBuddy} </p>
@@ -208,7 +200,7 @@ const SingleDive = () => {
                 <p className="formBorders diveDescription my-4"> {dive.diveText}</p>
 
                 <div className='d-flex justify-content-end fw-light'>
-                    {/* <Link className='px-1 text-decoration-none' to={`/profiles/${dive.diveAuthor}`}>{dive.diveAuthor}</Link> */}
+                    {/* <Link className='px-1 text-decoration-none' to={`/profiles/${dive.author}`}>{dive.author}</Link> */}
                     <p className="text-primary text-opacity-50">
                         Posted on {dive.createdAt}
                     </p>
