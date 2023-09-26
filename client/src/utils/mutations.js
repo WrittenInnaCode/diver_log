@@ -24,9 +24,17 @@ export const ADD_USER = gql`
   }
 `;
 
+export const UPDATE_BIO = gql`
+  mutation updateUserBio($userBio: String!) {
+  updateUserBio(userBio: $userBio) {
+    _id
+    userBio
+  }
+}
+`;
 
 export const ADD_DIVE = gql`
-mutation Mutation($diveSite: String!, $diveDate: String!, $timeIn: String!, $timeOut: String!, $startPsi: String!, $endPsi: String!, $diveText: String!, $diveBuddy: String!, $diveLife: String!, $temperature: String!, $visibility: String!, $current: String!, $maxDepth: String!, $weights: String!, $rating: Int!) {
+mutation addDive($diveSite: String!, $diveDate: String!, $timeIn: String!, $timeOut: String!, $startPsi: String!, $endPsi: String!, $diveText: String!, $diveBuddy: String!, $diveLife: String!, $temperature: String!, $visibility: String!, $current: String!, $maxDepth: String!, $weights: String!, $rating: Int!) {
   addDive(diveSite: $diveSite, diveDate: $diveDate, timeIn: $timeIn, timeOut: $timeOut, startPsi: $startPsi, endPsi: $endPsi, diveText: $diveText, diveBuddy: $diveBuddy, diveLife: $diveLife, temperature: $temperature, visibility: $visibility, current: $current, maxDepth: $maxDepth, weights: $weights, rating: $rating) {
     _id
     createdAt

@@ -65,17 +65,23 @@ const resolvers = {
 			return user;
 		},
 
-		updateUserBio: async (_, { userBio }, { user }) => {
-			if (!user) {
-				throw new Error("You must be authenticated to update your userBio.");
+		updateUserBio: async (_, { userBio }, context) => {
+			try {
+			  if (!context.user) {
+				throw new Error('You must be authenticated to update your bio.');
+			  }
+	  
+			  const updatedUser = await User.findByIdAndUpdate(
+				context.user._id,
+				{ userBio },
+				{ new: true } // Return the updated user
+			  );
+	  
+			  return updatedUser;
+			} catch (error) {
+			  throw new Error(`Failed to update user bio: ${error.message}`);
 			}
-
-			user.userBio = userBio;
-
-			await user.save();
-
-			return user;
-		},
+		  },
 
 		addDive: async (parent, {
 			diveSite,

@@ -1,20 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 
 import DiveList from '../../components/DiveList';
 
 import { QUERY_USER, QUERY_ME } from '../../utils/queries';
+import { UPDATE_BIO } from '../../utils/mutations';
 
 import Auth from '../../utils/auth';
 
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+
+import { MdSettings } from 'react-icons/md'; //edit button gear icon
 
 
 const Profile = () => {
 
   const { username: userParam } = useParams();
+
+  const navigate = useNavigate();
 
   const { loading, error, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
@@ -22,15 +31,42 @@ const Profile = () => {
 
   const user = data?.me || data?.user || {};
 
-  const numDives = (user.dives ?? []).length;
+  const [show, setShow] = useState(false);
 
-  const navigate = useNavigate();
+  const [bio, setBio] = useState(() => user?.userBio || '');
+
+  const handleClose = () => setShow(false);
+
+  const handleShow = () => {
+    // When Edit button is clicked, set `bio` state with the user's existing bio data
+    setBio(user?.userBio || '');
+    setShow(true);
+  };
+
+
+  const [updateBio] = useMutation(UPDATE_BIO, {
+    onCompleted: (data) => {
+      const updatedBio = data.updateUserBio.userBio;
+      setBio(updatedBio); // Update the bio in the component state
+      handleClose();
+    },
+  });
+
 
   useEffect(() => {
     if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
       return navigate("/me");
     }
-  });
+  }, [navigate, userParam]);
+
+  const handleBioSave = () => {
+    updateBio({ variables: { userBio: bio } });
+  };
+
+  const isProfileOwner = Auth.loggedIn() && Auth.getProfile().data.username === user.username;
+
+
+  const numDives = (user.dives ?? []).length;
 
   // Create a new array by sorting the dives based on the dive date property
   const sortedDives = (user.dives || []).slice().sort((a, b) => new Date(b.diveDate) - new Date(a.diveDate));
@@ -59,15 +95,43 @@ const Profile = () => {
         Viewing {userParam ? `${user.username}'s` : 'your'} profile.
       </h2> */}
 
-      <Container className="userDetails p-4 d-flex">
-        <Image
-          src={user.avatar}
-          alt={`${user.username}'s Avatar`}
-          style={{ width: '150px', height: '150px' }} />
-        <div className='ps-3 fw-bolder pt-2'>
-          <h3 className='text-primary text-opacity-50 pb-3'>{`${user.username}`}</h3>
-          <p>{numDives} dives logged</p>
-          <p>Max depth: {maxDepth} FT</p>
+      <Container fluid className="userInfo">
+        <div className='d-flex '>
+          <div>
+            <Image className='userAvatar'
+              src={user.avatar}
+              alt={`${user.username}'s Avatar`} />
+          </div>
+
+          <div className='userDetails ps-3 pt-2'>
+
+            <div className='d-flex justify-content-between'>
+              <h3 className='text-primary text-opacity-50 pb-3'>{`${user.username}`}</h3>
+
+              {/* Edit Profile Button */}
+              {isProfileOwner && (
+                <div className='px-2'>
+                  <Button variant="outline-light" size="sm" className='d-flex justify-content-end'
+                    onClick={handleShow}>
+                    <MdSettings className='profileSettings' />
+                  </Button>
+                </div>
+              )}
+
+            </div>
+
+            {user.userBio && (
+              <div>
+                <p className='userBio'>{user.userBio}</p>
+              </div>
+            )}
+
+            <div className='d-flex fw-bolder'>
+              <p className='pe-2'>{numDives} dives logged</p>
+              <p className='ps-2'>Max depth: {maxDepth} FT</p>
+            </div>
+
+          </div>
         </div>
       </Container>
 
@@ -81,6 +145,38 @@ const Profile = () => {
           showUsername={false}
         />
       </Container>
+
+
+
+      <Modal show={show} onHide={handleClose} centered className='avatarModal'>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Profile</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group
+              className="mb-3"
+            >
+              <Form.Label>Bio</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={2}
+                placeholder="Tell us a little bit about yourself"
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" type="submit" onClick={handleBioSave}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
     </Container>
   )

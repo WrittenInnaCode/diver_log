@@ -147,7 +147,7 @@ const NewDive = () => {
 				},
 			});
 
-			console.log('Newly created dive:', data);
+			// console.log('Newly created dive:', data);
 
 			if (data && data.addDive && data.addDive._id) {
 
