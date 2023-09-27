@@ -52,18 +52,23 @@ const resolvers = {
 		},
 
 
-		updateUserAvatar: async (_, { avatar }, { user }) => {
-			if (!user) {
-				throw new Error("You must be authenticated to update your avatar.");
-			}
-			// Update the user's avatar in the database
-			user.avatar = avatar;
-
-			// Save the updated user in the database
-			await user.save();
-
-			return user;
-		},
+		updateUserAvatar: async (_, { avatar }, context) => {
+			try {
+				if (!context.user) {
+				  throw new Error('You must be authenticated to update your avatar.');
+				}
+		
+				const updatedUser = await User.findByIdAndUpdate(
+				  context.user._id,
+				  { avatar },
+				  { new: true } // Return the updated user
+				);
+		
+				return updatedUser;
+			  } catch (error) {
+				throw new Error(`Failed to update user's avatar: ${error.message}`);
+			  }
+			},
 
 		updateUserBio: async (_, { userBio }, context) => {
 			try {

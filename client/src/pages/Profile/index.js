@@ -4,9 +4,11 @@ import { useQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
 
 import DiveList from '../../components/DiveList';
+import UploadWidget from '../../components/UploadWidget';
 
 import { QUERY_USER, QUERY_ME } from '../../utils/queries';
 import { UPDATE_BIO } from '../../utils/mutations';
+import { UPDATE_AVATAR } from '../../utils/mutations';
 
 import Auth from '../../utils/auth';
 
@@ -34,6 +36,7 @@ const Profile = () => {
   const [show, setShow] = useState(false);
 
   const [bio, setBio] = useState(() => user?.userBio || '');
+  const [avatar, setAvatar] = useState(() => user?.avatar || '')
 
   const handleClose = () => setShow(false);
 
@@ -52,6 +55,14 @@ const Profile = () => {
     },
   });
 
+  const [updateAvatar] = useMutation(UPDATE_AVATAR, {
+    onCompleted: (data) => {
+      const updatedAvatar = data.updateUserAvatar.avatar;
+      setAvatar(updatedAvatar);
+      handleClose();
+    },
+  });
+
 
   useEffect(() => {
     if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
@@ -59,8 +70,34 @@ const Profile = () => {
     }
   }, [navigate, userParam]);
 
-  const handleBioSave = () => {
-    updateBio({ variables: { userBio: bio } });
+  
+  const handleProfileSave = () => {
+    // Update bio
+    updateBio({ variables: { userBio: bio } })
+      .then((bioResult) => {
+        // Handle success or error for bio update here
+        const updatedBio = bioResult.data.updateUserBio.userBio;
+        setBio(updatedBio); // Update the bio in the component state
+      })
+      .catch((bioError) => {
+        // Handle error for bio update here
+        console.error("Error updating bio:", bioError);
+      });
+
+    // Update avatar
+    updateAvatar({ variables: { avatar } })
+      .then((avatarResult) => {
+        // Handle success or error for avatar update here
+        const updatedAvatar = avatarResult.data.updateUserAvatar.avatar;
+        setAvatar(updatedAvatar);
+      })
+      .catch((avatarError) => {
+        // Handle error for avatar update here
+        console.error("Error updating avatar:", avatarError);
+      });
+
+    // Close the modal
+    handleClose();
   };
 
   const isProfileOwner = Auth.loggedIn() && Auth.getProfile().data.username === user.username;
@@ -98,7 +135,7 @@ const Profile = () => {
       <Container fluid className="userInfo">
         <div className='d-flex '>
           <div>
-            <Image className='userAvatar'
+            <Image className='userAvatar' rounded
               src={user.avatar}
               alt={`${user.username}'s Avatar`} />
           </div>
@@ -153,6 +190,7 @@ const Profile = () => {
           <Modal.Title>Edit Profile</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+
           <Form>
             <Form.Group
               className="mb-3"
@@ -166,13 +204,18 @@ const Profile = () => {
                 onChange={(e) => setBio(e.target.value)}
               />
             </Form.Group>
+
+            <Form.Group>
+              <UploadWidget setAvatar={setAvatar} avatar={avatar} />
+            </Form.Group>
           </Form>
+
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" type="submit" onClick={handleBioSave}>
+          <Button variant="primary" type="submit" onClick={handleProfileSave}>
             Save Changes
           </Button>
         </Modal.Footer>

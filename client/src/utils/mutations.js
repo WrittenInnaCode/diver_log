@@ -33,6 +33,15 @@ export const UPDATE_BIO = gql`
 }
 `;
 
+export const UPDATE_AVATAR = gql`
+ mutation updateUserAvatar($avatar: String!) {
+  updateUserAvatar(avatar: $avatar) {
+    _id
+    avatar
+  }
+}
+`;
+
 export const ADD_DIVE = gql`
 mutation addDive($diveSite: String!, $diveDate: String!, $timeIn: String!, $timeOut: String!, $startPsi: String!, $endPsi: String!, $diveText: String!, $diveBuddy: String!, $diveLife: String!, $temperature: String!, $visibility: String!, $current: String!, $maxDepth: String!, $weights: String!, $rating: Int!) {
   addDive(diveSite: $diveSite, diveDate: $diveDate, timeIn: $timeIn, timeOut: $timeOut, startPsi: $startPsi, endPsi: $endPsi, diveText: $diveText, diveBuddy: $diveBuddy, diveLife: $diveLife, temperature: $temperature, visibility: $visibility, current: $current, maxDepth: $maxDepth, weights: $weights, rating: $rating) {

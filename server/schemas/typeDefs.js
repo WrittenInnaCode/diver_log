@@ -66,7 +66,7 @@ const typeDefs = gql`
 		updateUserAvatar(avatar: String!): User
 		
 		updateUserBio(userBio: String!): User
-		
+
 		addDive(
 			diveSite: String!, 
 			diveDate: String!, 

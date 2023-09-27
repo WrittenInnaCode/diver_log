@@ -94,7 +94,7 @@ const SingleDive = () => {
                 <Image rounded
                     src={dive.author.avatar}
                     alt={`${dive.author.username}'s Avatar`}
-                    style={{ width: '35px', height: '35px' }} />
+                    style={{ maxWidth: '35px', maxHeight: '35px', marginRight:'5px' }} />
 
                 {dive.author.username}
             </Link>
