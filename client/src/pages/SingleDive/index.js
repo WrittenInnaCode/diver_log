@@ -96,7 +96,7 @@ const SingleDive = () => {
                 <Image roundedCircle
                     src={dive.author.avatar}
                     alt={`${dive.author.username}'s Avatar`}
-                    style={{ maxWidth: '35px', maxHeight: '35px', marginRight:'5px' }} />
+                    style={{ maxWidth: '35px', maxHeight: '35px', marginRight: '5px' }} />
 
                 {dive.author.username}
             </Link>
@@ -126,6 +126,16 @@ const SingleDive = () => {
                         <p>{format(new Date(dive.diveDate), 'MMMM d, yyyy')}</p>
                     </div>
                 </div>
+
+                {dive.divePhoto.map((photoUrl, index) => (
+                    <div className='formBorders m-1 pb-1' key={index}>
+                        <Image
+                            src={photoUrl} 
+                            alt={`Dive Photo ${index + 1}`}
+                            />
+                    </div>
+                ))}
+
 
                 <div className="formBorders m-1 my-4 pb-1">
                     {/* <h6 className='text-primary text-opacity-50'>DIVE STATS</h6> */}

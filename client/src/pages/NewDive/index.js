@@ -14,11 +14,13 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Image from 'react-bootstrap/Image';
 
 import StarRating from '../../components/StarRating';
 import MyDatePicker from '../../components/DatePicker';
 import MyTimePicker from '../../components/TimePicker';
 import { differenceInMinutes } from 'date-fns';
+import PhotoUploadWidget from '../../components/PhotoUploadWidget';
 
 
 const NewDive = () => {
@@ -39,6 +41,7 @@ const NewDive = () => {
 		maxDepth: '',
 		weights: '',
 		rating: null,
+		divePhoto: [],
 	});
 
 	const [errorMessage, setErrorMessage] = useState('');
@@ -87,7 +90,12 @@ const NewDive = () => {
 
 
 
-// ---------------------------------form submit--------------------------------- //
+	const handlePhotoUpload = (photoUrl) => {
+		setFormData({ ...formData, divePhoto: [...formData.divePhoto, photoUrl] });
+	};
+
+
+	// ---------------------------------form submit--------------------------------- //
 	const handleFormSubmit = async (event) => {
 		event.preventDefault();
 
@@ -105,7 +113,7 @@ const NewDive = () => {
 		if (formData.timeOut < formData.timeIn) {
 			setErrorMessage("Are you sure you ended the dive before it started?");
 			return;
-		  }
+		}
 
 
 
@@ -124,7 +132,7 @@ const NewDive = () => {
 			// 	window.location.assign('/me');
 
 			// } else {
-			const { diveSite, diveDate, timeIn, timeOut, startPsi, endPsi, diveText, diveBuddy, diveLife, temperature, visibility, current, maxDepth, weights, rating } = formData; // Destructure the variables from formData
+			const { diveSite, diveDate, timeIn, timeOut, startPsi, endPsi, diveText, diveBuddy, diveLife, temperature, visibility, current, maxDepth, weights, rating, divePhoto } = formData; // Destructure the variables from formData
 			const { data } = await addDive({
 				variables: {
 					diveSite,
@@ -136,6 +144,7 @@ const NewDive = () => {
 					diveText,
 					diveBuddy,
 					diveLife,
+					divePhoto,
 					temperature,
 					visibility,
 					current,
@@ -147,7 +156,7 @@ const NewDive = () => {
 				},
 			});
 
-			// console.log('Newly created dive:', data);
+			console.log('Newly created dive:', data);
 
 			if (data && data.addDive && data.addDive._id) {
 
@@ -164,6 +173,7 @@ const NewDive = () => {
 					diveText: '',
 					diveBuddy: '',
 					diveLife: '',
+					divePhoto: [],
 					temperature: '',
 					visibility: '',
 					current: '',
@@ -424,6 +434,22 @@ const NewDive = () => {
 										name="diveText"
 										onChange={handleChange} />
 								</Form.Group>
+							</div>
+
+							<div className='formBorders my-4'>
+								<h6 className='text-primary text-opacity-50'>DIVE PHOTOS</h6>
+
+								<PhotoUploadWidget onPhotoUpload={handlePhotoUpload} />
+
+								{formData.divePhoto.map((photo, index) => (
+									<Image thumbnail
+										key={index}
+										src={photo}
+										alt={`Dive Photo ${index + 1}`}
+										className="uploaded-photo mt-3"
+										style={{ maxWidth: "200px", maxHeight: "200px", objectFit: "cover" }}
+									/>
+								))}
 							</div>
 
 
