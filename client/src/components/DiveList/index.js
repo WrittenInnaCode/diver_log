@@ -8,6 +8,8 @@ import Alert from 'react-bootstrap/Alert';
 
 import Image from 'react-bootstrap/Image';
 
+import { MdLocationOn } from 'react-icons/md';
+
 const DiveList = ({
   dives,
   title,
@@ -36,59 +38,65 @@ const DiveList = ({
 
   return (
     <Container>
-      {showTitle && <h4>{title}</h4>}
+      {showTitle && <h4 className='pb-3'>{title}</h4>}
 
       {currentDives.map((dive) => (
+        <div key={dive._id} className='pb-5'>
 
-        <Card key={dive._id} className="m-3">
-          <Card.Body className='diveCard'>
-            <Card.Title>
-              {showUsername ? (
-                <>
-                  {/* viewing ALL dives by all users */}
-                  <Link to={`/profiles/${dive.author?.username}`} >
+          {showUsername ? (
+            <>
+              {/* viewing ALL dives by all users - shows username above the card */}
+              <div className='pb-2'>
+                <Link to={`/profiles/${dive.author?.username}`} className='text-decoration-none link-light fw-bolder'>
 
-                    <Image roundedCircle
-                      src={dive.author?.avatar}
-                      alt={`${dive.author?.username}'s Avatar`}
-                      style={{ width: '35px', height: '35px', marginRight: '0.5rem' }} />
+                  <Image roundedCircle
+                    src={dive.author?.avatar}
+                    alt={`${dive.author?.username}'s Avatar`}
+                    style={{ width: '35px', height: '35px', marginRight: '0.5rem' }} />
 
-                    {dive.author.username} {''}
+                  {dive.author.username} {''}
 
-                  </Link>
-                  <span>went diving in</span>
-                  <Link to={`/dives/${dive._id}`}>
-                    <span> {dive.diveSite} {''}</span>
-                    <span> on {format(new Date(dive.diveDate), 'MMMM d, yyyy')}.</span>
-                  </Link>
+                </Link>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* viewing all dives by a specific/single user - does not show the username above the card */}
 
-                  <p style={{ fontSize: '15px' }}>
-                    Posted on {dive.createdAt}
-                  </p>
+              {/* <Link to={`/dives/${dive._id}`}>
+                <span>{dive.diveSite}</span>
+                <span> on {format(new Date(dive.diveDate), 'MMMM d, yyyy')}.</span>
+              </Link>
+              <p style={{ fontSize: '12px', paddingTop: '0.5rem' }}> Posted on {dive.createdAt}</p> */}
+            </>
+          )}
 
-                </>
-              ) : (
-                <>
-                  {/* viewing all dives by a specific/single user */}
-                  <Link to={`/dives/${dive._id}`}>
-                    <span>{dive.diveSite}</span>
-                    <span> on {format(new Date(dive.diveDate), 'MMMM d, yyyy')}.</span>
-                  </Link>
-                  <p style={{ fontSize: '12px', paddingTop: '0.5rem' }}> Posted on {dive.createdAt}</p>
-                </>
-              )}
+          <Card  style={{ width: '35rem' }}>
+            <Card.Header className='dive-header'>
+              {/* <span>went diving in</span> */}
+              <Link to={`/dives/${dive._id}`} 
+              className='text-primary text-opacity-50 text-decoration-none'>
+                <MdLocationOn />
+                <span className='fw-bolder pe-1'> {dive.diveSite} {''}</span>
+                <span style={{ fontSize:'13px' }}> {format(new Date(dive.diveDate), 'MMMM d, yyyy')}</span>
+              </Link>
+            </Card.Header>
 
-            </Card.Title>
+            <Card.Body className='dive-card'>
+              <Link className="diveText" to={`/dives/${dive._id}`}>
+              <Card.Img src="https://media.istockphoto.com/id/133729032/photo/two-people-scuba-diving-with-sunlight-from-above.jpg?s=612x612&w=0&k=20&c=Krb5L_3TaR4pvPEE60w4JlI31yTz3coI_kxokOKrVYE=" />
+                <Card.Text >
+                  {dive.diveText}
+                </Card.Text>
+              </Link>
+               </Card.Body>
 
-            <Link className="diveText" to={`/dives/${dive._id}`}>
-              <Card.Text >
-                {dive.diveText}
-              </Card.Text>
-            </Link>
-
-          </Card.Body>
-
-        </Card>
+               <Card.Footer className="dive-footer text-muted d-flex justify-content-between" style={{ fontSize: '10px' }}>
+                <Link to={`/dives/${dive._id}`} className='link-secondary text-decoration-none'>comments</Link>
+                <span>Posted on {dive.createdAt}</span>
+               </Card.Footer>
+          </Card>
+        </div>
       ))}
 
       {totalPages > 1 && (

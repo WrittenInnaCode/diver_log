@@ -22,6 +22,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 
+import { BsTrash3 } from 'react-icons/bs'
+import { FaRegEdit } from 'react-icons/fa'
 
 const SingleDive = () => {
     // Use `useParams()` to retrieve value of the route parameter `:profileId`
@@ -103,8 +105,8 @@ const SingleDive = () => {
 
                 {isAuthor && (
                     <div className='d-flex justify-content-end pb-2'>
-                        <Button variant="warning" size="sm">EDIT</Button>
-                        <Button variant="danger" size="sm" onClick={() => handleDelete(dive._id)}>DELETE</Button>
+                        <Button variant="warning" size="sm" className='me-1'><FaRegEdit /></Button>
+                        <Button variant="danger" size="sm" onClick={() => handleDelete(dive._id)}><BsTrash3 /></Button>
                     </div>
                 )}
 

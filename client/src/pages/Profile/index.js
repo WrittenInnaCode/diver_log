@@ -150,7 +150,7 @@ const Profile = () => {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <Container>
+    <Container className='pt-2'>
 
       {/* <h2 className="mb-4">
         Viewing {userParam ? `${user.username}'s` : 'your'} profile.
@@ -222,7 +222,7 @@ const Profile = () => {
             </Form.Group>
 
             <Form.Group className="mt-4 mb-3">
-              <Form.Label>Bio</Form.Label>
+              <Form.Label className='fw-bolder ps-1'>Bio</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={2}

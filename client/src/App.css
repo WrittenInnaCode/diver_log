@@ -56,21 +56,8 @@ text-align: right;
     white-space: nowrap;
 }
 
-/* .diveCard {
-    background-color: rgba(237, 249, 255, 0.661);
-} */
-
 .username {
     padding-top: 1rem !important;
-}
-
-.diveText {
-    text-decoration: none;
-    color: slategray;
-}
-
-.diveText:hover {
-    color: slategray;
 }
 
 .logOutBttn {
@@ -87,6 +74,29 @@ text-align: right;
     border-radius: 4px;
 }
 
+.dive-header{
+    background-color: rgba(208, 226, 255)!important;
+}
+
+/* .dive-card {
+    background-color: rgba(240, 248, 255, 0.555);
+} */
+
+.diveText {
+    text-decoration: none;
+    /* color: slategray; */
+    color: rgba(0, 60, 157);
+}
+
+/* .diveText:hover {
+    color: slategray;
+} */
+
+.dive-footer{
+    /* background-color: rgba(208, 226, 255)!important; */
+    background-color: rgba(240, 248, 255, 0.555)!important;
+}
+
 .diveForm {
     background-color: rgba(208, 226, 255);
     padding: 1.5rem;
@@ -96,8 +106,8 @@ text-align: right;
 
 .formBorders {
     /* border-style: dashed; */
-    border-color: rgb(255, 255, 255);
-    border-radius: 4px;
+    /* border-color: rgb(255, 255, 255); */
+    /* border-radius: 4px; */
     padding: 1rem;
     background-color: rgba(240, 248, 255, 0.555);
 }
