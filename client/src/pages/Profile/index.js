@@ -36,7 +36,21 @@ const Profile = () => {
   const [show, setShow] = useState(false);
 
   const [bio, setBio] = useState(() => user?.userBio || '');
-  const [avatar, setAvatar] = useState(user?.avatar || 'https://res.cloudinary.com/dbudwdvhb/image/upload/v1695613228/octocat-1695613200506_eei2mk.png');
+  // const [avatar, setAvatar] = useState(user?.avatar || 'https://res.cloudinary.com/dbudwdvhb/image/upload/v1695613228/octocat-1695613200506_eei2mk.png');
+
+
+  // For avatar preview to show current avatar (otherwise it shows the default avatar in the modal)
+  const [avatar, setAvatar] = useState(null); // Initialize avatar state with user's current avatar or a default avatar
+
+  useEffect(() => {
+    if (user) {
+      // Set avatar state when user data is available
+      setAvatar(user.avatar || 'https://res.cloudinary.com/dbudwdvhb/image/upload/v1695613228/octocat-1695613200506_eei2mk.png');
+    }
+  }, [user]);
+  //
+
+
   const maxCharacterLimit = 80;
 
   const handleClose = () => setShow(false);
@@ -196,15 +210,18 @@ const Profile = () => {
 
 
       <Modal show={show} onHide={handleClose} centered className='avatarModal'>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className='bg-dark text-white'>
           <Modal.Title>Edit Profile</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className='bg-light'>
 
           <Form>
-            <Form.Group
-              className="mb-3"
-            >
+
+            <Form.Group className="mt-3">
+              <UploadWidget avatar={avatar} setAvatar={setAvatar} />
+            </Form.Group>
+
+            <Form.Group className="mt-4 mb-3">
               <Form.Label>Bio</Form.Label>
               <Form.Control
                 as="textarea"
@@ -220,17 +237,14 @@ const Profile = () => {
               </div>
             </Form.Group>
 
-            <Form.Group>
-              <UploadWidget setAvatar={setAvatar} avatar={avatar} />
-            </Form.Group>
           </Form>
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" size="sm" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" type="submit" onClick={handleProfileSave}>
+          <Button variant="success" type="submit" size="sm" onClick={handleProfileSave}>
             Save Changes
           </Button>
         </Modal.Footer>
