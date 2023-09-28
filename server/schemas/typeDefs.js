@@ -28,7 +28,7 @@ const typeDefs = gql`
         maxDepth: String
         weights: String
 		rating: Int
-		#divePhoto: String
+		divePhoto: [String]
 		author: User
     	createdAt: String
     	comments: [Comment]!
@@ -83,7 +83,7 @@ const typeDefs = gql`
             maxDepth: String!, 
             weights: String!,
 			rating: Int!,
-			#divePhoto: String!
+			divePhoto: [String]!
 			): Dive
 
 		editDive(
@@ -103,7 +103,7 @@ const typeDefs = gql`
             maxDepth: String!, 
             weights: String!,
 			rating: Int!,
-			#divePhoto: String!
+			divePhoto: [String]!
 			): Dive
 
 		removeDive(diveId: ID!): Dive

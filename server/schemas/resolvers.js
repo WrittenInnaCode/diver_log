@@ -104,7 +104,7 @@ const resolvers = {
 			maxDepth,
 			weights,
 			rating,
-			// divePhoto
+			divePhoto
 		}, context) => {
 			if (context.user) {
 				const dive = await Dive.create({
@@ -123,7 +123,7 @@ const resolvers = {
 					weights,
 					rating,
 					diveBuddy,
-					// divePhoto,
+					divePhoto,
 					author: context.user._id,
 				});
 
@@ -189,7 +189,7 @@ const resolvers = {
 			maxDepth,
 			weights,
 			rating,
-			// divePhoto
+			divePhoto
 		}, context) => {
 			if (context.user) {
 				const dive = await Dive.findByIdAndUpdate(diveId, {
@@ -210,7 +210,7 @@ const resolvers = {
 						maxDepth,
 						weights,
 						rating,
-						// divePhoto
+						divePhoto
 					}
 				});
 				return dive;

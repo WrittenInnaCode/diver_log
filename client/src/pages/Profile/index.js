@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
 
 import DiveList from '../../components/DiveList';
-import UploadWidget from '../../components/AvatarUploadWidget';
+import AvatarUploadWidget from '../../components/AvatarUploadWidget';
 
 import { QUERY_USER, QUERY_ME } from '../../utils/queries';
 import { UPDATE_BIO } from '../../utils/mutations';
@@ -31,7 +31,8 @@ const Profile = () => {
     variables: { username: userParam },
   });
 
-  const user = data?.me || data?.user || {};
+  // Use useMemo to derive 'user' from 'data' only when 'data' changes ("The 'user' logical expression could make the dependencies of useEffect Hook (at line 50) change on every render. To fix this, wrap the initialization of 'user' in its own useMemo() Hook")
+  const user = useMemo(() => data?.me || data?.user || {}, [data]);
 
   const [show, setShow] = useState(false);
 
@@ -218,7 +219,7 @@ const Profile = () => {
           <Form>
 
             <Form.Group className="mt-3">
-              <UploadWidget avatar={avatar} setAvatar={setAvatar} />
+              <AvatarUploadWidget avatar={avatar} setAvatar={setAvatar} />
             </Form.Group>
 
             <Form.Group className="mt-4 mb-3">

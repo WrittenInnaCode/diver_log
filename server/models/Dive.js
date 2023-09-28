@@ -9,24 +9,24 @@ const diveSchema = new Schema({
         trim: true,
     },
     diveDate: {
-        type: String, 
+        type: String,
         required: 'You need to enter the date of the dive!',
     },
     timeIn: {
-        type: String, 
+        type: String,
         required: 'You need to enter the time when the dive started!',
     },
     timeOut: {
-        type: String, 
+        type: String,
         required: 'You need to enter the time when the dive ended!',
     },
     startPsi: {
-        type: String, 
+        type: String,
         required: 'You need to enter tank PSI at the beginning of the dive!',
         minlength: 1,
     },
     endPsi: {
-        type: String, 
+        type: String,
         required: 'You need to enter tank PSI at the end of the dive!',
         minlength: 1,
     },
@@ -37,7 +37,7 @@ const diveSchema = new Schema({
         trim: true,
     },
     author: {
-        type: Schema.Types.ObjectId, 
+        type: Schema.Types.ObjectId,
         ref: 'User',
         required: true,
     },
@@ -75,9 +75,12 @@ const diveSchema = new Schema({
         // min: 1, 
         // max: 5, 
     },
-    // divePhoto: {
-    //     type: String,
-    // },
+    divePhoto: [
+        {
+            type: String,
+        },
+    ],
+
     createdAt: {
         type: Date,
         default: Date.now,

@@ -43,8 +43,8 @@ export const UPDATE_AVATAR = gql`
 `;
 
 export const ADD_DIVE = gql`
-mutation addDive($diveSite: String!, $diveDate: String!, $timeIn: String!, $timeOut: String!, $startPsi: String!, $endPsi: String!, $diveText: String!, $diveBuddy: String!, $diveLife: String!, $temperature: String!, $visibility: String!, $current: String!, $maxDepth: String!, $weights: String!, $rating: Int!) {
-  addDive(diveSite: $diveSite, diveDate: $diveDate, timeIn: $timeIn, timeOut: $timeOut, startPsi: $startPsi, endPsi: $endPsi, diveText: $diveText, diveBuddy: $diveBuddy, diveLife: $diveLife, temperature: $temperature, visibility: $visibility, current: $current, maxDepth: $maxDepth, weights: $weights, rating: $rating) {
+mutation addDive($diveSite: String!, $diveDate: String!, $timeIn: String!, $timeOut: String!, $startPsi: String!, $endPsi: String!, $diveText: String!, $diveBuddy: String!, $diveLife: String!, $temperature: String!, $visibility: String!, $current: String!, $maxDepth: String!, $weights: String!, $rating: Int!, $divePhoto: [String]!) {
+  addDive(diveSite: $diveSite, diveDate: $diveDate, timeIn: $timeIn, timeOut: $timeOut, startPsi: $startPsi, endPsi: $endPsi, diveText: $diveText, diveBuddy: $diveBuddy, diveLife: $diveLife, temperature: $temperature, visibility: $visibility, current: $current, maxDepth: $maxDepth, weights: $weights, rating: $rating, divePhoto: $divePhoto) {
     _id
     createdAt
     current
@@ -53,6 +53,7 @@ mutation addDive($diveSite: String!, $diveDate: String!, $timeIn: String!, $time
     diveLife
     diveSite
     diveText
+    divePhoto
     endPsi
     maxDepth
     rating
@@ -87,6 +88,7 @@ export const REMOVE_DIVE = gql`
     diveLife
     diveSite
     diveText
+    divePhoto
     endPsi
     maxDepth
     rating
@@ -117,8 +119,8 @@ export const REMOVE_DIVE = gql`
 
 
 export const EDIT_DIVE = gql`
-mutation EditDive($diveId: ID!, $diveSite: String!, $diveDate: String!, $timeIn: String!, $timeOut: String!, $startPsi: String!, $endPsi: String!, $diveText: String!, $diveBuddy: String!, $diveLife: String!, $temperature: String!, $visibility: String!, $current: String!, $maxDepth: String!, $weights: String!, $rating: Int!) {
-  editDive(diveId: $diveId, diveSite: $diveSite, diveDate: $diveDate, timeIn: $timeIn, timeOut: $timeOut, startPsi: $startPsi, endPsi: $endPsi, diveText: $diveText, diveBuddy: $diveBuddy, diveLife: $diveLife, temperature: $temperature, visibility: $visibility, current: $current, maxDepth: $maxDepth, weights: $weights, rating: $rating) {
+mutation EditDive($diveId: ID!, $diveSite: String!, $diveDate: String!, $timeIn: String!, $timeOut: String!, $startPsi: String!, $endPsi: String!, $diveText: String!, $diveBuddy: String!, $diveLife: String!, $temperature: String!, $visibility: String!, $current: String!, $maxDepth: String!, $weights: String!, $rating: Int!, $divePhoto: [String]!) {
+  editDive(diveId: $diveId, diveSite: $diveSite, diveDate: $diveDate, timeIn: $timeIn, timeOut: $timeOut, startPsi: $startPsi, endPsi: $endPsi, diveText: $diveText, diveBuddy: $diveBuddy, diveLife: $diveLife, temperature: $temperature, visibility: $visibility, current: $current, maxDepth: $maxDepth, weights: $weights, rating: $rating, divePhoto: $divePhoto) {
     _id
     current
     diveBuddy
@@ -126,6 +128,7 @@ mutation EditDive($diveId: ID!, $diveSite: String!, $diveDate: String!, $timeIn:
     diveLife
     diveSite
     diveText
+    divePhoto
     endPsi
     maxDepth
     rating
@@ -161,6 +164,7 @@ export const ADD_COMMENT = gql`
     diveLife
     diveSite
     diveText
+    divePhoto
     endPsi
     maxDepth
     rating

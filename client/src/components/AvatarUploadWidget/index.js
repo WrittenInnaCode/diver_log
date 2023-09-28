@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
 
-const UploadWidget = ({ avatar, setAvatar }) => {
+const AvatarUploadWidget = ({ avatar, setAvatar }) => {
 
     const cloudinaryRef = useRef();
     const widgetRef = useRef();
@@ -51,4 +51,4 @@ const UploadWidget = ({ avatar, setAvatar }) => {
     )
 }
 
-export default UploadWidget;
+export default AvatarUploadWidget;

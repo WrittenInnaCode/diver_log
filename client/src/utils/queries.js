@@ -27,7 +27,7 @@ export const QUERY_USER = gql`
       diveBuddy
       diveDate
       diveLife
-     # divePhoto
+      divePhoto
       diveSite
       diveText
       endPsi
@@ -65,7 +65,7 @@ export const QUERY_ME = gql`
       diveBuddy
       diveDate
       diveLife
-     # divePhoto
+      divePhoto
       diveSite
       diveText
       endPsi
@@ -110,6 +110,7 @@ export const QUERY_DIVES = gql`
     diveLife
     diveSite
     diveText
+    divePhoto
     endPsi
     maxDepth
     rating
@@ -135,6 +136,7 @@ export const QUERY_SINGLE_DIVE = gql`
       diveLife
       diveSite
       diveText
+      divePhoto
       endPsi
       maxDepth
       rating
