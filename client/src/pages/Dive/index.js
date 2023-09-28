@@ -14,9 +14,9 @@ function Dive() {
 
 	return (
 		<div style={{ padding: '1rem' }}>
-			<h2>
+			{/* <h2>
 				This is the dives page.
-			</h2>
+			</h2> */}
 			<div>
 				{loading
 					? (
@@ -32,7 +32,7 @@ function Dive() {
 
 							<DiveList
 								dives={dives}
-								title="All Dives"
+								title="Viewing All Dives"
 							/>
 						</div>
 					)}

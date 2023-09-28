@@ -32,6 +32,12 @@ max-height: 150px;
     white-space: pre-line;
 }
 
+.character-limit{
+font-size: small;
+color: lightslategray;
+text-align: right;
+}
+
 .active {
     font-weight: bold;
 }

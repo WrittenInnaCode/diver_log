@@ -91,7 +91,7 @@ const SingleDive = () => {
         <Container className="p-4" key={dive._id}>
 
             <Link className='postAuthor px-2' to={`/profiles/${dive.author.username}`}>
-                <Image rounded
+                <Image roundedCircle
                     src={dive.author.avatar}
                     alt={`${dive.author.username}'s Avatar`}
                     style={{ maxWidth: '35px', maxHeight: '35px', marginRight:'5px' }} />

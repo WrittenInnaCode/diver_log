@@ -10,7 +10,11 @@ const UploadWidget = ({ avatar, setAvatar }) => {
         cloudinaryRef.current = window.cloudinary;
         widgetRef.current = cloudinaryRef.current.createUploadWidget({
             cloudName: "dbudwdvhb",
-            uploadPreset: "biopreset"
+            uploadPreset: "biopreset",
+            cropping: true,
+            showSkipCropButton: false,
+            croppingAspectRatio: 1,
+            folder: "avatar"
         }, function (error, result) {
             // console.log(result)
             if (!error && result && result.event === "success") {
@@ -19,7 +23,7 @@ const UploadWidget = ({ avatar, setAvatar }) => {
                 setAvatar(newAvatarURL);
             }
         })
-    }, [])
+    })
 
     return (
         <Button onClick={() => widgetRef.current.open()}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import { format } from 'date-fns'
@@ -18,16 +18,16 @@ const DiveList = ({
 
   const [currentPage, setCurrentPage] = useState(1);
 
-   // Pagination. Calculate the index of the first and last dive to display on the current page
-   const indexOfLastDive = currentPage * itemsPerPage;
-   const indexOfFirstDive = indexOfLastDive - itemsPerPage;
-   const currentDives = dives.slice(indexOfFirstDive, indexOfLastDive);
- 
-   const totalPages = Math.ceil(dives.length / itemsPerPage);
- 
-   const handlePaginationClick = (pageNumber) => {
-     setCurrentPage(pageNumber);
-   };
+  // Pagination. Calculate the index of the first and last dive to display on the current page
+  const indexOfLastDive = currentPage * itemsPerPage;
+  const indexOfFirstDive = indexOfLastDive - itemsPerPage;
+  const currentDives = dives.slice(indexOfFirstDive, indexOfLastDive);
+
+  const totalPages = Math.ceil(dives.length / itemsPerPage);
+
+  const handlePaginationClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
 
   if (!dives.length) {
@@ -36,7 +36,7 @@ const DiveList = ({
 
   return (
     <Container>
-      {showTitle && <h3>{title}</h3>}
+      {showTitle && <h4>{title}</h4>}
 
       {currentDives.map((dive) => (
 
@@ -45,10 +45,16 @@ const DiveList = ({
             <Card.Title>
               {showUsername ? (
                 <>
-                {/* viewing ALL dives by all users */}
+                  {/* viewing ALL dives by all users */}
                   <Link to={`/profiles/${dive.author?.username}`} >
-                  <Image src={dive.author?.avatar} alt={`${dive.author?.username}'s Avatar`} style={{ width: '35px', height: '35px' }} />
+
+                    <Image roundedCircle
+                      src={dive.author?.avatar}
+                      alt={`${dive.author?.username}'s Avatar`}
+                      style={{ width: '35px', height: '35px', marginRight: '0.5rem' }} />
+
                     {dive.author.username} {''}
+
                   </Link>
                   <span>went diving in</span>
                   <Link to={`/dives/${dive._id}`}>
@@ -63,7 +69,7 @@ const DiveList = ({
                 </>
               ) : (
                 <>
-                {/* viewing all dives by a specific/single user */}
+                  {/* viewing all dives by a specific/single user */}
                   <Link to={`/dives/${dive._id}`}>
                     <span>{dive.diveSite}</span>
                     <span> on {format(new Date(dive.diveDate), 'MMMM d, yyyy')}.</span>
@@ -85,7 +91,7 @@ const DiveList = ({
         </Card>
       ))}
 
-{totalPages > 1 && (
+      {totalPages > 1 && (
         <Pagination>
           {Array.from({ length: totalPages }, (_, index) => (
             <Pagination.Item
@@ -98,7 +104,7 @@ const DiveList = ({
           ))}
         </Pagination>
       )}
-      
+
     </Container>
   );
 };

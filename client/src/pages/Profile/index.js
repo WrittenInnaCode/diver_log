@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
 
 import DiveList from '../../components/DiveList';
-import UploadWidget from '../../components/UploadWidget';
+import UploadWidget from '../../components/AvatarUploadWidget';
 
 import { QUERY_USER, QUERY_ME } from '../../utils/queries';
 import { UPDATE_BIO } from '../../utils/mutations';
@@ -36,7 +36,8 @@ const Profile = () => {
   const [show, setShow] = useState(false);
 
   const [bio, setBio] = useState(() => user?.userBio || '');
-  const [avatar, setAvatar] = useState(() => user?.avatar || '')
+  const [avatar, setAvatar] = useState(user?.avatar || 'https://res.cloudinary.com/dbudwdvhb/image/upload/v1695613228/octocat-1695613200506_eei2mk.png');
+  const maxCharacterLimit = 80;
 
   const handleClose = () => setShow(false);
 
@@ -70,7 +71,7 @@ const Profile = () => {
     }
   }, [navigate, userParam]);
 
-  
+
   const handleProfileSave = () => {
     // Update bio
     updateBio({ variables: { userBio: bio } })
@@ -98,6 +99,15 @@ const Profile = () => {
 
     // Close the modal
     handleClose();
+  };
+
+
+  const handleChange = (event) => {
+    const text = event.target.value;
+    // Ensure the bio doesn't exceed the character limit
+    if (text.length <= maxCharacterLimit) {
+      setBio(text);
+    }
   };
 
   const isProfileOwner = Auth.loggedIn() && Auth.getProfile().data.username === user.username;
@@ -135,7 +145,7 @@ const Profile = () => {
       <Container fluid className="userInfo">
         <div className='d-flex '>
           <div>
-            <Image className='userAvatar' rounded
+            <Image className='userAvatar' roundedCircle
               src={user.avatar}
               alt={`${user.username}'s Avatar`} />
           </div>
@@ -201,8 +211,13 @@ const Profile = () => {
                 rows={2}
                 placeholder="Tell us a little bit about yourself"
                 value={bio}
-                onChange={(e) => setBio(e.target.value)}
+                // onChange={(e) => setBio(e.target.value)}
+                onChange={handleChange}
+                maxLength={maxCharacterLimit}
               />
+              <div className="character-limit">
+                {bio.length}/{maxCharacterLimit} characters remaining
+              </div>
             </Form.Group>
 
             <Form.Group>
