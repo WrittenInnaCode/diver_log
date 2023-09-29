@@ -5,6 +5,7 @@ import { format } from 'date-fns'
 import Pagination from 'react-bootstrap/Pagination';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
+import Carousel from 'react-bootstrap/Carousel';
 
 import Image from 'react-bootstrap/Image';
 
@@ -71,30 +72,49 @@ const DiveList = ({
             </>
           )}
 
-          <Card  style={{ width: '35rem' }}>
+          <Card style={{ maxWidth: '35rem' }}>
             <Card.Header className='dive-header'>
               {/* <span>went diving in</span> */}
-              <Link to={`/dives/${dive._id}`} 
-              className='text-primary text-opacity-50 text-decoration-none'>
+              <Link to={`/dives/${dive._id}`}
+                className='text-primary text-opacity-50 text-decoration-none'>
                 <MdLocationOn />
                 <span className='fw-bolder pe-1'> {dive.diveSite} {''}</span>
-                <span style={{ fontSize:'13px' }}> {format(new Date(dive.diveDate), 'MMMM d, yyyy')}</span>
+                <span style={{ fontSize: '13px' }}> {format(new Date(dive.diveDate), 'MMMM d, yyyy')}</span>
               </Link>
             </Card.Header>
 
             <Card.Body className='dive-card'>
+
+              <Carousel interval={null} className='photoSlide'>
+                {dive.divePhoto.map((photoUrl, index) => (
+
+                  <Carousel.Item key={index}
+                  // style={{ width: "35rem", height: "30rem" }} 
+                  >
+                    <div className='d-flex justify-content-center'>
+                    <Image
+                      src={photoUrl}
+                      alt={`Dive Photo ${index + 1}`}
+                      style={{ width: "35rem", height: "30rem", objectFit: "contain" }}
+                    />
+                    </div>
+                  </Carousel.Item>
+
+                ))}
+              </Carousel>
+
               <Link className="diveText" to={`/dives/${dive._id}`}>
-              <Card.Img src="https://media.istockphoto.com/id/133729032/photo/two-people-scuba-diving-with-sunlight-from-above.jpg?s=612x612&w=0&k=20&c=Krb5L_3TaR4pvPEE60w4JlI31yTz3coI_kxokOKrVYE=" />
-                <Card.Text >
+                <Card.Text className='pt-3'>
                   {dive.diveText}
                 </Card.Text>
               </Link>
-               </Card.Body>
 
-               <Card.Footer className="dive-footer text-muted d-flex justify-content-between" style={{ fontSize: '10px' }}>
-                <Link to={`/dives/${dive._id}`} className='link-secondary text-decoration-none'>comments</Link>
-                <span>Posted on {dive.createdAt}</span>
-               </Card.Footer>
+            </Card.Body>
+
+            <Card.Footer className="dive-footer text-muted d-flex justify-content-between" style={{ fontSize: '10px' }}>
+              <Link to={`/dives/${dive._id}`} className='link-secondary text-decoration-none'>comments</Link>
+              <span>Posted on {dive.createdAt}</span>
+            </Card.Footer>
           </Card>
         </div>
       ))}

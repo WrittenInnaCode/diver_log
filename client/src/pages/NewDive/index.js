@@ -91,6 +91,7 @@ const NewDive = () => {
 
 
 	const handlePhotoUpload = (photoUrl) => {
+		// console.log('Photo URL:', photoUrl);
 		setFormData({ ...formData, divePhoto: [...formData.divePhoto, photoUrl] });
 	};
 
@@ -156,7 +157,7 @@ const NewDive = () => {
 				},
 			});
 
-			console.log('Newly created dive:', data);
+			// console.log('Newly created dive:', data);
 
 			if (data && data.addDive && data.addDive._id) {
 

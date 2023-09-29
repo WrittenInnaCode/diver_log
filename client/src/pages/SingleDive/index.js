@@ -128,12 +128,13 @@ const SingleDive = () => {
                 </div>
 
                 {dive.divePhoto.map((photoUrl, index) => (
-                    <div className='formBorders m-1 pb-1' key={index}>
+                    <Row className='formBorders m-1 pb-1' key={index}>
                         <Image
-                            src={photoUrl} 
+                            src={photoUrl}
                             alt={`Dive Photo ${index + 1}`}
-                            />
-                    </div>
+                            style={{ maxWidth: "400px", maxHeight: "400px" }}
+                        />
+                    </Row>
                 ))}
 
 
