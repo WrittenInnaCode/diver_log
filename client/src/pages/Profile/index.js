@@ -46,7 +46,7 @@ const Profile = () => {
   useEffect(() => {
     if (user) {
       // Set avatar state when user data is available
-      setAvatar(user.avatar || 'https://res.cloudinary.com/dbudwdvhb/image/upload/v1695613228/octocat-1695613200506_eei2mk.png');
+      setAvatar(user.avatar || 'https://res.cloudinary.com/dbudwdvhb/image/upload/v1695971557/avatar/py2dbrno3fq00jzs3kg5.png');
     }
   }, [user]);
   //
@@ -234,7 +234,7 @@ const Profile = () => {
                 maxLength={maxCharacterLimit}
               />
               <div className="character-limit">
-                {bio.length}/{maxCharacterLimit} characters remaining
+                {bio.length}/{maxCharacterLimit} characters
               </div>
             </Form.Group>
 

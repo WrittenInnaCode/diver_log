@@ -38,7 +38,7 @@ const DiveList = ({
   }
 
   return (
-    <Container>
+    <Container className=''>
       {showTitle && <h4 className='pb-3'>{title}</h4>}
 
       {currentDives.map((dive) => (

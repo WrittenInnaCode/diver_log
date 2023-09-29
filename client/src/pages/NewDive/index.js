@@ -90,9 +90,9 @@ const NewDive = () => {
 
 
 
-	const handlePhotoUpload = (photoUrl) => {
+	const handlePhotoUpload = (photos) => {
 		// console.log('Photo URL:', photoUrl);
-		setFormData({ ...formData, divePhoto: [...formData.divePhoto, photoUrl] });
+		setFormData({ ...formData, divePhoto: [...formData.divePhoto, ...photos] });
 	};
 
 

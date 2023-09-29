@@ -6,6 +6,7 @@ const PhotoUploadWidget = ({ onPhotoUpload }) => {
 
     const cloudinaryRef = useRef();
     const widgetRef = useRef();
+    const [selectedPhotos, setSelectedPhotos] = useState([]);
 
     useEffect(() => {
         cloudinaryRef.current = window.cloudinary;
@@ -16,10 +17,21 @@ const PhotoUploadWidget = ({ onPhotoUpload }) => {
         }, function (error, result) {
             // console.log(result)
             if (!error && result && result.event === "success") {
-                onPhotoUpload(result.info.secure_url);
+                // onPhotoUpload(result.info.secure_url);
+                
+                // Store the selected photo URL without updating the state
+                setSelectedPhotos((prevSelected) => [...prevSelected, result.info.secure_url]);
             }
         });
-    }, [onPhotoUpload]);
+    }, []);
+
+    useEffect(() => {
+        // Update the state with all selected photos once all uploads are finished
+        if (selectedPhotos.length > 0) {
+            onPhotoUpload(selectedPhotos);
+            setSelectedPhotos([]); // Clear the selected photos
+        }
+    }, [selectedPhotos, onPhotoUpload]);
 
 
     return (
