@@ -22,6 +22,8 @@ import MyTimePicker from '../../components/TimePicker';
 import { differenceInMinutes } from 'date-fns';
 import PhotoUploadWidget from '../../components/PhotoUploadWidget';
 
+import { GrClose } from 'react-icons/gr';
+
 
 const NewDive = () => {
 
@@ -241,6 +243,14 @@ const NewDive = () => {
 	};
 
 
+	const handleDeletePhoto = (indexToDelete) => {
+		const updatedPhotos = [...formData.divePhoto];
+		updatedPhotos.splice(indexToDelete, 1); // Remove the photo at the specified index
+		setFormData({ ...formData, divePhoto: updatedPhotos });
+	};
+
+
+
 	return (
 		<Container>
 			<h2 className='p-2 mt-2 text-light text-opacity-75'>
@@ -442,15 +452,27 @@ const NewDive = () => {
 
 								<PhotoUploadWidget onPhotoUpload={handlePhotoUpload} />
 
-								{formData.divePhoto.map((photo, index) => (
-									<Image thumbnail
-										key={index}
-										src={photo}
-										alt={`Dive Photo ${index + 1}`}
-										className="uploaded-photo mt-3"
-										style={{ maxWidth: "200px", maxHeight: "200px", objectFit: "cover" }}
-									/>
-								))}
+								<div className='d-flex flex-wrap mt-3'>
+									{formData.divePhoto.map((photo, index) => (
+										<div key={index} alt={`Dive Photo ${index + 1}`} className='position-relative m-1'>
+											<Image thumbnail
+												src={photo}
+												className="uploaded-photo"
+												style={{ maxWidth: "200px", maxHeight: "200px", objectFit: "cover" }}
+											/>
+											<Button
+												aria-label="delete"
+												variant="light"
+												size="sm"
+												className='position-absolute top-0 end-0'
+												onClick={() => handleDeletePhoto(index)}>
+												<GrClose />
+											</Button>
+										</div>
+
+									))}
+								</div>
+
 							</div>
 
 

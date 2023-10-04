@@ -126,17 +126,18 @@ const SingleDive = () => {
                         <p>{format(new Date(dive.diveDate), 'MMMM d, yyyy')}</p>
                     </div>
                 </div>
-
-                {dive.divePhoto.map((photoUrl, index) => (
-                    <Row className='formBorders m-1 pb-1' key={index}>
-                        <Image
-                            src={photoUrl}
-                            alt={`Dive Photo ${index + 1}`}
-                            style={{ maxWidth: "400px", maxHeight: "400px" }}
-                        />
-                    </Row>
-                ))}
-
+                
+                <div className='d-flex flex-wrap'>
+                    {dive.divePhoto.map((photoUrl, index) => (
+                        <Row className='p-1' key={index}>
+                            <Image
+                                src={photoUrl}
+                                alt={`Dive Photo ${index + 1}`}
+                                style={{ maxWidth: "430px", maxHeight: "430px" }}
+                            />
+                        </Row>
+                    ))}
+                </div>
 
                 <div className="formBorders m-1 my-4 pb-1">
                     {/* <h6 className='text-primary text-opacity-50'>DIVE STATS</h6> */}
