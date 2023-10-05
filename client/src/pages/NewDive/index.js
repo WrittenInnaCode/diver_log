@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
@@ -25,9 +25,9 @@ import PhotoUploadWidget from '../../components/PhotoUploadWidget';
 import { GrClose } from 'react-icons/gr';
 
 
-const NewDive = () => {
+const NewDive = ({ edit, formData, diveId, editDive }) => {
 
-	const [formData, setFormData] = useState({
+	const [state, setState] = useState({
 		diveSite: '',
 		diveDate: null, // Initialize diveDate as null
 		timeIn: null,
@@ -48,6 +48,31 @@ const NewDive = () => {
 
 	const [errorMessage, setErrorMessage] = useState('');
 	const [ratingError, setRatingError] = useState('');
+
+
+	useEffect(() => {
+		if (formData) {
+			// Pre-fill form fields with formData
+			setState({
+				diveSite: formData.diveSite || '',
+				diveDate: formData.diveDate || null,
+				timeIn: formData.timeIn || null,
+				timeOut: formData.timeOut || null,
+				startPsi: formData.startPsi || '',
+				endPsi: formData.endPsi || '',
+				diveText: formData.diveText || '',
+				diveBuddy: formData.diveBuddy || '',
+				diveLife: formData.diveLife || '',
+				temperature: formData.temperature || '',
+				visibility: formData.visibility || '',
+				current: formData.current || '',
+				maxDepth: formData.maxDepth || '',
+				weights: formData.weights || '',
+				rating: formData.rating || null,
+				divePhoto: formData.divePhoto || [],
+			});
+		}
+	}, [formData]);
 
 
 	const [addDive, { error }] = useMutation(ADD_DIVE, {
@@ -94,7 +119,10 @@ const NewDive = () => {
 
 	const handlePhotoUpload = (photos) => {
 		// console.log('Photo URL:', photoUrl);
-		setFormData({ ...formData, divePhoto: [...formData.divePhoto, ...photos] });
+		setState((prevState) => ({
+			...prevState,
+			divePhoto: [...prevState.divePhoto, ...photos]
+		}));
 	};
 
 
@@ -103,41 +131,56 @@ const NewDive = () => {
 		event.preventDefault();
 
 		// Check if these fields are null or empty
-		if (!formData.diveDate || !formData.timeIn || !formData.timeOut) {
+		if (!state.diveDate || !state.timeIn || !state.timeOut) {
 			setErrorMessage("Please select the date and time before submitting the form.");
 			return; // Exit the function to prevent form submission
 		}
 
-		if (formData.rating === null) {
+		if (state.rating === null) {
 			setRatingError('Please provide a rating for the dive.');
 			return;
 		}
 
-		if (formData.timeOut < formData.timeIn) {
+		if (state.timeOut < state.timeIn) {
 			setErrorMessage("Are you sure you ended the dive before it started?");
 			return;
 		}
 
 
+		let data; // Declare data variable here
+
 
 		try {
-			// if (edit) {
-			// 	const { data } = await edit({
-			// 		variables: {
-			// 			diveId,
-			// 			diveSite,
-			// 			diveText,
-			// 			diveBuddy,
-			// 			diveLife
+			if (edit) {
+				// Handle edit operation
+				data = await editDive({
+					variables: {
+						diveId,
+						diveSite: state.diveSite,
+						diveDate: state.diveDate,
+						timeIn: state.timeIn,
+						timeOut: state.timeOut,
+						startPsi: state.startPsi,
+						endPsi: state.endPsi,
+						diveText: state.diveText,
+						diveBuddy: state.diveBuddy,
+						diveLife: state.diveLife,
+						divePhoto: state.divePhoto,
+						temperature: state.temperature,
+						visibility: state.visibility,
+						current: state.current,
+						maxDepth: state.maxDepth,
+						weights: state.weights,
+						rating: state.rating,
+						diveAuthor: Auth.getProfile().data.username,
 
-			// 		},
-			// 	});
-			// 	window.location.assign('/me');
+					},
+				});
+				window.location.assign('/me');
 
-			// } else {
-			const { diveSite, diveDate, timeIn, timeOut, startPsi, endPsi, diveText, diveBuddy, diveLife, temperature, visibility, current, maxDepth, weights, rating, divePhoto } = formData; // Destructure the variables from formData
-			const { data } = await addDive({
-				variables: {
+			} else {
+				// Handle add operation
+				const {
 					diveSite,
 					diveDate,
 					timeIn,
@@ -147,26 +190,46 @@ const NewDive = () => {
 					diveText,
 					diveBuddy,
 					diveLife,
-					divePhoto,
 					temperature,
 					visibility,
 					current,
 					maxDepth,
 					weights,
 					rating,
-					// author: Auth.getProfile().data.username,
-					diveAuthor: Auth.getProfile().data.username,
-				},
-			});
+					divePhoto
+				} = state; // Destructure the variables from state
 
-			// console.log('Newly created dive:', data);
+				data = await addDive({
+					variables: {
+						diveSite,
+						diveDate,
+						timeIn,
+						timeOut,
+						startPsi,
+						endPsi,
+						diveText,
+						diveBuddy,
+						diveLife,
+						divePhoto,
+						temperature,
+						visibility,
+						current,
+						maxDepth,
+						weights,
+						rating,
+						diveAuthor: Auth.getProfile().data.username,
+					},
+				});
+
+				// console.log('Newly created dive:', data);
+			}
 
 			if (data && data.addDive && data.addDive._id) {
 
 				// After successful submission, navigate the user to the new dive post
 				navigate(`/dives/${data.addDive._id}`);
 
-				setFormData({
+				setState({
 					diveSite: '',
 					diveDate: null, // Use null to reset the date picker
 					timeIn: null,
@@ -185,7 +248,6 @@ const NewDive = () => {
 					rating: null,
 				});
 
-				// }
 			} else {
 				throw new Error('Failed to create dive post.');
 			}
@@ -199,8 +261,8 @@ const NewDive = () => {
 	// Handle form field changes
 	const handleChange = (event) => {
 		const { name, value } = event.target;
-		setFormData((prevData) => ({
-			...prevData,
+		setState((prevState) => ({
+			...prevState,
 			[name]: value,
 		}));
 	};
@@ -208,8 +270,8 @@ const NewDive = () => {
 
 	// Callback function to handle date change
 	const handleDateChange = (date) => {
-		setFormData((prevData) => ({
-			...prevData,
+		setState((prevState) => ({
+			...prevState,
 			diveDate: date,
 		}));
 		setErrorMessage('');
@@ -217,19 +279,28 @@ const NewDive = () => {
 
 
 	const handleTimeInChange = (time) => {
-		setFormData((prevData) => ({
-			...prevData,
+		setState((prevState) => ({
+			...prevState,
 			timeIn: time,
 		}));
 		setErrorMessage('');
 	};
 
 	const handleTimeOutChange = (time) => {
-		setFormData((prevData) => ({
-			...prevData,
+		setState((prevState) => ({
+			...prevState,
 			timeOut: time,
 		}));
 		setErrorMessage('');
+	};
+
+
+	const handleRatingChange = (newRating) => {
+		setState((prevState) => ({
+			...prevState,
+			rating: newRating,
+		}));
+		setRatingError(''); // Clear the rating error when the user selects a rating
 	};
 
 
@@ -238,15 +309,18 @@ const NewDive = () => {
 			return null; // If either timeIn or timeOut is not set, return null indicating invalid input
 		}
 
-		const totalDiveTime = differenceInMinutes(timeOut, timeIn);
+		const totalDiveTime = differenceInMinutes(new Date(timeOut), new Date(timeIn));
 		return totalDiveTime;
 	};
 
 
 	const handleDeletePhoto = (indexToDelete) => {
-		const updatedPhotos = [...formData.divePhoto];
+		const updatedPhotos = [...state.divePhoto];
 		updatedPhotos.splice(indexToDelete, 1); // Remove the photo at the specified index
-		setFormData({ ...formData, divePhoto: updatedPhotos });
+		setState((prevState) => ({
+			...prevState,
+			divePhoto: updatedPhotos
+		}));
 	};
 
 
@@ -254,7 +328,7 @@ const NewDive = () => {
 	return (
 		<Container>
 			<h2 className='p-2 mt-2 text-light text-opacity-75'>
-				Add dive log
+				{edit ? 'Edit Dive' : 'Add a New Dive'}
 			</h2>
 
 			{Auth.loggedIn() ? (
@@ -273,7 +347,7 @@ const NewDive = () => {
 												required
 												type="text"
 												placeholder="Enter the Dive Site name or location"
-												value={formData.diveSite}
+												value={state.diveSite}
 												name="diveSite"
 												onChange={handleChange} />
 										</Form.Group>
@@ -282,11 +356,9 @@ const NewDive = () => {
 									<Col className='starRating text-center'>
 										<h6 className='text-primary text-opacity-50'>DIVE RATING</h6>
 										<StarRating
-											value={formData.rating}
-											onChange={(newRating) => {
-												setFormData({ ...formData, rating: newRating });
-												setRatingError(''); // Clear the rating error when the user selects a rating
-											}} />
+											value={state.rating}
+											onChange={handleRatingChange}
+											/>
 										{ratingError && <p style={{ color: 'red' }}>{ratingError}</p>}
 
 									</Col>
@@ -298,19 +370,22 @@ const NewDive = () => {
 								<h6 className='text-primary text-opacity-50'>DATE & TIME</h6>
 								<div className="d-flex justify-content-evenly mb-3">
 									<MyDatePicker
-										diveDate={formData.diveDate}
-										handleDateChange={handleDateChange}
+										// diveDate={formData.diveDate}
+										// handleDateChange={handleDateChange}
+										selected={state.diveDate} onChange={handleDateChange}
 									/>
 
 									<MyTimePicker
 										type="in"
-										selectedTime={formData.timeIn}
-										handleTimeChange={handleTimeInChange}
+										// selectedTime={formData.timeIn}
+										// handleTimeChange={handleTimeInChange}
+										selected={state.timeIn} onChange={handleTimeInChange}
 									/>
 									<MyTimePicker
 										type="out"
-										selectedTime={formData.timeOut}
-										handleTimeChange={handleTimeOutChange}
+										// selectedTime={formData.timeOut}
+										// handleTimeChange={handleTimeOutChange}
+										selected={state.timeOut} onChange={handleTimeOutChange}
 									/>
 								</div>
 								{errorMessage && <p style={{ color: 'red' }} className='text-center'>{errorMessage}</p>}
@@ -324,7 +399,7 @@ const NewDive = () => {
 									<Form.Control
 										type="text"
 										placeholder="Add people you've dived with"
-										value={formData.diveBuddy}
+										value={state.diveBuddy}
 										name="diveBuddy"
 										onChange={handleChange} />
 								</Form.Group>
@@ -340,7 +415,7 @@ const NewDive = () => {
 											required
 											type="text"
 											placeholder="PSI"
-											value={formData.startPsi}
+											value={state.startPsi}
 											name="startPsi"
 											onChange={handleChange} />
 									</Form.Group>
@@ -351,7 +426,7 @@ const NewDive = () => {
 											required
 											type="text"
 											placeholder="PSI"
-											value={formData.endPsi}
+											value={state.endPsi}
 											name="endPsi"
 											onChange={handleChange} />
 									</Form.Group>
@@ -368,7 +443,7 @@ const NewDive = () => {
 											<Form.Control
 												type="text"
 												placeholder="°F"
-												value={formData.temperature}
+												value={state.temperature}
 												name="temperature"
 												onChange={handleChange} />
 										</Form.Group>
@@ -378,7 +453,7 @@ const NewDive = () => {
 											<Form.Control
 												type="text"
 												placeholder="FT"
-												value={formData.visibility}
+												value={state.visibility}
 												name="visibility"
 												onChange={handleChange} />
 										</Form.Group>
@@ -389,7 +464,7 @@ const NewDive = () => {
 											<Form.Control
 												type="text"
 												placeholder="LB"
-												value={formData.weights}
+												value={state.weights}
 												name="weights"
 												onChange={handleChange} />
 										</Form.Group>
@@ -402,7 +477,7 @@ const NewDive = () => {
 											<Form.Control
 												type="text"
 												placeholder="FT"
-												value={formData.maxDepth}
+												value={state.maxDepth}
 												name="maxDepth"
 												onChange={handleChange} />
 										</Form.Group>
@@ -412,7 +487,7 @@ const NewDive = () => {
 											<Form.Control
 												type="text"
 												// placeholder=" "
-												value={formData.current}
+												value={state.current}
 												name="current"
 												onChange={handleChange} />
 										</Form.Group>
@@ -427,7 +502,7 @@ const NewDive = () => {
 									<Form.Control
 										type="text"
 										placeholder="Add marine life you encountered during this dive"
-										value={formData.diveLife}
+										value={state.diveLife}
 										name="diveLife"
 										onChange={handleChange} />
 								</Form.Group>
@@ -441,7 +516,7 @@ const NewDive = () => {
 										as="textarea"
 										placeholder='Write about your experience while taking this dive'
 										rows={3}
-										value={formData.diveText}
+										value={state.diveText}
 										name="diveText"
 										onChange={handleChange} />
 								</Form.Group>
@@ -453,7 +528,7 @@ const NewDive = () => {
 								<PhotoUploadWidget onPhotoUpload={handlePhotoUpload} />
 
 								<div className='d-flex flex-wrap mt-3'>
-									{formData.divePhoto.map((photo, index) => (
+									{state.divePhoto.map((photo, index) => (
 										<div key={index} alt={`Dive Photo ${index + 1}`} className='position-relative m-1'>
 											<Image thumbnail
 												src={photo}
@@ -477,7 +552,7 @@ const NewDive = () => {
 
 
 							<Button variant="primary" type="submit">
-								Submit
+								{edit ? "Save Changes" : "Submit"}
 							</Button>
 
 						</Form>

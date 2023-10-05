@@ -17,6 +17,7 @@ import NewDive from './pages/NewDive';
 import SingleDive from './pages/SingleDive';
 import Profile from './pages/Profile';
 import BucketList from './pages/BucketList';
+import EditDive from './pages/EditDive';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -83,6 +84,10 @@ function App() {
                   <Route
                     path="/dives/:diveId"
                     element={<SingleDive />}
+                  />
+                  <Route
+                    path="/dives/:diveId/editdive"
+                    element={<EditDive />}
                   />
                   <Route
                     path="/bucketlist"

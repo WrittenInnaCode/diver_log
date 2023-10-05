@@ -105,7 +105,7 @@ const SingleDive = () => {
 
                 {isAuthor && (
                     <div className='d-flex justify-content-end pb-2'>
-                        <Button variant="warning" size="sm" className='me-1'><FaRegEdit /></Button>
+                        <Button variant="warning" size="sm" className='me-1' href={`/dives/${dive._id}/editdive`}><FaRegEdit /></Button>
                         <Button variant="danger" size="sm" onClick={() => handleDelete(dive._id)}><BsTrash3 /></Button>
                     </div>
                 )}
