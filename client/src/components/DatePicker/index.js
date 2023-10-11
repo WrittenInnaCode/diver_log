@@ -11,7 +11,7 @@ function MyDatePicker({ diveDate, handleDateChange }) {
         label="Select Dive Date"
         disableFuture
         name="diveDate"
-        value={diveDate}
+        value={diveDate ? new Date(diveDate) : null}
         onChange={handleDateChange}
         className="customDatePicker"
       />

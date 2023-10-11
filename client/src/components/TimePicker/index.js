@@ -9,7 +9,7 @@ export default function MyTimePicker({ type, selectedTime, handleTimeChange }) {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <TimePicker
                 label={`Time ${type === 'in' ? 'In' : 'Out'}`}
-                value={selectedTime}
+                value={selectedTime ? new Date(selectedTime) : null}
                 onChange={handleTimeChange}
                 className='customTimePicker'
             />

@@ -363,29 +363,25 @@ const NewDive = ({ edit, formData, diveId, editDive }) => {
 
 									</Col>
 								</Row>
-
 							</div>
 
 							<div className="formBorders my-4">
 								<h6 className='text-primary text-opacity-50'>DATE & TIME</h6>
 								<div className="d-flex justify-content-evenly mb-3">
 									<MyDatePicker
-										// diveDate={formData.diveDate}
-										// handleDateChange={handleDateChange}
-										selected={state.diveDate} onChange={handleDateChange}
+										diveDate={state.diveDate}
+										handleDateChange={handleDateChange}
 									/>
 
 									<MyTimePicker
 										type="in"
-										// selectedTime={formData.timeIn}
-										// handleTimeChange={handleTimeInChange}
-										selected={state.timeIn} onChange={handleTimeInChange}
+										selectedTime={state.timeIn}
+										handleTimeChange={handleTimeInChange}
 									/>
 									<MyTimePicker
 										type="out"
-										// selectedTime={formData.timeOut}
-										// handleTimeChange={handleTimeOutChange}
-										selected={state.timeOut} onChange={handleTimeOutChange}
+										selectedTime={state.timeOut}
+										handleTimeChange={handleTimeOutChange}
 									/>
 								</div>
 								{errorMessage && <p style={{ color: 'red' }} className='text-center'>{errorMessage}</p>}
