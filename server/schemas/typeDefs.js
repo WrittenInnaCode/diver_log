@@ -9,6 +9,7 @@ const typeDefs = gql`
 		dives: [Dive]!
 		avatar: String
   		userBio: String
+		comments: [Comment]
 	}
 
 	type Dive {
@@ -31,7 +32,7 @@ const typeDefs = gql`
 		divePhoto: [String]
 		author: User
     	createdAt: String
-    	comments: [Comment]!
+    	comments: [Comment]
   	}
 
   	type Comment {

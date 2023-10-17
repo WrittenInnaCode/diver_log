@@ -39,7 +39,6 @@ export const QUERY_USER = gql`
       timeOut
       visibility
       weights
-     # diveAuthor
       author {
         username
         _id
@@ -77,7 +76,6 @@ export const QUERY_ME = gql`
       timeOut
       visibility
       weights
-     # diveAuthor
       author {
        _id
        username
@@ -154,8 +152,12 @@ export const QUERY_SINGLE_DIVE = gql`
       comments {
         _id
         commentText
+        createdAt
         commentAuthor {
-          username
+          _id
+        avatar
+        username
+
         }
       }
     }

@@ -8,8 +8,8 @@ import { Link } from 'react-router-dom';
 
 import DiveRating from '../../components/DiveRating';
 
-// import CommentList from '../../components/CommentList';
-// import CommentForm from '../../components/CommentForm';
+import CommentList from '../../components/CommentList';
+import CommentForm from '../../components/CommentForm';
 
 import { QUERY_SINGLE_DIVE } from '../../utils/queries';
 import { REMOVE_DIVE } from '../../utils/mutations';
@@ -126,7 +126,7 @@ const SingleDive = () => {
                         <p>{format(new Date(dive.diveDate), 'MMMM d, yyyy')}</p>
                     </div>
                 </div>
-                
+
                 <div className='d-flex flex-wrap'>
                     {dive.divePhoto.map((photoUrl, index) => (
                         <Row className='p-1' key={index}>
@@ -222,19 +222,17 @@ const SingleDive = () => {
 
 
 
-                {/* <Divider horizontal style={{ marginTop: '3rem', marginBottom: '3rem' }}>
-                <Header as='h3'> Comments </Header>
-            </Divider>
+                <h3> Comments </h3>
 
-            <div>
-                <CommentList comments={dive.comments} />
-            </div>
+                <div>
+                    <CommentList comments={dive.comments} />
+                </div>
 
-            <br />
+                <br />
 
-            <div style={{ border: '' }}>
-                <CommentForm diveId={dive._id} />
-            </div> */}
+                <div style={{ border: '' }}>
+                    <CommentForm diveId={dive._id} />
+                </div>
             </Container>
         </Container>
     );

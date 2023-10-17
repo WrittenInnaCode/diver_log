@@ -3,6 +3,29 @@ const { User, Dive, About } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
+
+	Dive: {
+		author: async (dive, args, context) => {
+			try {
+				const user = await User.findById(dive.author);
+				return user;
+			} catch (error) {
+				throw new Error('Error fetching dive author: ' + error.message);
+			}
+		},
+	},
+
+	Comment: {
+		commentAuthor: async (comment, args, context) => {
+			try {
+				const user = await User.findById(comment.commentAuthor);
+				return user;
+			} catch (error) {
+				throw new Error('Error fetching comment author: ' + error.message);
+			}
+		},
+	},
+
 	Query: {
 		users: async () => {
 			return await User.find({}).select('-password').populate('dives');
@@ -27,7 +50,7 @@ const resolvers = {
 	},
 
 	Mutation: {
-		addUser: async (parent, { username, email, password}) => {
+		addUser: async (parent, { username, email, password }) => {
 			const user = await User.create({ username, email, password });
 			const token = signToken(user);
 			return { token, user };
@@ -55,38 +78,38 @@ const resolvers = {
 		updateUserAvatar: async (_, { avatar }, context) => {
 			try {
 				if (!context.user) {
-				  throw new Error('You must be authenticated to update your avatar.');
+					throw new Error('You must be authenticated to update your avatar.');
 				}
-		
+
 				const updatedUser = await User.findByIdAndUpdate(
-				  context.user._id,
-				  { avatar },
-				  { new: true } // Return the updated user
+					context.user._id,
+					{ avatar },
+					{ new: true } // Return the updated user
 				);
-		
+
 				return updatedUser;
-			  } catch (error) {
+			} catch (error) {
 				throw new Error(`Failed to update user's avatar: ${error.message}`);
-			  }
-			},
+			}
+		},
 
 		updateUserBio: async (_, { userBio }, context) => {
 			try {
-			  if (!context.user) {
-				throw new Error('You must be authenticated to update your bio.');
-			  }
-	  
-			  const updatedUser = await User.findByIdAndUpdate(
-				context.user._id,
-				{ userBio },
-				{ new: true } // Return the updated user
-			  );
-	  
-			  return updatedUser;
+				if (!context.user) {
+					throw new Error('You must be authenticated to update your bio.');
+				}
+
+				const updatedUser = await User.findByIdAndUpdate(
+					context.user._id,
+					{ userBio },
+					{ new: true } // Return the updated user
+				);
+
+				return updatedUser;
 			} catch (error) {
-			  throw new Error(`Failed to update user bio: ${error.message}`);
+				throw new Error(`Failed to update user bio: ${error.message}`);
 			}
-		  },
+		},
 
 		addDive: async (parent, {
 			diveSite,
@@ -139,37 +162,39 @@ const resolvers = {
 
 		addComment: async (parent, { diveId, commentText }, context) => {
 			if (context.user) {
-				return Dive.findOneAndUpdate(
+				const comment = {
+					commentText,
+					commentAuthor: context.user._id
+				};
+
+				const updatedDive = await Dive.findOneAndUpdate(
 					{ _id: diveId },
-					{
-						$addToSet: {
-							comments: { commentText, commentAuthor: context.user.username },
-						},
-					},
-					{
-						new: true,
-						runValidators: true,
-					}
+					{ $push: { comments: comment } },
+					{ new: true }
 				);
+				return updatedDive;
 			}
-			throw new AuthenticationError('You need to be logged in!');
+			throw new AuthenticationError('You need to be logged in to add a comment.');
 		},
 
-		removeDive: async (parent, { diveId }, context) => {
+		removeComment: async (parent, { diveId, commentId }, context) => {
 			if (context.user) {
-				const dive = await Dive.findOneAndDelete({
-					_id: diveId,
-					author: context.user._id,
-				});
-
-				await User.findOneAndUpdate(
-					{ _id: context.user._id },
-					{ $pull: { dives: dive._id } }
+				const dive = await Dive.findOneAndUpdate(
+					{ _id: diveId },
+					{
+						$pull: {
+							comments: {
+								_id: commentId,
+								commentAuthor: context.user._id,
+							},
+						},
+					},
+					{ new: true }
 				);
 
 				return dive;
 			}
-			throw new AuthenticationError('You need to be logged in!');
+			throw new AuthenticationError('You need to be logged in to remove a comment.');
 		},
 
 		editDive: async (parent, {
@@ -237,17 +262,6 @@ const resolvers = {
 		},
 
 	},
-
-	Dive: {
-		author: async (dive, args, context) => {
-		  try {
-			const user = await User.findById(dive.author);
-			return user;
-		  } catch (error) {
-			throw new Error('Error fetching dive author: ' + error.message);
-		  }
-		},
-	  },
 
 };
 
