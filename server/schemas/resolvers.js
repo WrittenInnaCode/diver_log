@@ -243,20 +243,19 @@ const resolvers = {
 			throw new AuthenticationError('You need to be logged in!');
 		},
 
-		removeComment: async (parent, { diveId, commentId }, context) => {
+		removeDive: async (parent, { diveId }, context) => {
 			if (context.user) {
-				return Dive.findOneAndUpdate(
-					{ _id: diveId },
-					{
-						$pull: {
-							comments: {
-								_id: commentId,
-								commentAuthor: context.user.username,
-							},
-						},
-					},
-					{ new: true }
+				const dive = await Dive.findOneAndDelete({
+					_id: diveId,
+					author: context.user._id,
+				});
+
+				await User.findOneAndUpdate(
+					{ _id: context.user._id },
+					{ $pull: { dives: dive._id } }
 				);
+
+				return dive;
 			}
 			throw new AuthenticationError('You need to be logged in!');
 		},
