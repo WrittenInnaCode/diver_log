@@ -176,7 +176,7 @@ const NewDive = ({ edit, formData, diveId, editDive }) => {
 
 					},
 				});
-				window.location.assign('/me');
+				window.location.assign(`/dives/${diveId}`);
 
 			} else {
 				// Handle add operation
@@ -199,7 +199,7 @@ const NewDive = ({ edit, formData, diveId, editDive }) => {
 					divePhoto
 				} = state; // Destructure the variables from state
 
-				data = await addDive({
+				const { data } = await addDive({
 					variables: {
 						diveSite,
 						diveDate,
@@ -222,11 +222,10 @@ const NewDive = ({ edit, formData, diveId, editDive }) => {
 				});
 
 				// console.log('Newly created dive:', data);
-			}
 
-			if (data && data.addDive && data.addDive._id) {
+				 if (data && data.addDive && data.addDive._id) {
 
-				// After successful submission, navigate the user to the new dive post
+			// After successful submission, navigate the user to the new dive post
 				navigate(`/dives/${data.addDive._id}`);
 
 				setState({
@@ -251,9 +250,10 @@ const NewDive = ({ edit, formData, diveId, editDive }) => {
 			} else {
 				throw new Error('Failed to create dive post.');
 			}
+			}
 		} catch (err) {
 			console.error(err);
-		};
+		}
 	};
 
 
@@ -358,7 +358,7 @@ const NewDive = ({ edit, formData, diveId, editDive }) => {
 										<StarRating
 											value={state.rating}
 											onChange={handleRatingChange}
-											/>
+										/>
 										{ratingError && <p style={{ color: 'red' }}>{ratingError}</p>}
 
 									</Col>
