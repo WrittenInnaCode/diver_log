@@ -182,3 +182,29 @@ export const ADD_COMMENT = gql`
   }
   }
 `;
+
+
+export const LIKE_DIVE = gql`
+  mutation likeDive($diveId: ID!) {
+    likeDive(diveId: $diveId) {
+     _id
+      likes {
+       _id
+       username
+     }
+  }
+}
+`;
+
+
+export const UNLIKE_DIVE = gql`
+  mutation UnlikeDive($diveId: ID!) {
+    unlikeDive(diveId: $diveId) {
+     _id
+      likes {
+        _id
+       username
+     }
+  }
+}
+`;

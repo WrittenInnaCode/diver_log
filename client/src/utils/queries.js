@@ -101,6 +101,10 @@ export const QUERY_DIVES = gql`
       }
       commentText
     }
+    likes {  # Include the likes field in the query
+        _id
+        username
+      }
     createdAt
     current
     diveBuddy
@@ -159,6 +163,10 @@ export const QUERY_SINGLE_DIVE = gql`
         username
 
         }
+      }
+      likes {  # Include the likes field in the query
+        _id
+        username
       }
     }
   }

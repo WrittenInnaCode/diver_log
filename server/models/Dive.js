@@ -105,6 +105,12 @@ const diveSchema = new Schema({
             },
         },
     ],
+    likes: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+        },
+    ],
 });
 
 const Dive = model('Dive', diveSchema);

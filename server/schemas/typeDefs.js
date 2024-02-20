@@ -33,6 +33,7 @@ const typeDefs = gql`
 		author: User
     	createdAt: String
     	comments: [Comment]
+		likes: [User]
   	}
 
   	type Comment {
@@ -41,6 +42,11 @@ const typeDefs = gql`
     	commentAuthor: User
     	createdAt: String
   	}
+
+	  type Like {
+        _id: ID
+        username: String
+    }
 
 	type Auth {
 		token: ID!
@@ -112,6 +118,10 @@ const typeDefs = gql`
     	addComment(diveId: ID!, commentText: String!): Dive
     
     	removeComment(diveId: ID!, commentId: ID!): Dive
+
+		likeDive(diveId: ID!): Dive
+
+		unlikeDive(diveId: ID!): Dive
 	}
 `;
 

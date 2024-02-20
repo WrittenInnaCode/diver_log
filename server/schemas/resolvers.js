@@ -260,6 +260,43 @@ const resolvers = {
 			throw new AuthenticationError('You need to be logged in!');
 		},
 
+
+		likeDive: async (_, { diveId }, context) => {
+			try {
+				if (!context.user) {
+					throw new AuthenticationError('You need to be logged in to like this dive');
+				}
+
+				const updatedDive = await Dive.findByIdAndUpdate(
+					diveId,
+					{ $addToSet: { likes: context.user._id } },
+					{ new: true }
+				);
+
+				return updatedDive;
+
+			} catch (error) {
+				throw new Error(`Failed to like dive: ${error.message}`)
+			}
+		},
+
+		unlikeDive: async (_, { diveId }, context) => {
+			try {
+				if (!context.user) {
+					throw new AuthenticationError('You need to be logged in to unlike this dive');
+				}
+
+				const updatedDive = await Dive.findByIdAndUpdate(
+					diveId,
+					{ $pull: { likes: context.user._id } },
+					{ new: true }
+				);
+				return updatedDive;
+			} catch (error) {
+				throw new Error(`Failed to unlike the dive: ${error.message}`);
+			}
+		},
+
 	},
 
 };
