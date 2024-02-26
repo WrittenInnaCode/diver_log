@@ -10,6 +10,7 @@ const typeDefs = gql`
 		avatar: String
   		userBio: String
 		comments: [Comment]
+		likes: [Like]
 	}
 
 	type Dive {
@@ -33,7 +34,7 @@ const typeDefs = gql`
 		author: User
     	createdAt: String
     	comments: [Comment]
-		likes: [User]
+		likes: [Like]
   	}
 
   	type Comment {
@@ -43,7 +44,7 @@ const typeDefs = gql`
     	createdAt: String
   	}
 
-	  type Like {
+	type Like {
         _id: ID
         username: String
     }
@@ -121,7 +122,6 @@ const typeDefs = gql`
 
 		likeDive(diveId: ID!): Dive
 
-		unlikeDive(diveId: ID!): Dive
 	}
 `;
 

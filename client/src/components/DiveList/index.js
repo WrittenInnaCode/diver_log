@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Card from 'react-bootstrap/Card';
+import LikeButton from '../LikeButton'
+
 import { format } from 'date-fns'
+
+import Card from 'react-bootstrap/Card';
 import Pagination from 'react-bootstrap/Pagination';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
 import Carousel from 'react-bootstrap/Carousel';
-
 import Image from 'react-bootstrap/Image';
 
 import { MdLocationOn } from 'react-icons/md';
+import { FaRegComment } from "react-icons/fa";
+
 
 const DiveList = ({
   dives,
@@ -92,11 +96,11 @@ const DiveList = ({
                   // style={{ width: "35rem", height: "30rem" }} 
                   >
                     <div className='d-flex justify-content-center'>
-                    <Image
-                      src={photoUrl}
-                      alt={`Dive Photo ${index + 1}`}
-                      style={{ width: "35rem", height: "30rem", objectFit: "contain" }}
-                    />
+                      <Image
+                        src={photoUrl}
+                        alt={`Dive Photo ${index + 1}`}
+                        style={{ width: "35rem", height: "30rem", objectFit: "contain" }}
+                      />
                     </div>
                   </Carousel.Item>
 
@@ -111,9 +115,10 @@ const DiveList = ({
 
             </Card.Body>
 
-            <Card.Footer className="dive-footer text-muted d-flex justify-content-between" style={{ fontSize: '10px' }}>
-              <Link to={`/dives/${dive._id}`} className='link-secondary text-decoration-none'>comments</Link>
-              <span>Posted on {dive.createdAt}</span>
+            <Card.Footer className="dive-footer text-muted d-flex justify-content-between">
+              <LikeButton dive={dive} />
+              <Link to={`/dives/${dive._id}`} className='link-secondary text-decoration-none'> <FaRegComment /> {dive.comments ? dive.comments.length : 0}{' '} comment{dive.comments && dive.comments.length === 1 ? '' : 's'}</Link>
+              <span style={{ fontSize: '10px' }}>Posted on {dive.createdAt}</span>
             </Card.Footer>
           </Card>
         </div>

@@ -32,6 +32,12 @@ const userSchema = new Schema(
 				ref: 'Dive',
 			},
 		],
+		likes: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: 'Dive',
+			},
+		]
 	},
 	// set this to use virtual below
 	{

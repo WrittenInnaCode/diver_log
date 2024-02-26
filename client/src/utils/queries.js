@@ -43,6 +43,16 @@ export const QUERY_USER = gql`
         username
         _id
       }
+      comments {
+      commentAuthor {
+        username
+      }
+      likes {
+        _id
+        username
+      }
+      commentText
+    }
     }
   }
   }
@@ -80,6 +90,16 @@ export const QUERY_ME = gql`
        _id
        username
       }
+      comments {
+       commentAuthor {
+         username
+       }
+       commentText
+      }
+      likes {
+        _id
+        username
+      }
     }
   }
   }
@@ -101,7 +121,7 @@ export const QUERY_DIVES = gql`
       }
       commentText
     }
-    likes {  # Include the likes field in the query
+    likes {
         _id
         username
       }
@@ -164,7 +184,7 @@ export const QUERY_SINGLE_DIVE = gql`
 
         }
       }
-      likes {  # Include the likes field in the query
+      likes {
         _id
         username
       }

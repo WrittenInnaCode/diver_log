@@ -113,6 +113,10 @@ export const REMOVE_DIVE = gql`
       commentText
       createdAt
     }
+    likes {
+       _id
+       username
+      }
   }
   }
 `;
@@ -191,20 +195,7 @@ export const LIKE_DIVE = gql`
       likes {
        _id
        username
-     }
-  }
-}
-`;
-
-
-export const UNLIKE_DIVE = gql`
-  mutation UnlikeDive($diveId: ID!) {
-    unlikeDive(diveId: $diveId) {
-     _id
-      likes {
-        _id
-       username
-     }
+      }
   }
 }
 `;

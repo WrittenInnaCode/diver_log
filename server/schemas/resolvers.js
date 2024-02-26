@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Dive, About } = require('../models');
+const { User, Dive } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -22,6 +22,17 @@ const resolvers = {
 				return user;
 			} catch (error) {
 				throw new Error('Error fetching comment author: ' + error.message);
+			}
+		},
+	},
+
+	Like: {
+		username: async (like, args, context) => {
+			try {
+				const user = await User.findOne({ username: like.username });
+				return user;
+			} catch (error) {
+				throw new Error('Error fetching username of a like: ' + error.message);
 			}
 		},
 	},
@@ -264,36 +275,28 @@ const resolvers = {
 		likeDive: async (_, { diveId }, context) => {
 			try {
 				if (!context.user) {
-					throw new AuthenticationError('You need to be logged in to like this dive');
+					throw new AuthenticationError('You need to be logged in to like a dive.');
 				}
 
-				const updatedDive = await Dive.findByIdAndUpdate(
-					diveId,
-					{ $addToSet: { likes: context.user._id } },
-					{ new: true }
-				);
-
-				return updatedDive;
-
-			} catch (error) {
-				throw new Error(`Failed to like dive: ${error.message}`)
-			}
-		},
-
-		unlikeDive: async (_, { diveId }, context) => {
-			try {
-				if (!context.user) {
-					throw new AuthenticationError('You need to be logged in to unlike this dive');
+				const dive = await Dive.findById(diveId);
+				if (!dive) {
+					throw new Error('Dive not found.')
 				}
 
-				const updatedDive = await Dive.findByIdAndUpdate(
-					diveId,
-					{ $pull: { likes: context.user._id } },
-					{ new: true }
-				);
-				return updatedDive;
+				const isLiked = dive.likes.some(like => like.equals(context.user._id));
+
+				if (isLiked) {
+					// If the user has already liked the post, unlike it
+					dive.likes = dive.likes.filter(like => !like.equals(context.user._id));
+				} else {
+					// If the user has not liked the post, like it
+					dive.likes.push(context.user._id);
+				}
+				await dive.save();
+
+				return dive;
 			} catch (error) {
-				throw new Error(`Failed to unlike the dive: ${error.message}`);
+				throw new Error(`Faile to like/unlike dive post: ${error.message}`);
 			}
 		},
 
