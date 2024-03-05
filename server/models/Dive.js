@@ -107,9 +107,11 @@ const diveSchema = new Schema({
     ],
     likes: [
         {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
-        },
+            likedBy: {
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+            },
+        }
     ],
 });
 

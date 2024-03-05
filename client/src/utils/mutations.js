@@ -72,6 +72,13 @@ mutation addDive($diveSite: String!, $diveDate: String!, $timeIn: String!, $time
       _id
       commentText
     }
+    likes {
+      _id
+      likedBy {
+        _id
+        username
+      }
+    }
   }
 }
 `;
@@ -114,9 +121,12 @@ export const REMOVE_DIVE = gql`
       createdAt
     }
     likes {
-       _id
-       username
+      _id
+      likedBy {
+        _id
+        username
       }
+    }
   }
   }
 `;
@@ -150,6 +160,7 @@ mutation EditDive($diveId: ID!, $diveSite: String!, $diveDate: String!, $timeIn:
 export const ADD_COMMENT = gql`
   mutation addComment($diveId: ID!, $commentText: String!) {
     addComment(diveId: $diveId, commentText: $commentText) {
+    _id
     comments {
       _id
       commentText
@@ -160,29 +171,6 @@ export const ADD_COMMENT = gql`
         avatar
       }
     }
-    _id
-    createdAt
-    current
-    diveBuddy
-    diveDate
-    diveLife
-    diveSite
-    diveText
-    divePhoto
-    endPsi
-    maxDepth
-    rating
-    startPsi
-    temperature
-    timeIn
-    timeOut
-    visibility
-    weights
-    author {
-      _id
-      avatar
-      username
-    }
   }
   }
 `;
@@ -192,10 +180,13 @@ export const LIKE_DIVE = gql`
   mutation likeDive($diveId: ID!) {
     likeDive(diveId: $diveId) {
      _id
-      likes {
-       _id
-       username
+     likes {
+      _id
+      likedBy {
+        _id
+        username
       }
+    }
   }
 }
 `;

@@ -44,14 +44,17 @@ export const QUERY_USER = gql`
         _id
       }
       comments {
-      commentAuthor {
-        username
+        commentAuthor {
+         username
+       }
+        commentText
       }
       likes {
+      _id
+      likedBy {
         _id
         username
       }
-      commentText
     }
     }
   }
@@ -97,9 +100,12 @@ export const QUERY_ME = gql`
        commentText
       }
       likes {
+      _id
+      likedBy {
         _id
         username
       }
+    }
     }
   }
   }
@@ -122,9 +128,12 @@ export const QUERY_DIVES = gql`
       commentText
     }
     likes {
+      _id
+      likedBy {
         _id
         username
       }
+    }
     createdAt
     current
     diveBuddy
@@ -179,15 +188,17 @@ export const QUERY_SINGLE_DIVE = gql`
         createdAt
         commentAuthor {
           _id
-        avatar
-        username
-
+          avatar
+          username
         }
       }
       likes {
-        _id
-        username
+          _id
+          likedBy {
+            _id
+            username
       }
+    }
     }
   }
 `;

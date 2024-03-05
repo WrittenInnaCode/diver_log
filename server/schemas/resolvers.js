@@ -27,9 +27,9 @@ const resolvers = {
 	},
 
 	Like: {
-		username: async (like, args, context) => {
+		likedBy: async (like, args, context) => {
 			try {
-				const user = await User.findOne({ username: like.username });
+				const user = await User.findById(like.likedBy);
 				return user;
 			} catch (error) {
 				throw new Error('Error fetching username of a like: ' + error.message);
@@ -274,31 +274,38 @@ const resolvers = {
 
 		likeDive: async (_, { diveId }, context) => {
 			try {
-				if (!context.user) {
-					throw new AuthenticationError('You need to be logged in to like a dive.');
+
+				if (!context.user || !context.user._id) {
+					throw new Error('User ID is not defined in the context.');
 				}
 
+				const userId = context.user._id;
 				const dive = await Dive.findById(diveId);
+
 				if (!dive) {
-					throw new Error('Dive not found.')
+					throw new Error('Dive not found.');
 				}
 
-				const isLiked = dive.likes.some(like => like.equals(context.user._id));
 
-				if (isLiked) {
-					// If the user has already liked the post, unlike it
-					dive.likes = dive.likes.filter(like => !like.equals(context.user._id));
+				// Check if the user has already liked the dive
+				const alreadyLikedIndex = dive.likes.findIndex(like => like.likedBy && like.likedBy.toString() === userId.toString());
+
+				if (alreadyLikedIndex !== -1) {
+					// If the user has already liked the dive, remove the like
+					dive.likes.splice(alreadyLikedIndex, 1);
 				} else {
-					// If the user has not liked the post, like it
-					dive.likes.push(context.user._id);
+					// If the user hasn't liked the dive, add the like
+					dive.likes.push({ likedBy: userId });
 				}
+				// console.log('User ID:', userId);
 				await dive.save();
 
 				return dive;
 			} catch (error) {
-				throw new Error(`Faile to like/unlike dive post: ${error.message}`);
+				throw new Error(`Failed to like/unlike dive post: ${error.message}`);
 			}
-		},
+		}
+
 
 	},
 

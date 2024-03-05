@@ -46,7 +46,7 @@ const typeDefs = gql`
 
 	type Like {
         _id: ID
-        username: String
+        likedBy: User
     }
 
 	type Auth {
