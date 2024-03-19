@@ -1,13 +1,12 @@
-import { NavLink, Link, useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import React, { useState } from 'react';
 
-import Login from '../../components/Login';
-import Signup from '../../components/Signup';
+import AuthModal from '../AuthModal';
 
 import Auth from '../../utils/auth';
 
-import { Navbar, Nav, Container, Button, Modal, Tab, Tabs, NavDropdown, Figure } from 'react-bootstrap';
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 
 
 function AppNavbar() {
@@ -19,9 +18,8 @@ function AppNavbar() {
 
 	// Modal:
 	const [show, setShow] = useState(false);
-	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-
+	const handleClose = () => setShow(false);
 
 
 	// to assign custom class to navlinks when they're selected
@@ -94,36 +92,8 @@ function AppNavbar() {
 
 			</Navbar>
 
-			<div>
-				<Modal show={show} onHide={handleClose} centered>
-					<Modal.Header closeButton>
-						<Modal.Title>Welcome!</Modal.Title>
-					</Modal.Header>
+			<AuthModal show={show} onHide={handleClose} />
 
-					<Modal.Body className="bg-light">
-						<Tabs
-							defaultActiveKey="login"
-							className="mb-3, modalTabs"
-							fill
-							justify
-							id="modalTabs"
-						>
-
-							<Tab eventKey="login" title="Log In">
-								<Login />
-							</Tab>
-
-							<Tab eventKey="signup" title="Sign Up">
-								<Signup />
-							</Tab>
-
-						</Tabs>
-
-					</Modal.Body>
-					<Modal.Footer>
-					</Modal.Footer>
-				</Modal>
-			</div>
 		</Container>
 	);
 }
