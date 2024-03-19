@@ -1,41 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { LIKE_DIVE } from '../../utils/mutations';
-import Auth from '../../utils/auth';
 
-import { FaRegHeart } from "react-icons/fa";
-import { FaHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 
-
-const LikeButton = ({ dive }) => {
-
+const LikeButton = ({ dive, user }) => {
+    
     const [liked, setLiked] = useState(false);
 
-    const [likeDive] = useMutation(LIKE_DIVE);
+    const [likeDive] = useMutation(LIKE_DIVE, {
+        variables: { diveId: dive._id },
+        onCompleted: (data) => {
+            setLiked(!liked);
+        },
+        onError: (error) => {
+            console.error("Error liking/unliking the dive:", error);
+        }
+    });
 
 
     useEffect(() => {
-        // Check if the dive is liked by the user
-        if (Auth.loggedIn() && dive.likes.find(like => like.username === Auth.getProfile().username)) {
+        if (user && dive.likes.find(like => like.likedBy._id === user._id)) {
             setLiked(true);
         } else {
-            setLiked(false)
+            setLiked(false);
         }
-    }, [dive.likes]);
+    }, [dive.likes, user]);
 
 
-    const handleLike = async () => {
-        try {
-            await likeDive({ variables: { diveId: dive._id } });
-            setLiked(!liked); // Toggle the liked state
-        } catch (error) {
-            console.error('Error liking the dive:', error);
+    const handleLikeClick = async () => {
+        if (!user) {
+            console.log('User must be logged in to like a dive');
+            return;
         }
+        await likeDive();
     };
 
 
     return (
-        <div onClick={handleLike}>
+        <div onClick={handleLikeClick}>
             {liked ? <FaHeart /> : <FaRegHeart />}
             <span>{dive.likes.length}</span>
         </div>

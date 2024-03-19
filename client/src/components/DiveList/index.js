@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LikeButton from '../LikeButton'
 
+import { useAuth } from '../../utils/AuthContext';
 import { format } from 'date-fns'
 
 import Card from 'react-bootstrap/Card';
@@ -22,6 +23,9 @@ const DiveList = ({
   showUsername = true,
   itemsPerPage = 10,
 }) => {
+
+  const { user } = useAuth();
+  // console.log(user);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -46,34 +50,20 @@ const DiveList = ({
       {showTitle && <h4 className='pb-3'>{title}</h4>}
 
       {currentDives.map((dive) => (
+
         <div key={dive._id} className='pb-5'>
 
-          {showUsername ? (
-            <>
-              {/* viewing ALL dives by all users - shows username above the card */}
-              <div className='pb-2'>
-                <Link to={`/profiles/${dive.author?.username}`} className='text-decoration-none link-light fw-bolder'>
-
-                  <Image roundedCircle
-                    src={dive.author?.avatar}
-                    alt={`${dive.author?.username}'s Avatar`}
-                    style={{ width: '35px', height: '35px', marginRight: '0.5rem' }} />
-
-                  {dive.author.username} {''}
-
-                </Link>
-              </div>
-            </>
-          ) : (
-            <>
-              {/* viewing all dives by a specific/single user - does not show the username above the card */}
-
-              {/* <Link to={`/dives/${dive._id}`}>
-                <span>{dive.diveSite}</span>
-                <span> on {format(new Date(dive.diveDate), 'MMMM d, yyyy')}.</span>
+          {showUsername && (
+            <div className='pb-2'>
+              <Link to={`/profiles/${dive.author?.username}`} className='text-decoration-none link-light fw-bolder'>
+                <Image roundedCircle
+                  src={dive.author?.avatar}
+                  alt={`${dive.author?.username}'s Avatar`}
+                  style={{ width: '35px', height: '35px', marginRight: '0.5rem' }}
+                />
+                {dive.author.username}
               </Link>
-              <p style={{ fontSize: '12px', paddingTop: '0.5rem' }}> Posted on {dive.createdAt}</p> */}
-            </>
+            </div>
           )}
 
           <Card style={{ maxWidth: '35rem' }}>
@@ -116,7 +106,7 @@ const DiveList = ({
             </Card.Body>
 
             <Card.Footer className="dive-footer text-muted d-flex justify-content-between">
-              <LikeButton dive={dive} />
+              <LikeButton dive={dive} user={user} />
               <Link to={`/dives/${dive._id}`} className='link-secondary text-decoration-none'> <FaRegComment /> {dive.comments ? dive.comments.length : 0}{' '} comment{dive.comments && dive.comments.length === 1 ? '' : 's'}</Link>
               <span style={{ fontSize: '10px' }}>Posted on {dive.createdAt}</span>
             </Card.Footer>
