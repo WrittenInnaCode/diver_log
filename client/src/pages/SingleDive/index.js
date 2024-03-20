@@ -47,12 +47,15 @@ const SingleDive = () => {
     };
 
 
-    // Check if the currently logged-in user is the author of the dive
+    // Check if the currently logged-in user is the author of the dive; if user not logged in = not author
     const userLoggedIn = Auth.loggedIn();
-    const userProfile = Auth.getProfile().data;
+    let isAuthor = false;
 
-    const isAuthor = userLoggedIn && userProfile && userProfile.username === (dive.author?.username);
-    // const isAuthor = Auth.loggedIn() && Auth.getProfile().data.username === dive.author.username;
+    if (userLoggedIn){
+        const userProfile = Auth.getProfile().data;
+        isAuthor = userProfile.username === dive.author?.username;
+    }
+
 
 
     const handleDelete = async (diveId) => {

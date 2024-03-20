@@ -16,7 +16,7 @@ const EditDive = () => {
     const { loading, data } = useQuery(QUERY_SINGLE_DIVE, {
         variables: { diveId: diveId },
     });
-    console.log(data)
+    // console.log(data)
 
     const [editDive] = useMutation(EDIT_DIVE);
 

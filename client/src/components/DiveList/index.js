@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LikeButton from '../LikeButton'
+import AuthModal from '../AuthModal';
 
 import { useAuth } from '../../utils/AuthContext';
 import { format } from 'date-fns'
@@ -26,6 +27,8 @@ const DiveList = ({
 
   const { user } = useAuth();
   // console.log(user);
+
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -106,7 +109,16 @@ const DiveList = ({
             </Card.Body>
 
             <Card.Footer className="dive-footer text-muted d-flex justify-content-between">
-              <LikeButton dive={dive} user={user} />
+
+              <LikeButton
+                dive={dive}
+                user={user}
+                onUnauthorizedLike={() => setShowAuthModal(true)}
+              />
+
+              {/* If user is not logged in and tries to like the dive, show auth modal: */}
+              <AuthModal show={showAuthModal} onHide={() => setShowAuthModal(false)} />
+
               <Link to={`/dives/${dive._id}`} className='link-secondary text-decoration-none'> <FaRegComment /> {dive.comments ? dive.comments.length : 0}{' '} comment{dive.comments && dive.comments.length === 1 ? '' : 's'}</Link>
               <span style={{ fontSize: '10px' }}>Posted on {dive.createdAt}</span>
             </Card.Footer>

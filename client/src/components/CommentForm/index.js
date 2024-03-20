@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import AuthModal from '../AuthModal';
 import { useMutation } from '@apollo/client';
 
 import { ADD_COMMENT } from '../../utils/mutations';
@@ -11,6 +11,13 @@ import Form from 'react-bootstrap/Form';
 
 
 const CommentForm = ({ diveId }) => {
+
+  // Modal:
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+
+
   const [commentText, setCommentText] = useState('');
 
   const [addComment, { error }] = useMutation(ADD_COMMENT);
@@ -44,12 +51,10 @@ const CommentForm = ({ diveId }) => {
   return (
     <div>
 
-      <h3> Leave a Comment </h3>
-
       {Auth.loggedIn() ? (
         <>
-
-          <Form onSubmit={handleFormSubmit}>
+          {/* <h5> Leave a Comment </h5> */}
+          <Form onSubmit={handleFormSubmit} style={{ paddingBottom: '1rem', textAlign: "center" }}>
 
             <Form.Group className="mb-3">
               <Form.Control as="textarea" rows={3}
@@ -61,20 +66,18 @@ const CommentForm = ({ diveId }) => {
               />
             </Form.Group>
 
-            <br />
-              <Button type="submit">
-                Add Comment
-              </Button>
+            <Button type="submit">
+              Add Comment
+            </Button>
 
           </Form>
 
         </>
       ) : (
-        <p>
-          You need to be logged in to comment. 
-          {/* Please{' '} */}
-          {/* <Link to="/login">login</Link> or <Link to="/signup">signup.</Link> */}
-        </p>
+        <div style={{ paddingBottom: '1rem', textAlign: "center" }}>
+          <Button variant="outline-primary" size="sm" onClick={() => handleShow()} >Log in</Button> to leave a comment
+          <AuthModal show={show} onHide={handleClose} />
+        </div>
       )}
     </div>
   );

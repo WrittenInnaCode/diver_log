@@ -4,7 +4,7 @@ import { LIKE_DIVE } from '../../utils/mutations';
 
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 
-const LikeButton = ({ dive, user }) => {
+const LikeButton = ({ dive, user, onUnauthorizedLike }) => {
     
     const [liked, setLiked] = useState(false);
 
@@ -30,7 +30,8 @@ const LikeButton = ({ dive, user }) => {
 
     const handleLikeClick = async () => {
         if (!user) {
-            console.log('User must be logged in to like a dive');
+            onUnauthorizedLike();
+            // console.log('User must be logged in to like a dive');
             return;
         }
         await likeDive();
