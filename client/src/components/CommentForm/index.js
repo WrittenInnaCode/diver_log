@@ -54,10 +54,13 @@ const CommentForm = ({ diveId }) => {
       {Auth.loggedIn() ? (
         <>
           {/* <h5> Leave a Comment </h5> */}
-          <Form onSubmit={handleFormSubmit} style={{ paddingBottom: '1rem', textAlign: "center" }}>
+          <Form onSubmit={handleFormSubmit} style={{ paddingBottom: '1rem', paddingTop: '1rem', textAlign: "center" }}
+          // className='pt-4 border-light border-top'
+          >
 
             <Form.Group className="mb-3">
               <Form.Control as="textarea" rows={3}
+                className='commentText'
                 name="commentText"
                 placeholder="Add your comment..."
                 value={commentText}

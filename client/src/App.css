@@ -9,7 +9,8 @@ html {
 }
 
 .navbarBg {
-    background-color: rgb(20, 56, 108);
+    /* background-color: rgb(20, 56, 108); */
+    background-color: rgb(182, 205, 227);
     min-height: 100vh;
     border-right: solid 2px;
     border-color: aliceblue;
@@ -23,19 +24,19 @@ html {
     font-size: 160%;
 }
 
-.userAvatar{
-max-width: 150px;
-max-height: 150px;
+.userAvatar {
+    max-width: 150px;
+    max-height: 150px;
 }
 
-.userBio{
+.userBio {
     white-space: pre-line;
 }
 
-.character-limit{
-font-size: small;
-color: lightslategray;
-text-align: right;
+.character-limit {
+    font-size: small;
+    color: lightslategray;
+    text-align: right;
 }
 
 .active {
@@ -43,8 +44,9 @@ text-align: right;
 }
 
 .bodyBg {
-    background-color: rgba(3, 105, 183, 0.844);
-    background: linear-gradient(#1689e2d7, rgba(2, 28, 79, 0.844));
+    background-color: rgba(228, 234, 247, 0.844);
+    /* background-color: rgba(205, 219, 246, 0.844); */
+    /* background: linear-gradient(#1689e2d7, rgba(2, 28, 79, 0.844)); */
     min-height: 100vh;
 }
 
@@ -54,14 +56,16 @@ text-align: right;
 
 .logOutBttn {
     white-space: nowrap;
+    margin-top: 2rem;
 }
 
 .username {
     padding-top: 1rem !important;
 }
 
-.logOutBttn {
-    margin-top: 2rem;
+.commentText {
+    max-width: 60%;
+    margin: auto;
 }
 
 .customDatePicker {
@@ -74,16 +78,18 @@ text-align: right;
     border-radius: 4px;
 }
 
-.dive-header{
-    background-color: rgba(208, 226, 255)!important;
+.dive-header {
+    /* background-color: rgba(208, 226, 255) !important; */
+    margin-left: 2.5rem;
 }
 
 /* .dive-card {
     background-color: rgba(129, 186, 235, 0.555);
 } */
 
-.photoSlide{
-    background-color: rgb(20, 56, 108);
+.photoSlide {
+    /* background-color: rgb(20, 56, 108); */
+    /* background-color: rgb(222, 232, 247); */
 }
 
 .diveText {
@@ -96,21 +102,21 @@ text-align: right;
     color: slategray;
 } */
 
-.dive-footer{
+.dive-footer {
     /* background-color: rgba(208, 226, 255)!important; */
-    background-color: rgba(240, 248, 255, 0.555)!important;
+    background-color: rgba(240, 248, 255, 0.555) !important;
 }
 
 .diveForm {
-    background-color: rgba(208, 226, 255);
+    /* background-color: rgba(208, 226, 255); */
     padding: 1.5rem;
     border-radius: 6px;
     color: rgba(0, 60, 157);
 }
 
 .formBorders {
-    /* border-style: dashed; */
-    /* border-color: rgb(255, 255, 255); */
+    border-style:ridge;
+    /* border-color: rgb(247, 243, 243); */
     /* border-radius: 4px; */
     padding: 1rem;
     background-color: rgba(240, 248, 255, 0.555);
@@ -124,7 +130,7 @@ text-align: right;
     padding: 1rem;
 }
 
-.userDetails{
+.userDetails {
     width: 100%;
 }
 
@@ -188,6 +194,7 @@ input[type="radio"] {
 /* these stars are the ones from the DiveRating */
 .star-rating {
     font-size: 24px;
+    text-align:end;
 }
 
 .star-filled {
@@ -214,10 +221,21 @@ input[type="radio"] {
 }
 
 
+
+@media screen and (max-width: 991px) {
+    .commentText {
+        max-width: 100%;
+    }
+}
+
 @media screen and (max-width: 950px) {
     .diveDetailsLocation {
         display: flex;
         flex-direction: column-reverse;
+    }
+
+    .commentText {
+        max-width: 100%;
     }
 }
 

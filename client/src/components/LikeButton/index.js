@@ -1,42 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { LIKE_DIVE } from '../../utils/mutations';
+import { UNLIKE_DIVE } from '../../utils/mutations';
+import { QUERY_DIVES } from '../../utils/queries';
 
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 const LikeButton = ({ dive, user, onUnauthorizedLike }) => {
-    
-    const [liked, setLiked] = useState(false);
+
+    const [liked, setLiked] = useState(dive.isLikedByCurrentUser);
 
     const [likeDive] = useMutation(LIKE_DIVE, {
         variables: { diveId: dive._id },
-        onCompleted: (data) => {
-            setLiked(!liked);
-        },
-        onError: (error) => {
-            console.error("Error liking/unliking the dive:", error);
-        }
+        refetchQueries: [{ query: QUERY_DIVES }], // Refetch dives to update UI
     });
 
 
     useEffect(() => {
-        if (user && dive.likes.find(like => like.likedBy._id === user._id)) {
-            setLiked(true);
-        } else {
-            setLiked(false);
-        }
-    }, [dive.likes, user]);
+        // Ensure liked state is correctly set when dive prop changes
+        setLiked(dive.isLikedByCurrentUser);
+    }, [dive.isLikedByCurrentUser]);
+
+    const [unlikeDive] = useMutation(UNLIKE_DIVE, {
+        variables: { diveId: dive._id },
+        refetchQueries: [{ query: QUERY_DIVES }],
+    });
+
+
+    console.log('dive.isLikedByCurrentUser:', dive.isLikedByCurrentUser)
 
 
     const handleLikeClick = async () => {
         if (!user) {
             onUnauthorizedLike();
-            // console.log('User must be logged in to like a dive');
             return;
         }
-        await likeDive();
+        try {
+            if (liked) {
+                await unlikeDive();
+            } else {
+                await likeDive();
+            }
+            setLiked(!liked); // Optimistically toggle the liked state
+        } catch (error) {
+            console.error("Error liking/unliking the dive:", error);
+        }
     };
-
 
     return (
         <div onClick={handleLikeClick}>

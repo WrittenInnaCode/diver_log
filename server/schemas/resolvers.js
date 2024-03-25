@@ -271,56 +271,31 @@ const resolvers = {
 			throw new AuthenticationError('You need to be logged in!');
 		},
 
-
-		// likeDive: async (_, { diveId }, context) => {
-		// 	if (!context.user) {
-		// 		throw new AuthenticationError('You need to be logged in!');
-		// 	}
-		
-		// 	// Find the dive to check if the current user has already liked it
-		// 	const dive = await Dive.findById(diveId);
-		// 	if (!dive) {
-		// 		throw new Error('Dive not found');
-		// 	}
-		
-		// 	const likeIndex = dive.likes.findIndex(like => like.likedBy.toString() === context.user._id.toString());
-		
-		// 	if (likeIndex > -1) {
-		// 		// User has already liked this dive, so remove the like
-		// 		dive.likes.splice(likeIndex, 1);
-		// 		await dive.save();
-		// 	} else {
-		// 		// Add a new like from the user
-		// 		dive.likes.push({ likedBy: context.user._id });
-		// 		await dive.save();
-		// 	}
-		// 	return Dive.findById(diveId).populate('likes.likedBy');
-		// }
-
 		likeDive: async (_, { diveId }, context) => {
 			const userId = context.user._id;
-		
 			const dive = await Dive.findById(diveId);
-		  
 			if (!dive) {
-			  throw new Error('Dive not found');
+				throw new Error('Dive not found');
 			}
-		  
-			// Check if the user has already liked the dive
-			const alreadyLiked = dive.likes.findIndex(like => like.likedBy.toString() === userId.toString()) > -1;
-		  
-			if (alreadyLiked) {
-			  // User has already liked the dive, so unlike it
-			  dive.likes = dive.likes.filter(like => like.likedBy.toString() !== userId.toString());
-			} else {
-			  // User hasn't liked the dive, add a new like
-			  dive.likes.push({ likedBy: userId });
+			// Add a new like if not already liked
+			if (!dive.likes.some(like => like.likedBy.toString() === userId)) {
+				dive.likes.push({ likedBy: userId });
+				await dive.save();
 			}
-		  
-			await dive.save();
-		  
 			return dive;
-		  }
+		},
+
+		unlikeDive: async (_, { diveId }, context) => {
+			const userId = context.user._id;
+			const dive = await Dive.findById(diveId);
+			if (!dive) {
+				throw new Error('Dive not found');
+			}
+			// Remove the user's like
+			dive.likes = dive.likes.filter(like => like.likedBy.toString() !== userId);
+			await dive.save();
+			return dive;
+		}
 	},
 
 };

@@ -121,6 +121,8 @@ const typeDefs = gql`
     	removeComment(diveId: ID!, commentId: ID!): Dive
 
 		likeDive(diveId: ID!): Dive
+		
+		unlikeDive(diveId: ID!): Dive
 
 	}
 `;

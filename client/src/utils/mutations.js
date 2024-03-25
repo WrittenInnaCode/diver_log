@@ -190,3 +190,19 @@ export const LIKE_DIVE = gql`
   }
 }
 `;
+
+
+export const UNLIKE_DIVE = gql`
+  mutation unlikeDive($diveId: ID!) {
+    unlikeDive(diveId: $diveId) {
+     _id
+     likes {
+      _id
+      likedBy {
+        _id
+        username
+      }
+    }
+  }
+}
+`;

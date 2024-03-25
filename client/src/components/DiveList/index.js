@@ -49,7 +49,7 @@ const DiveList = ({
   }
 
   return (
-    <Container className=''>
+    <Container className='' style={{ maxWidth: '50rem' }}>
       {showTitle && <h4 className='pb-3'>{title}</h4>}
 
       {currentDives.map((dive) => (
@@ -57,72 +57,73 @@ const DiveList = ({
         <div key={dive._id} className='pb-5'>
 
           {showUsername && (
-            <div className='pb-2'>
-              <Link to={`/profiles/${dive.author?.username}`} className='text-decoration-none link-light fw-bolder'>
+            <div>
+              <Link to={`/profiles/${dive.author?.username}`} className='text-decoration-none link-dark fw-bolder'>
                 <Image roundedCircle
                   src={dive.author?.avatar}
                   alt={`${dive.author?.username}'s Avatar`}
                   style={{ width: '35px', height: '35px', marginRight: '0.5rem' }}
                 />
-                {dive.author.username}
+                {dive.author.username} 
               </Link>
             </div>
           )}
 
-          <Card style={{ maxWidth: '35rem' }}>
-            <Card.Header className='dive-header'>
-              {/* <span>went diving in</span> */}
-              <Link to={`/dives/${dive._id}`}
-                className='text-primary text-opacity-50 text-decoration-none'>
-                <MdLocationOn />
-                <span className='fw-bolder pe-1'> {dive.diveSite} {''}</span>
-                <span style={{ fontSize: '13px' }}> {format(new Date(dive.diveDate), 'MMMM d, yyyy')}</span>
-              </Link>
-            </Card.Header>
+          {/* <Card style={{ maxWidth: '50rem' }}> */}
+          <div className='dive-header pb-3'>
+            <Link to={`/dives/${dive._id}`}
+              className='text-primary text-opacity-50 text-decoration-none'>
+              <MdLocationOn />
+              <span className='fw-bolder pe-1'> {dive.diveSite} {''}</span>
+              <span style={{ fontSize: '13px' }}> {format(new Date(dive.diveDate), 'MMMM d, yyyy')}</span>
+            </Link>
+          </div>
 
-            <Card.Body className='dive-card'>
+          {/* <Card.Body className='dive-card'> */}
 
-              <Carousel interval={null} className='photoSlide'>
-                {dive.divePhoto.map((photoUrl, index) => (
+          <Carousel interval={null} variant="dark"
+          // className='photoSlide'
+          >
+            {dive.divePhoto.map((photoUrl, index) => (
 
-                  <Carousel.Item key={index}
-                  // style={{ width: "35rem", height: "30rem" }} 
-                  >
-                    <div className='d-flex justify-content-center'>
-                      <Image
-                        src={photoUrl}
-                        alt={`Dive Photo ${index + 1}`}
-                        style={{ width: "35rem", height: "30rem", objectFit: "contain" }}
-                      />
-                    </div>
-                  </Carousel.Item>
+              <Carousel.Item key={index}>
+                <div className='d-flex justify-content-center'>
+                  <Image
+                    src={photoUrl}
+                    alt={`Dive Photo ${index + 1}`}
+                    style={{ width: "35rem", height: "30rem", objectFit: "contain" }}
+                  />
+                </div>
+              </Carousel.Item>
 
-                ))}
-              </Carousel>
+            ))}
+          </Carousel>
 
-              <Link className="diveText" to={`/dives/${dive._id}`}>
-                <Card.Text className='pt-3'>
-                  {dive.diveText}
-                </Card.Text>
-              </Link>
+          <Link className="diveText" to={`/dives/${dive._id}`}>
+            <Card.Text className='pt-3'>
+              {dive.diveText}
+            </Card.Text>
+          </Link>
 
-            </Card.Body>
+          {/* </Card.Body> */}
 
-            <Card.Footer className="dive-footer text-muted d-flex justify-content-between">
+          <Card.Footer className="dive-footer text-muted d-flex justify-content-between">
 
-              <LikeButton
-                dive={dive}
-                user={user}
-                onUnauthorizedLike={() => setShowAuthModal(true)}
-              />
+            <LikeButton
+              dive={dive}
+              user={user}
+              // isLikedByCurrentUser={dive.isLikedByCurrentUser}
+              onUnauthorizedLike={() => setShowAuthModal(true)}
+            />
 
-              {/* If user is not logged in and tries to like the dive, show auth modal: */}
-              <AuthModal show={showAuthModal} onHide={() => setShowAuthModal(false)} />
+            {/* If user is not logged in and tries to like the dive, show auth modal: */}
+            <AuthModal show={showAuthModal} onHide={() => setShowAuthModal(false)} />
 
-              <Link to={`/dives/${dive._id}`} className='link-secondary text-decoration-none'> <FaRegComment /> {dive.comments ? dive.comments.length : 0}{' '} comment{dive.comments && dive.comments.length === 1 ? '' : 's'}</Link>
-              <span style={{ fontSize: '10px' }}>Posted on {dive.createdAt}</span>
-            </Card.Footer>
-          </Card>
+            <Link to={`/dives/${dive._id}`} className='link-secondary text-decoration-none'> <FaRegComment /> {dive.comments ? dive.comments.length : 0}{' '} comment{dive.comments && dive.comments.length === 1 ? '' : 's'}</Link>
+            <span style={{ fontSize: '10px' }}>Posted on {dive.createdAt}</span>
+          </Card.Footer>
+          {/* </Card> */}
+
         </div>
       ))}
 

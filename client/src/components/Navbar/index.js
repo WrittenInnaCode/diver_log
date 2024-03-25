@@ -40,7 +40,7 @@ function AppNavbar() {
 					<Container className='p-2'>
 						<Navbar.Brand as={NavLink} to="/"
 							// className='logo text-light p-2'
-							className={splitLocation[1] === "me" ? "logo text-light fw-normal p-2" : "logo text-light fw-normal p-2"}
+							className={splitLocation[1] === "me" ? "logo  fw-normal p-2" : "logo fw-normal p-2"}
 						>Divegram</Navbar.Brand>
 					</Container>
 
@@ -54,23 +54,23 @@ function AppNavbar() {
 										<Nav className="me-auto d-flex flex-column">
 											<Nav.Item>
 												<Nav.Link as={NavLink} to="/me" eventKey="/me"
-													className={splitLocation[1] === "me" ? "text-light fw-bold" : "text-light"}>
+													className={splitLocation[1] === "me" ? " fw-bold" : ""}>
 													{Auth.getProfile().data.username} {' '}
 												</Nav.Link>
 											</Nav.Item>
 											<Nav.Item>
 												<Nav.Link as={NavLink} to="/newdivelog" eventKey="/newdivelog"
-													className={splitLocation[1] === "newdivelog" ? "text-light fw-bold" : "text-light"}
+													className={splitLocation[1] === "newdivelog" ? " fw-bold" : ""}
 												>Log New Dive</Nav.Link>
 											</Nav.Item>
 											<Nav.Item>
 												<Nav.Link as={NavLink} to="/dives" eventKey="/dives"
-													className={splitLocation[1] === "dives" ? "text-light fw-bold" : "text-light"}
+													className={splitLocation[1] === "dives" ? "t fw-bold" : ""}
 												>Explore Dives</Nav.Link>
 											</Nav.Item>
 											<Nav.Item>
 												<Nav.Link as={NavLink} to="/bucketlist" eventKey="/bucketlist"
-													className={splitLocation[1] === "bucketlist" ? "text-light fw-bold" : "text-light"}
+													className={splitLocation[1] === "bucketlist" ? " fw-bold" : ""}
 												>Bucket List</Nav.Link>
 											</Nav.Item>
 

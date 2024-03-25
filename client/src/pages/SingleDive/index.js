@@ -224,9 +224,6 @@ const SingleDive = () => {
                 </div>
 
 
-
-                <h3> Comments </h3>
-
                 <div>
                     <CommentList comments={dive.comments} />
                 </div>
