@@ -49,7 +49,7 @@ const LikeButton = ({ dive, user, onUnauthorizedLike }) => {
 
     return (
         <div onClick={handleLikeClick}>
-            {liked ? <FaHeart /> : <FaRegHeart />}
+            {liked ? <FaHeart /> : <FaRegHeart />} {''}
             <span>{dive.likes.length}</span>
         </div>
     );

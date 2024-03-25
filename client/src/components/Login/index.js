@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../../utils/mutations';
 
-import Auth from '../../utils/auth';
+import { useAuth } from '../../utils/AuthContext';
 
 import { Button, Form, Alert } from 'react-bootstrap';
 
@@ -15,7 +15,9 @@ const Login = () => {
     const [validated] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
 
-    const [login, { error }] = useMutation(LOGIN_USER);
+    const { login } = useAuth();
+
+    const [loginMutation, { error }] = useMutation(LOGIN_USER);
 
     useEffect(() => {
         if (error) {
@@ -40,12 +42,12 @@ const Login = () => {
         }
 
         try {
-            const { data } = await login({
+            const { data } = await loginMutation({
                 variables: { ...userFormData },
             });
+            // console.log(data);
+            login(data.login.token);
 
-            console.log(data);
-            Auth.login(data.login.token);
         } catch (e) {
             console.error(e);
         }

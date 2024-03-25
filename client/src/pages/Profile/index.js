@@ -51,6 +51,7 @@ const Profile = () => {
   }, [user]);
   //
 
+// console.log(user)
 
   const maxCharacterLimit = 80;
 
