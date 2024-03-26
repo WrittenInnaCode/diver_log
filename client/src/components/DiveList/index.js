@@ -70,7 +70,7 @@ const DiveList = ({
           )}
 
           {/* <Card style={{ maxWidth: '50rem' }}> */}
-          <div className='dive-header pb-3'>
+          <div className='dive-header'>
             <Link to={`/dives/${dive._id}`}
               className='text-primary text-opacity-50 text-decoration-none'>
               <MdLocationOn />

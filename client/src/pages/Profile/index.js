@@ -35,7 +35,7 @@ const Profile = () => {
   // Use useMemo to derive 'user' from 'data' only when 'data' changes ("The 'user' logical expression could make the dependencies of useEffect Hook change on every render. To fix this, wrap the initialization of 'user' in its own useMemo() Hook")
   const user = useMemo(() => data?.me || data?.user || {}, [data]);
 
-  const divesWithLikeStatus = useMemo(() => {
+  const profileDives = useMemo(() => {
     // First, sort the dives based on the diveDate, from newest to oldest (creating a new array)
     const sortedDives = (user.dives || []).slice().sort((a, b) => new Date(b.diveDate) - new Date(a.diveDate)); //The use of .slice() before .sort() is to create a shallow copy of the array, preventing the original user.dives array from being mutated, which is a best practice to avoid unintended side effects in React components
 
@@ -105,11 +105,14 @@ const Profile = () => {
   // Calculate the maximum depth
   let maxDepth = 0; // Initialize maxDepth to 0
 
-  user.dives.forEach((dive) => {
-    if (dive.maxDepth > maxDepth) {
-      maxDepth = dive.maxDepth; // Update maxDepth if a deeper dive is found
-    }
-  });
+  if (user.dives && user.dives.length > 0) {
+    // Iterate over each dive and update maxDepth if a greater depth is found
+    user.dives.forEach(dive => {
+      if (dive.maxDepth > maxDepth) {
+        maxDepth = dive.maxDepth;
+      }
+    });
+  }
 
 
   if (loading) return <div>Loading...</div>;
@@ -164,7 +167,7 @@ const Profile = () => {
       <Container>
         <DiveList
           // dives={sortedDives}
-          dives={divesWithLikeStatus}
+          dives={profileDives}
           // title={`${user.username}'s dives:`}
           // showTitle={false}
           showUsername={false}
