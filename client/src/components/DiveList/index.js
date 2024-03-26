@@ -112,7 +112,6 @@ const DiveList = ({
             <LikeButton
               dive={dive}
               user={user}
-              // isLikedByCurrentUser={dive.isLikedByCurrentUser}
               onUnauthorizedLike={() => setShowAuthModal(true)}
             />
 

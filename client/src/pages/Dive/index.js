@@ -9,7 +9,7 @@ function Dive() {
 	const { loading, data } = useQuery(QUERY_DIVES);
 
 	const { user } = useAuth();
-	console.log('user:', user);
+	// console.log('user:', user);
 
 
 	if (loading) {
@@ -23,9 +23,9 @@ function Dive() {
 	})) || [];
 
 
-	console.log('divesWithLikeStatus', divesWithLikeStatus);
-	console.log('User ID:', user?._id);
-	
+	// console.log('divesWithLikeStatus', divesWithLikeStatus);
+	// console.log('User ID:', user?._id);
+
 
 	return (
 		<div style={{ padding: '1rem' }}>

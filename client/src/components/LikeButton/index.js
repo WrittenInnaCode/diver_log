@@ -27,7 +27,7 @@ const LikeButton = ({ dive, user, onUnauthorizedLike }) => {
     });
 
 
-    console.log('dive.isLikedByCurrentUser:', dive.isLikedByCurrentUser)
+    // console.log('dive.isLikedByCurrentUser:', dive.isLikedByCurrentUser)
 
 
     const handleLikeClick = async () => {

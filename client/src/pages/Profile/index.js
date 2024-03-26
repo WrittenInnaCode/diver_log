@@ -4,13 +4,14 @@ import { useQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
 
 import DiveList from '../../components/DiveList';
-import AvatarUploadWidget from '../../components/AvatarUploadWidget';
 
 import { QUERY_USER, QUERY_ME } from '../../utils/queries';
-import { UPDATE_BIO } from '../../utils/mutations';
-import { UPDATE_AVATAR } from '../../utils/mutations';
+import { UPDATE_BIO, UPDATE_AVATAR } from '../../utils/mutations';
 
 import Auth from '../../utils/auth';
+import { useAuth } from '../../utils/AuthContext';
+
+import AvatarUploadWidget from '../../components/AvatarUploadWidget';
 
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
@@ -24,99 +25,67 @@ import { MdSettings } from 'react-icons/md'; //edit button gear icon
 const Profile = () => {
 
   const { username: userParam } = useParams();
-
   const navigate = useNavigate();
+  const { user: loggedInUser } = useAuth(); // Assume 'user' is the profile being viewed and 'loggedInUser' is the user who is logged in
 
   const { loading, error, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
 
-  // Use useMemo to derive 'user' from 'data' only when 'data' changes ("The 'user' logical expression could make the dependencies of useEffect Hook (at line 50) change on every render. To fix this, wrap the initialization of 'user' in its own useMemo() Hook")
+  // Use useMemo to derive 'user' from 'data' only when 'data' changes ("The 'user' logical expression could make the dependencies of useEffect Hook change on every render. To fix this, wrap the initialization of 'user' in its own useMemo() Hook")
   const user = useMemo(() => data?.me || data?.user || {}, [data]);
 
-  const [show, setShow] = useState(false);
+  const divesWithLikeStatus = useMemo(() => {
+    // First, sort the dives based on the diveDate, from newest to oldest (creating a new array)
+    const sortedDives = (user.dives || []).slice().sort((a, b) => new Date(b.diveDate) - new Date(a.diveDate)); //The use of .slice() before .sort() is to create a shallow copy of the array, preventing the original user.dives array from being mutated, which is a best practice to avoid unintended side effects in React components
 
-  const [bio, setBio] = useState(() => user?.userBio || '');
-  // const [avatar, setAvatar] = useState(user?.avatar || 'https://res.cloudinary.com/dbudwdvhb/image/upload/v1695613228/octocat-1695613200506_eei2mk.png');
+    // Then, map over sorted dives to include the isLikedByCurrentUser property
+    return sortedDives.map(dive => ({
+      ...dive,
+      isLikedByCurrentUser: dive.likes.some(like => like.likedBy._id === loggedInUser?._id)
+    }));
+  }, [user.dives, loggedInUser?._id]);
 
 
-  // For avatar preview to show current avatar (otherwise it shows the default avatar in the modal)
+  const [show, setShow] = useState(false); //modal
+  const [bio, setBio] = useState(user?.userBio || '');
   const [avatar, setAvatar] = useState(null); // Initialize avatar state with user's current avatar or a default avatar
 
   useEffect(() => {
-    if (user) {
-      // Set avatar state when user data is available
-      setAvatar(user.avatar || 'https://res.cloudinary.com/dbudwdvhb/image/upload/v1695971557/avatar/py2dbrno3fq00jzs3kg5.png');
+    // Set avatar state when user data is available
+    setAvatar(user.avatar || 'https://res.cloudinary.com/dbudwdvhb/image/upload/v1695971557/avatar/py2dbrno3fq00jzs3kg5.png');
+  }, [user.avatar]);
+
+
+  useEffect(() => {
+    if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
+      navigate("/me");
     }
-  }, [user]);
-  //
+  }, [navigate, userParam]);
 
-// console.log(user)
 
-  const maxCharacterLimit = 80;
+  const [updateBio] = useMutation(UPDATE_BIO);
+  const [updateAvatar] = useMutation(UPDATE_AVATAR);
 
   const handleClose = () => setShow(false);
-
   const handleShow = () => {
     // When Edit button is clicked, set `bio` state with the user's existing bio data
     setBio(user?.userBio || '');
     setShow(true);
   };
 
-
-  const [updateBio] = useMutation(UPDATE_BIO, {
-    onCompleted: (data) => {
-      const updatedBio = data.updateUserBio.userBio;
-      setBio(updatedBio); // Update the bio in the component state
+  const handleProfileSave = async () => {
+    try {
+      await updateBio({ variables: { userBio: bio } });
+      await updateAvatar({ variables: { avatar } });
       handleClose();
-    },
-  });
-
-  const [updateAvatar] = useMutation(UPDATE_AVATAR, {
-    onCompleted: (data) => {
-      const updatedAvatar = data.updateUserAvatar.avatar;
-      setAvatar(updatedAvatar);
-      handleClose();
-    },
-  });
-
-
-  useEffect(() => {
-    if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-      return navigate("/me");
+    } catch (error) {
+      console.error("Error updating profile:", error);
     }
-  }, [navigate, userParam]);
-
-
-  const handleProfileSave = () => {
-    // Update bio
-    updateBio({ variables: { userBio: bio } })
-      .then((bioResult) => {
-        // Handle success or error for bio update here
-        const updatedBio = bioResult.data.updateUserBio.userBio;
-        setBio(updatedBio); // Update the bio in the component state
-      })
-      .catch((bioError) => {
-        // Handle error for bio update here
-        console.error("Error updating bio:", bioError);
-      });
-
-    // Update avatar
-    updateAvatar({ variables: { avatar } })
-      .then((avatarResult) => {
-        // Handle success or error for avatar update here
-        const updatedAvatar = avatarResult.data.updateUserAvatar.avatar;
-        setAvatar(updatedAvatar);
-      })
-      .catch((avatarError) => {
-        // Handle error for avatar update here
-        console.error("Error updating avatar:", avatarError);
-      });
-
-    // Close the modal
-    handleClose();
   };
 
+
+  const maxCharacterLimit = 80;
 
   const handleChange = (event) => {
     const text = event.target.value;
@@ -126,37 +95,29 @@ const Profile = () => {
     }
   };
 
+  
   const isProfileOwner = Auth.loggedIn() && Auth.getProfile().data.username === user.username;
 
 
   const numDives = (user.dives ?? []).length;
 
-  // Create a new array by sorting the dives based on the dive date property
-  const sortedDives = (user.dives || []).slice().sort((a, b) => new Date(b.diveDate) - new Date(a.diveDate));
-
 
   // Calculate the maximum depth
   let maxDepth = 0; // Initialize maxDepth to 0
 
-  sortedDives.forEach((dive) => {
+  user.dives.forEach((dive) => {
     if (dive.maxDepth > maxDepth) {
       maxDepth = dive.maxDepth; // Update maxDepth if a deeper dive is found
     }
   });
 
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
+  if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
+
 
   return (
     <Container className='pt-2'>
-
-      {/* <h2 className="mb-4">
-        Viewing {userParam ? `${user.username}'s` : 'your'} profile.
-      </h2> */}
 
       <Container fluid className="userInfo">
         <div className='d-flex '>
@@ -202,7 +163,8 @@ const Profile = () => {
 
       <Container>
         <DiveList
-          dives={sortedDives}
+          // dives={sortedDives}
+          dives={divesWithLikeStatus}
           // title={`${user.username}'s dives:`}
           // showTitle={false}
           showUsername={false}
@@ -230,7 +192,6 @@ const Profile = () => {
                 rows={2}
                 placeholder="Tell us a little bit about yourself"
                 value={bio}
-                // onChange={(e) => setBio(e.target.value)}
                 onChange={handleChange}
                 maxLength={maxCharacterLimit}
               />
