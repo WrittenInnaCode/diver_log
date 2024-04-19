@@ -5,11 +5,19 @@ import React, { useState } from 'react';
 import AuthModal from '../AuthModal';
 
 import Auth from '../../utils/auth';
+import { useAuth } from '../../utils/AuthContext';
 
 import { Navbar, Nav, Button } from 'react-bootstrap';
+import Image from 'react-bootstrap/Image';
+
+import { FaBucket } from "react-icons/fa6";
+import { FaMagnifyingGlassLocation } from "react-icons/fa6";
+import { FaFilePen } from "react-icons/fa6";
 
 
 function AppNavbar() {
+
+	const { user } = useAuth();
 
 	const logout = (event) => {
 		event.preventDefault();
@@ -55,29 +63,47 @@ function AppNavbar() {
 
 								<Navbar.Collapse id="basic-navbar-nav">
 									<Nav className="navbarLinks me-auto d-flex flex-column">
-										<Nav.Link as={NavLink} to="/me" eventKey="/me"
-											className={splitLocation[1] === "me" ? "fw-bold" : ""}>
-											{Auth.getProfile().data.username} {' '}
-										</Nav.Link>
+										<div className='pb-2'>
+											<Nav.Link as={NavLink} to="/me" eventKey="/me"
+												className={splitLocation[1] === "me" ? "fw-bold" : ""}>
 
-										<Nav.Link as={NavLink} to="/newdivelog" eventKey="/newdivelog"
-											className={splitLocation[1] === "newdivelog" ? "fw-bold" : " "}>
-											Log New Dive
-										</Nav.Link>
+												{user && ( // Check if user is not null before rendering the Image and username
+													<>
+														<Image className='navAvatar'
+															roundedCircle
+															src={user.avatar}
+															alt={`${user.username}'s Avatar`} />
+														{user.username}
+													</>
+												)}
+											</Nav.Link>
+										</div>
 
-										<Nav.Link as={NavLink} to="/dives" eventKey="/dives"
-											className={splitLocation[1] === "dives" ? "fw-bold" : " "}>
-											Explore Dives
-										</Nav.Link>
+										<div className='pb-2'>
+											<Nav.Link as={NavLink} to="/newdivelog" eventKey="/newdivelog"
+												className={splitLocation[1] === "newdivelog" ? "fw-bold" : " "}>
+												<FaFilePen className='fs-4 me-2' /> Log New Dive
+											</Nav.Link>
+										</div>
 
-										<Nav.Link as={NavLink} to="/bucketlist" eventKey="/bucketlist"
-											className={splitLocation[1] === "bucketlist" ? "fw-bold" : " "}>
-											Bucket List
-										</Nav.Link>
+										<div className='pb-2'>
+											<Nav.Link as={NavLink} to="/dives" eventKey="/dives"
+												className={splitLocation[1] === "dives" ? "fw-bold" : " "}>
+												<FaMagnifyingGlassLocation className='fs-4 me-2' /> Explore Dives
+											</Nav.Link>
+										</div>
+
+										<div className='pb-2'>
+											<Nav.Link as={NavLink} to="/bucketlist" eventKey="/bucketlist"
+												className={splitLocation[1] === "bucketlist" ? "fw-bold" : " "}>
+												<FaBucket className='fs-4 me-2' /> Bucket List
+											</Nav.Link>
+										</div>
 
 										<Button variant="warning" onClick={logout} size="sm" className='logOutBttn'>
 											Ascend and Exit
 										</Button>
+
 									</Nav>
 								</Navbar.Collapse>
 

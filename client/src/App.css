@@ -60,6 +60,14 @@ html {
     text-align: center;
 }
 
+.navAvatar{
+    max-width: 30px;
+    max-height: 30px;
+    margin-right: 10px;
+    margin-left: -5px;
+    border:  solid #ffffff91;
+}
+
 .navbarItems {
     padding-top: 1rem;
 }
