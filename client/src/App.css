@@ -2,31 +2,190 @@ html {
     background-color: rgb(1, 46, 119);
 }
 
-.logo {
-    /* font-family:Brush Script MT, Brush Script Std, cursive; */
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 30px !important;
+.wrapper {
+    /* width: 100%; */
+    display: flex;
 }
 
-.navbarBg {
-    /* background-color: rgb(20, 56, 108); */
-    background-color: rgb(182, 205, 227);
+@media screen and (max-width: 767px) {
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+
+.bodyBg {
+    background-color: rgba(230, 234, 244, 0.844);
     min-height: 100vh;
+    width: 100%;
+}
+
+
+
+/* NAVBAR */
+
+.navbarBg {
+    background-color: rgb(123, 170, 211);
     border-right: solid 2px;
     border-color: aliceblue;
 }
 
-/* .navbar-nav .nav-item .nav-link {
-   color: white;
+.navbarContent {
+    width: 100%;
+    padding-left: 1rem !important;
+    padding-right: 1rem;
+    display: flex;
+    flex-direction: column !important;
+    align-items: center;
+}
+
+.logo {
+    /* font-family:Brush Script MT, Brush Script Std, cursive; */
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 38px !important;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.loginBttn {
+    white-space: nowrap;
+    margin-top: 1rem;
+}
+
+.logOutBttn {
+    white-space: nowrap;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.navbarItems {
+    padding-top: 1rem;
+}
+
+.toggleBttn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modalTabs {
+    display: flex;
+    flex-direction: row !important;
+}
+
+@media screen and (max-width: 767px) {
+    .navbarContent {
+        display: flex;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        align-items: flex-start !important;
+    }
+
+    .navbarBg {
+        min-height: auto;
+        border-right: none;
+        border-bottom: solid 2px;
+        border-color: aliceblue;
+    }
+}
+
+
+
+
+
+.commentText {
+    max-width: 60%;
+    margin: auto;
+}
+
+
+
+/* DIVE LOG FORM */
+
+.customDatePicker {
+    background-color: rgb(255, 255, 255);
+    border-radius: 4px;
+}
+
+.customTimePicker {
+    background-color: rgb(255, 255, 255);
+    border-radius: 4px;
+}
+
+.diveForm {
+    /* background-color: rgba(208, 226, 255); */
+    padding: 1.5rem;
+    border-radius: 6px;
+    color: rgba(0, 60, 157);
+}
+
+.formBorders {
+    border-style: ridge;
+    /* border-color: rgb(247, 243, 243); */
+    /* border-radius: 4px; */
+    padding: 1rem;
+    background-color: rgba(240, 248, 255, 0.555);
+}
+
+
+
+/* DIVE LIST */
+
+.diveText {
+    text-decoration: none;
+    /* color: slategray; */
+    color: rgba(0, 60, 157);
+}
+
+.dive-header {
+    /* background-color: rgba(208, 226, 255) !important; */
+    margin-left: 2.5rem;
+}
+
+.dive-footer {
+    /* background-color: rgba(208, 226, 255)!important; */
+    background-color: rgba(240, 248, 255, 0.555) !important;
+}
+
+/* .dive-card {
+    background-color: rgba(129, 186, 235, 0.555);
 } */
 
-.profileSettings {
-    font-size: 160%;
+/* .photoSlide {
+    background-color: rgb(20, 56, 108);
+    background-color: rgb(222, 232, 247);
+} */
+
+/* .diveText:hover {
+    color: slategray;
+} */
+
+
+
+
+/* PROFILE */
+
+
+.userInfo {
+    background-color: rgba(208, 226, 255);
+    margin: 1rem;
+    border-radius: 6px;
+    color: rgba(0, 60, 157);
+    padding: 1rem;
 }
 
 .userAvatar {
     max-width: 150px;
     max-height: 150px;
+}
+
+.userDetails {
+    width: 100%;
+}
+
+.profileSettings {
+    font-size: 160%;
 }
 
 .userBio {
@@ -39,99 +198,22 @@ html {
     text-align: right;
 }
 
-.active {
-    font-weight: bold;
-}
 
-.bodyBg {
-    background-color: rgba(228, 234, 247, 0.844);
-    /* background-color: rgba(205, 219, 246, 0.844); */
-    /* background: linear-gradient(#1689e2d7, rgba(2, 28, 79, 0.844)); */
-    min-height: 100vh;
-}
 
-.loginBttn {
-    white-space: nowrap;
-}
 
-.logOutBttn {
-    white-space: nowrap;
-    margin-top: 2rem;
-}
+/* SINGLE DIVE */
 
-.username {
-    padding-top: 1rem !important;
-}
 
-.commentText {
-    max-width: 60%;
-    margin: auto;
-}
-
-.customDatePicker {
-    background-color: rgb(255, 255, 255);
-    border-radius: 4px;
-}
-
-.customTimePicker {
-    background-color: rgb(255, 255, 255);
-    border-radius: 4px;
-}
-
-.dive-header {
-    /* background-color: rgba(208, 226, 255) !important; */
-    margin-left: 2.5rem;
-}
-
-/* .dive-card {
-    background-color: rgba(129, 186, 235, 0.555);
-} */
-
-.photoSlide {
-    /* background-color: rgb(20, 56, 108); */
-    /* background-color: rgb(222, 232, 247); */
-}
-
-.diveText {
+.postAuthor {
     text-decoration: none;
-    /* color: slategray; */
-    color: rgba(0, 60, 157);
+    color: white;
+    font-size: 20px;
+    font-weight: bolder;
 }
 
-/* .diveText:hover {
-    color: slategray;
-} */
-
-.dive-footer {
-    /* background-color: rgba(208, 226, 255)!important; */
-    background-color: rgba(240, 248, 255, 0.555) !important;
-}
-
-.diveForm {
-    /* background-color: rgba(208, 226, 255); */
-    padding: 1.5rem;
-    border-radius: 6px;
-    color: rgba(0, 60, 157);
-}
-
-.formBorders {
-    border-style:ridge;
-    /* border-color: rgb(247, 243, 243); */
-    /* border-radius: 4px; */
-    padding: 1rem;
-    background-color: rgba(240, 248, 255, 0.555);
-}
-
-.userInfo {
-    background-color: rgba(208, 226, 255);
-    margin: 1rem;
-    border-radius: 6px;
-    color: rgba(0, 60, 157);
-    padding: 1rem;
-}
-
-.userDetails {
-    width: 100%;
+.postAuthor:hover {
+    color: white;
+    text-decoration: underline;
 }
 
 .diveDetails {
@@ -146,22 +228,7 @@ html {
     align-items: baseline;
 }
 
-.diveStatsAquatic {
-    display: flex;
-    align-items: baseline;
-}
-
-.aquaticLife {
-    white-space: nowrap;
-}
-
 .diveStats h6 {
-    padding-right: 0.5rem;
-    font-weight: bolder;
-    font-size: smaller;
-}
-
-.diveStatsAquatic h6 {
     padding-right: 0.5rem;
     font-weight: bolder;
     font-size: smaller;
@@ -172,29 +239,55 @@ html {
     justify-content: space-evenly;
 }
 
+.diveStatsAquatic {
+    display: flex;
+    align-items: baseline;
+}
+
+.diveStatsAquatic h6 {
+    padding-right: 0.5rem;
+    font-weight: bolder;
+    font-size: smaller;
+}
+
+.aquaticLife {
+    white-space: nowrap;
+}
+
 .diveDescription {
     white-space: pre-line;
 }
 
 
-.star {
-    cursor: pointer;
-    transition: color 150ms;
-}
+
+
+/* NEW DIVE */
 
 .starRating {
     text-align: center;
     /* background-color: #97cdf6c0; */
 }
 
+
+
+/* STAR RATING */
+
+.star {
+    cursor: pointer;
+    transition: color 150ms;
+}
+
 input[type="radio"] {
     display: none;
 }
 
-/* these stars are the ones from the DiveRating */
+
+
+/* DIVE RATING */
+
 .star-rating {
     font-size: 24px;
-    text-align:end;
+    text-align: end;
 }
 
 .star-filled {
@@ -205,20 +298,6 @@ input[type="radio"] {
     color: #97cdf6c0;
 }
 
-/*  */
-
-
-.postAuthor {
-    text-decoration: none;
-    color: white;
-    font-size: 20px;
-    font-weight: bolder;
-}
-
-.postAuthor:hover {
-    color: white;
-    text-decoration: underline;
-}
 
 
 
@@ -246,23 +325,17 @@ input[type="radio"] {
     }
 }
 
-@media screen and (max-width: 575px) {
-    .navbarBg {
-        min-height: auto;
-        border-right: none;
-        border-bottom: solid 2px;
-        border-color: aliceblue;
-    }
+@media screen and (max-width: 840px) {
 
     /* .bodyBg {
         min-height:100vh;
     } */
 
-    .toggleBttn {
+    /* .toggleBttn {
         display: flex;
         flex-direction: column;
         white-space: nowrap;
-    }
+    } */
 
     /* .diveStatsAquatic{
         display: flex;

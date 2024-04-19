@@ -1,9 +1,12 @@
 function BucketList() {
 	return (
 		<>
-		<h1>
+		<h3>
 			This is my Bucket List.
-		</h1>
+		</h3>
+		<p>
+			Work in progress...
+		</p>
 		</>
 		
 	);

@@ -6,7 +6,7 @@ import AuthModal from '../AuthModal';
 
 import Auth from '../../utils/auth';
 
-import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+import { Navbar, Nav, Button } from 'react-bootstrap';
 
 
 function AppNavbar() {
@@ -34,55 +34,58 @@ function AppNavbar() {
 
 
 	return (
-		<Container>
-			<Navbar expand="sm">
-				<Nav className="d-flex flex-row flex-sm-column justify-content-center w-100">
-					<Container className='p-2'>
-						<Navbar.Brand as={NavLink} to="/"
-							// className='logo text-light p-2'
-							className={splitLocation[1] === "me" ? "logo  fw-normal p-2" : "logo fw-normal p-2"}
-						>Divegram</Navbar.Brand>
-					</Container>
+		<div>
+			<Navbar expand="md" collapseOnSelect variant='dark'>
+				<Nav className='navbarContent'>
+
+					<div className='logoBrand'>
+						<Navbar.Brand as={NavLink} to="/dives"
+							className={splitLocation[1] === "me" ? "logo fw-normal" : "logo fw-normal"}>
+							Divegram
+						</Navbar.Brand>
+					</div>
 
 					{Auth.loggedIn() ? (
 						<>
-							<div className='toggleBttn'>
-								<Container className='d-flex flex-column'>
+							<div className='navbarItems'>
+
+								<div className='toggleBttn'>
 									<Navbar.Toggle aria-controls="basic-navbar-nav" />
+								</div>
 
-									<Navbar.Collapse id="basic-navbar-nav" >
-										<Nav className="me-auto d-flex flex-column">
-											<Nav.Item>
-												<Nav.Link as={NavLink} to="/me" eventKey="/me"
-													className={splitLocation[1] === "me" ? " fw-bold" : ""}>
-													{Auth.getProfile().data.username} {' '}
-												</Nav.Link>
-											</Nav.Item>
-											<Nav.Item>
-												<Nav.Link as={NavLink} to="/newdivelog" eventKey="/newdivelog"
-													className={splitLocation[1] === "newdivelog" ? " fw-bold" : ""}
-												>Log New Dive</Nav.Link>
-											</Nav.Item>
-											<Nav.Item>
-												<Nav.Link as={NavLink} to="/dives" eventKey="/dives"
-													className={splitLocation[1] === "dives" ? "t fw-bold" : ""}
-												>Explore Dives</Nav.Link>
-											</Nav.Item>
-											<Nav.Item>
-												<Nav.Link as={NavLink} to="/bucketlist" eventKey="/bucketlist"
-													className={splitLocation[1] === "bucketlist" ? " fw-bold" : ""}
-												>Bucket List</Nav.Link>
-											</Nav.Item>
+								<Navbar.Collapse id="basic-navbar-nav">
+									<Nav className="navbarLinks me-auto d-flex flex-column">
+										<Nav.Link as={NavLink} to="/me" eventKey="/me"
+											className={splitLocation[1] === "me" ? "fw-bold" : ""}>
+											{Auth.getProfile().data.username} {' '}
+										</Nav.Link>
 
-											<Button variant="warning" onClick={logout} size="sm" className='logOutBttn'> Ascend and Exit </Button>
-										</Nav>
-									</Navbar.Collapse>
-								</Container>
+										<Nav.Link as={NavLink} to="/newdivelog" eventKey="/newdivelog"
+											className={splitLocation[1] === "newdivelog" ? "fw-bold" : " "}>
+											Log New Dive
+										</Nav.Link>
+
+										<Nav.Link as={NavLink} to="/dives" eventKey="/dives"
+											className={splitLocation[1] === "dives" ? "fw-bold" : " "}>
+											Explore Dives
+										</Nav.Link>
+
+										<Nav.Link as={NavLink} to="/bucketlist" eventKey="/bucketlist"
+											className={splitLocation[1] === "bucketlist" ? "fw-bold" : " "}>
+											Bucket List
+										</Nav.Link>
+
+										<Button variant="warning" onClick={logout} size="sm" className='logOutBttn'>
+											Ascend and Exit
+										</Button>
+									</Nav>
+								</Navbar.Collapse>
+
 							</div>
 						</>
 					) : (
 						<>
-							<Button className="loginBttn" variant="primary" size="sm" onClick={() => handleShow()}>
+							<Button className="loginBttn" variant="light" size="sm" onClick={() => handleShow()}>
 								Dive In
 							</Button>
 						</>
@@ -94,7 +97,7 @@ function AppNavbar() {
 
 			<AuthModal show={show} onHide={handleClose} />
 
-		</Container>
+		</div>
 	);
 }
 

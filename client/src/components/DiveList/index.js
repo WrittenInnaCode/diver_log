@@ -49,7 +49,7 @@ const DiveList = ({
   }
 
   return (
-    <Container className='' style={{ maxWidth: '50rem' }}>
+    <Container style={{ maxWidth: '50rem' }}>
       {showTitle && <h4 className='pb-3'>{title}</h4>}
 
       {currentDives.map((dive) => (
